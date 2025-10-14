@@ -1,0 +1,80 @@
+/* COLORES, TAMAÑOS, SEPARACIÓN DEL MENÚ SUPERIOR */
+header {
+  background: #fffaf9;
+  border-bottom: 1px solid #eadfe0;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 10px 16px; }
+.navbar-site { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-img { height: 56px; width: auto; display: block; }
+.brand span { color: #6b3d45; font-weight: 600; }
+
+
+.menu { display: flex; align-items: center; gap: 14px; }
+.menu a, .menu .active {
+  color: #6b3d45;
+  text-decoration: none;
+  font-weight: 500;
+}
+.menu a:hover, .menu .active { color: #d8a1a7; }
+
+
+.cta { display: flex; align-items: center; gap: 10px; }
+
+
+/* BOTÓN DEL LOGIN */
+.btn-login {
+  color: #d8a1a7;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+.btn-login:hover { border-color: #d8a1a7; }
+
+/* CARRITO */
+.cart { position: relative; display: inline-flex; align-items: center; }
+.icon-cart { width: 26px; height: 26px; object-fit: contain; }
+.cart-count{
+  position: absolute; top: -6px; right: -8px;
+  background: #d84d5c; color: #fff; font-size: 12px; line-height: 1;
+  border-radius: 999px; padding: 3px 6px; border: 2px solid #fff;
+}
+
+
+
+a { color: inherit; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+
+/* COLOR BASE */
+:root{
+  --bg:#fffaf9;   
+  --card:#fff; 
+}
+
+/* FONDO GENERAL */
+html, body { height:100%; }
+body{ background:var(--bg); }
+
+main.home{ background:var(--bg); }     
+footer.footer{ background:var(--bg); } 
+.hero-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fdebed;
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 380px; 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* CUADRO DESTACADO O CENTRAL DEL INICIO */
+.hero-img img {
+  width: 85%; 
+  height: auto;
+  display: block;
+}

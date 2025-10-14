@@ -1,0 +1,39 @@
+/* LA BASE: colores, fuentes, variables, botones globales */
+
+:root{
+  --bg: #fffaf9;        /* fondo general */
+  --card: #fff;         /* fondo de tarjetas */
+  --text: #3e2328;      /* color de texto principal */
+  --accent: #d8a1a7;    /* rosado principal */
+  --accent-strong: #694f54; /* café */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+
+h1, h2, h3, h4, h5 {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.btn-danger {
+  background-color: var(--accent-strong) !important;
+  border: none !important; 
+  color: var(--
+  card) !important;
+}
+
+/* el !important es para ganarle en prioridad a bootstrap */
+
+.btn-danger:hover {
+  background-color: var(--accent) !important;
+}
+
+/* una pequeña animación para los links */
+a {
+  transition: color 0.3s ease, border-color 0.3s ease;
+}

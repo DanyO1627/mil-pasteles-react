@@ -1,0 +1,36 @@
+/* SOLO LO QUE LE AFECTA A LOS PRODUCTOS */
+
+/* esto dice: que ocupe el ancho de la tarjeta, que la altura sea la misma para todas las fotos, 
+qe recorte la imagen sin deformarla y que las esquinas vayan redonditas, y esto como es de bootstrap, se 
+aplica automáticamente para todas las imagnes.*/
+.card-img-top { 
+    width:100%; 
+    height:220px; 
+    object-fit:cover; 
+    border-radius:8px; 
+}
+
+/* este es solo para las imagenes de las tarjetas: le saca el borde gris de bootstrap, 
+esquinas suaves, si algo sale del cuadro, lo recorta, le da una animación al pasar el mouse*/
+.card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* le da un toque  la animación, se levanta un poquito y le da una sombra */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card-title {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.card-text {
+  color: #7a6769;
+  font-size: 0.9rem;
+}
