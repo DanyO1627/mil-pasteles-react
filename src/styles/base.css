@@ -23,8 +23,8 @@ h1, h2, h3, h4, h5 {
 .btn-danger {
   background-color: var(--accent-strong) !important;
   border: none !important; 
-  color: var(--
-  card) !important;
+  color: var(--card) !important;
+  border-radius: 10px;
 }
 
 /* el !important es para ganarle en prioridad a bootstrap */
@@ -32,6 +32,21 @@ h1, h2, h3, h4, h5 {
 .btn-danger:hover {
   background-color: var(--accent) !important;
 }
+
+/* estos son los botones de las tarjetas de productos "ver más detalles" */
+.btn-btn-outline-primary {
+  color: var(--accent-strong) !important;
+  border-color: var(--accent-strong) !important;
+  border-radius: 5px;
+
+  
+}
+
+.btn-btn-outline-primary:hover {
+  background-color: var(--text) !important;
+  color: var(--card) !important;
+}
+
 
 /* una pequeña animación para los links */
 a {

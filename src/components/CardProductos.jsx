@@ -1,6 +1,7 @@
 import React from "react";
 import '../styles/cardProducto.css';
 import '../styles/base.css';
+import {Link} from 'react-router-dom';
 
 export default function CardProductos({ producto }) {
 
@@ -16,9 +17,16 @@ export default function CardProductos({ producto }) {
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text text-muted">{producto.descripcion}</p>
                 <p className= 'fw-bold'>${producto.precio.toLocaleString()}</p>
+                
                 <button className="btn btn-danger mt-auto">
                     Agregar al carrito
+                    
                 </button>
+
+                <Link to={`/producto/${producto.id}`} 
+                className="btn btn-outline-primary">
+                Ver detalles
+                </Link>
 
                 
                 </div>
