@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5 {
 }
 
 /* estos son los botones de las tarjetas de productos "ver más detalles" */
-.btn-btn-outline-primary {
+.btn-outline-primary {
   color: var(--accent-strong) !important;
   border-color: var(--accent-strong) !important;
   border-radius: 5px;
@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5 {
   
 }
 
-.btn-btn-outline-primary:hover {
+.btn-outline-primary:hover {
   background-color: var(--text) !important;
   color: var(--card) !important;
 }

@@ -1,0 +1,87 @@
+.detalle-container {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* .detalle-imagen {
+  width: 80%;
+  max-width: 320px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+} */
+
+.detalle-nombre {
+  color: #b22222;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.detalle-descripcion {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.detalle-precio {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #c94e50;
+  margin-bottom: 1.5rem;
+}
+
+.detalle-flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  justify-content: flex-start;
+}
+
+.detalle-imagen {
+  flex-shrink: 0;
+  width: 320px;
+  max-width: 40vw;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.detalle-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.detalle-botones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detalle-carrito-inline {
+  display: flex;
+  align-items: center;
+  background: #ff4d4d;
+  color: white;
+  border-radius: 20px;
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 40px;
+}
+
+.btn-agregar {
+  width: auto;
+  min-width: 140px;
+  max-width: 180px;
+  font-size: 1rem;
+  padding: 0.4em 1em;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}
+
+.detalle-card {
+  margin-top: 2.5rem; 
+}
