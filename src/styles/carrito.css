@@ -1,17 +1,46 @@
-
-.detalle-carrito {
-  position: relative;
-  display: inline-block;
-  margin-left: 15px;
+/* --- Estructura general --- */
+.carrito-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-
-
-.carrito-icon {
-  font-size: 1.2rem;
-  margin-right: 0.5em;
+.carrito-container .col-md-6 {
+  flex: 1;
 }
 
-.carrito-contador {
-  font-size: 1rem;
+/* --- lado derecho (carrito) --- */
+.carrito-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* --- lado izquierdo(productos) --- */
+.productos-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.producto-mini {
+  transition: transform 0.2s ease;
+}
+
+.producto-mini:hover {
+  transform: scale(1.02);
+}
+
+.mini-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.carrito-titulo {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 100rem;
 }

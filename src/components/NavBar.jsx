@@ -16,7 +16,7 @@ export default function NavBar() {
           <NavLink to="/">Home</NavLink>
           <Link className="nav-link" to="/productos">Productos</Link>
           <a href="#nosotros">Nosotros</a>
-          <a href="#blog">Blog</a>
+          <Link className="nav-link" to="/blogs">Blogs</Link>
           <a href="#contacto">Contacto</a>
         </nav>
 

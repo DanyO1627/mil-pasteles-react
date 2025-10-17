@@ -8,6 +8,12 @@
   --accent-strong: #694f54; /* café */
 }
 
+/* NUESTROS PRODUCTOS // TITULO DE PRODUCTOS */
+.text-accent {
+  margin-top: 30px;
+  color: var(--accent-strong);
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: var(--text);

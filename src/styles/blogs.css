@@ -1,0 +1,106 @@
+/* BLOGS - Estilos exclusivos para la sección de blog */
+
+
+/* Centra el contenido principal y limita el ancho */
+main.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 32px;
+  background: #f8e9ed;
+  border-left: 18px solid #c48990;
+  border-right: 18px solid #c48990;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(120, 60, 80, 0.10);
+}
+
+
+/* Tarjeta de blog principal */
+.blog-card {
+  display: flex;
+  align-items: center;
+  background: var(--card, #f8e9ed);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(120, 60, 80, 0.18);
+  border: 2px solid #c48990;
+  margin-bottom: 32px;
+  padding: 24px;
+  gap: 24px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* Limita el ancho del texto */
+.blog-info {
+    margin-top: 60px;
+  flex: 1;
+  max-width: 60%;
+}
+
+
+.blog-info h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+  color: var(--brand, #a03c5b);
+}
+
+
+.blog-info p {
+  margin-bottom: 16px;
+  color: var(--ink, #4a2c2c);
+}
+
+
+/* Centra la imagen verticalmente respecto al texto */
+.blog-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+}
+
+
+.blog-img img {
+  width: 140px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(120, 60, 80, 0.18);
+  object-fit: cover;
+}
+
+
+/* Detalle de blog: imagen al lado del texto */
+.blog-detail-img {
+  width: 280px;
+  float: right;
+  top: 50%; /* Empezamos desde la mitad del contenedor padre */
+  transform: translateY(-45%); /* Subimos la imagen sobre la propia altura de la foto*/
+  margin-left: 24px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(120, 60, 80, 0.18);
+  object-fit: cover;
+}
+
+
+/* Botón "Ver más" estilo sitio */
+.btn-primary {
+  background: var(--brand, #a03c5b);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+
+.btn-primary:hover {
+  background: #c48990;
+  color: #fff;
+}
+
