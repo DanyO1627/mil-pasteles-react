@@ -69,7 +69,7 @@ esquinas suaves, si algo sale del cuadro, lo recorta, le da una animación al pa
 } */
 
 
-.productos-grid {
+.productos-grid-productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;

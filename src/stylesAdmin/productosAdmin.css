@@ -1,0 +1,108 @@
+/* 
+.admin-card	Bloque (componente principal)
+.admin-card__imagen	Elemento (parte interna del bloque)
+.admin-card__btn--editar	Modificador (variación del elemento) */
+
+
+
+
+/* el general */
+.admin-panel {
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header */
+.admin-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-panel__titulo {
+  margin: 0;
+  color: var(--accent-strong, #694f54);
+  font-size: 1.5rem;
+}
+
+/* Botones */
+.admin-panel__acciones {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.admin-panel__btn {
+  background: var(--accent-strong, #694f54);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.admin-panel__btn:hover { opacity: 0.95 }
+
+/* tarjetas admin */
+.admin-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Card admin*/
+.admin-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #efe0e2;
+}
+
+/* Imagen*/
+.admin-card__imagen {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Contenido */
+.admin-card__contenido {
+  flex: 1;
+  text-align: left;
+}
+.admin-card__nombre { margin: 0 0 0.25rem 0; font-size: 1rem; font-weight: 600; }
+.admin-card__categoria, .admin-card__precio{ margin: 0; font-size: 0.9rem; color: #6e575a; }
+.admin-card__stock { font-weight: bold; margin: 0; font-size: 0.9rem; color: #6e575a; }
+
+/* boton de acciones */
+.admin-card__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.admin-card__btn {
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.admin-card__btn--editar { background: #897176; color: rgb(255, 255, 255); }
+.admin-card__btn--eliminar { background: #734a4a; color: white; }
+
+/* Admin home PROVISORIO */
+.admin-home {
+  padding: 2rem;
+  text-align: center;
+}
+.admin-home__titulo { font-size: 1.6rem; margin-bottom: 1rem; color: var(--accent-strong, #694f54); }
+.admin-home__btn { background: var(--accent-strong, #694f54); color: white; border: none; padding: 0.7rem 1.1rem; border-radius: 10px; cursor: pointer; }

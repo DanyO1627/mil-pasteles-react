@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
+import { useProductos } from "../context/InventarioContext";
 import { useNavigate } from "react-router-dom";
 import lista_productos from "../data/dataProductos";
 import "../styles/base.css";
 import "../styles/carrito.css";
 
 export default function Carrito() {
-  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito } = useCarrito();
+  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra } = useCarrito();
+  const { productos } = useProductos();
   const navigate = useNavigate();
+  const [mensaje, setMensaje] = useState("");
+
+  const handleComprar = () => {
+  const resultado = procesarCompra();
+
+  setMensaje(resultado.message);
+
+  if (resultado.success) {
+      // mensaje 3 segundos y redirigir a los productos
+      setTimeout(() => {
+        setMensaje("");
+        navigate("/productos");
+      }, 3000);
+    } else {
+      // Limpiar mensaje de error
+      setTimeout(() => setMensaje(""), 3000);
+    }
+  };
 
   return (
     <div className="container mt-5 carrito-page">
       <h2 className="text-center mb-4">🛒 Carrito de Compras</h2>
 
       <div className="row">
-        {/* 🧁 Columna izquierda - Lista de productos */}
+        {/* lado izquierod lista de productos */}
         <div className="col-md-6 productos-col">
           <h4 className="mb-3">Agrega más productos</h4>
           <div className="row">
@@ -29,12 +49,14 @@ export default function Carrito() {
                   <div className="card-body p-2 text-center">
                     <h6>{producto.nombre}</h6>
                     <p className="text-muted">${producto.precio.toLocaleString()}</p>
+                    <p className="text-muted small">Stock: {producto.stock ?? 0}</p>
+                    
                     <button 
                       className="btn btn-danger btn-sm"
                       onClick={() => agregarAlCarrito(producto)}
-                    >
-                      Añadir
+                      disabled={(producto.stock ?? 0) === 0}> {(producto.stock ?? 0) === 0 ? 'Sin stock' : 'Añadir'}
                     </button>
+
                   </div>
                 </div>
               </div>
@@ -76,13 +98,16 @@ export default function Carrito() {
                 </div>
               ))}
 
-              {/* Total y acciones */}
+              {/*total y acciones*/}
               <div className="card mt-4 p-4 text-center shadow-sm">
                 <h5>Total: ${precioTotal.toLocaleString()}</h5>
                 <div className="d-flex flex-column gap-2 mt-3">
-                  <button className="btn btn-danger">
-                    Comprar ahora
+                  <button 
+                    className="btn btn-danger"
+                    onClick={handleComprar}
+                  > Comprar ahora
                   </button>
+                  
                   <button className="btn btn-outline-secondary" onClick={vaciarCarrito}>
                     Vaciar carrito
                   </button>

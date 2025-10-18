@@ -29,6 +29,16 @@ import rollosCanela from "../assets/rollos_canela.jpg";
 import PastelImposible from "../assets/pastel_imposible.webp"; 
 import chocoChips from "../assets/choco_chips.jpeg"; 
 
+// 7 nuevos
+// --- NUEVAS IMPORTACIONES (7 productos, placeholders) ---
+import tresChocolates from "../assets/torta_tres_chocolates.jpeg"; 
+import flanCasero from "../assets/flan_casero.jpg"; 
+import gofresLiege from "../assets/gofres_liege.jpg"; 
+import operaCake from "../assets/opera_cake.jpg"; 
+import sconeArandanos from "../assets/scone_arandanos.avif"
+import palmeraChocolate from "../assets/palmera_chocolate.jpg"; 
+import pastelGuayaba from "../assets/pastel_guayaba.jpg";
+
 
 const lista_productos = [
   {
@@ -38,7 +48,8 @@ const lista_productos = [
     imagen: tortaTresLeches,
     descripcion: "Torta tres leches húmeda, con textura suave y sabor casero.",
     descripcion_larga: "Nuestra Torta Tres Leches es un clásico irresistible: bizcocho esponjoso bañado en una mezcla de tres tipos de leche (entera, condensada y evaporada), cubierto con crema merengue y decorado con frutas frescas. Perfecta para celebraciones y amantes de los postres tradicionales que buscan un sabor auténtico y sumamente húmedo.",
-    categoria: "Tortas & Pasteles" // COINCIDE
+    categoria: "Tortas & Pasteles",
+    stock: 10 
   },
   {
     id: 2,
@@ -47,7 +58,8 @@ const lista_productos = [
     imagen: tartaManzana,
     descripcion: "Tarta con manzanas caramelizadas y toque de canela.",
     descripcion_larga: "Disfruta de nuestra Tarta de Manzana con su base de masa quebrada crujiente, rellena de láminas de manzana fresca, suavemente caramelizadas y sazonadas con un toque cálido de canela. Horneada a la perfección, es ideal para servir tibia, sola o acompañada de helado.",
-    categoria: "Tartas & Pies" // COINCIDE
+    categoria: "Tartas & Pies",
+    stock: 14 
   },
   {
     id: 3,
@@ -56,7 +68,8 @@ const lista_productos = [
     imagen: cheesecake,
     descripcion: "Cheesecake con base de galleta y cobertura de frutos rojos.",
     descripcion_larga: "El Cheesecake de Frutos Rojos es una delicia cremosa y refrescante. Presenta una base de galleta de mantequilla, un relleno de queso crema suave y aireado, y una generosa capa superior de mermelada y frutos rojos (fresas, arándanos, frambuesas) que aportan un contraste ácido perfecto.",
-    categoria: "Tartas & Pies" // COINCIDE
+    categoria: "Tartas & Pies",
+    stock: 2
   },
   {
     id: 4,
@@ -65,7 +78,8 @@ const lista_productos = [
     imagen: brownie,
     descripcion: "Brownie de chocolate intenso con trozos de nuez.",
     descripcion_larga: "Nuestro Brownie XL es la máxima expresión del placer chocolatero. Con una textura interior densa y fudgy, y una capa exterior crujiente, está elaborado con chocolate de alta calidad y enriquecido con abundantes trozos de nueces. Una porción extra grande para compartir o disfrutar en solitario.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 3
   },
   {
     id: 5,
@@ -74,7 +88,8 @@ const lista_productos = [
     imagen: pieLimon,
     descripcion: "Pie con base crocante, relleno de limón y merengue dorado.",
     descripcion_larga: "El clásico y vibrante Pie de Limón: una base de masa sablée crocante, un relleno suave y ácido de crema de limón natural, coronado con un imponente merengue suizo tostado a la perfección. Un postre ligero y refrescante que equilibra dulzor y acidez.",
-    categoria: "Tartas & Pies" // COINCIDE
+    categoria: "Tartas & Pies",
+    stock: 11
   },
   {
     id: 6,
@@ -83,7 +98,8 @@ const lista_productos = [
     imagen: selvaNegra,
     descripcion: "Bizcocho de chocolate con crema batida y cerezas.",
     descripcion_larga: "La auténtica Torta Selva Negra se compone de capas de bizcocho de chocolate humedecidas con licor de cerezas (Kirsch), intercaladas con crema fresca batida y cerezas ácidas. Una combinación sofisticada de sabores y texturas, ideal para los paladares más exigentes.",
-    categoria: "Tortas & Pasteles" // COINCIDE
+    categoria: "Tortas & Pasteles",
+    stock: 4
   },
   {
     id: 7,
@@ -92,7 +108,8 @@ const lista_productos = [
     precio: 9600,
     imagen: tartaFrambuesa,
     descripcion_larga: "Nuestra Tarta de Frambuesa destaca por su frescura y sencillez. Base de masa dulce rellena de crema pastelera casera, y una cobertura generosa de frambuesas frescas que aportan un toque jugoso y ligeramente ácido. Un postre elegante y ligero para cualquier ocasión.",
-    categoria: "Tartas & Pies" // COINCIDE
+    categoria: "Tartas & Pies",
+    stock: 13 
   },
   {
     id: 8,
@@ -101,7 +118,8 @@ const lista_productos = [
     imagen: tortaMilHojas,
     descripcion: "Capas de masa hojaldrada rellenas de manjar casero.",
     descripcion_larga: "La icónica Torta Milhojas: una estructura de finas y crujientes capas de masa de hojaldre horneada a la perfección, generosamente rellenas con nuestro manjar (dulce de leche) artesanal. Cubierta con azúcar flor, es la favorita de quienes aman el contraste de texturas.",
-    categoria: "Tortas & Pasteles" // COINCIDE
+    categoria: "Tortas & Pasteles",
+    stock: 7
   },
   {
     id: 9,
@@ -110,7 +128,8 @@ const lista_productos = [
     imagen: cupcakes,
     descripcion: "Pack de 6 cupcakes con buttercream de colores.",
     descripcion_larga: "Este Pack de 6 Cupcakes de Vainilla es perfecto para compartir. Cada cupcake tiene un bizcocho suave y aromático de vainilla, coronado con un delicado buttercream de colores vibrantes y frescos. Ideales para fiestas, regalos o un capricho dulce.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 20 
   },
   {
     id: 10,
@@ -119,7 +138,8 @@ const lista_productos = [
     imagen: galletas,
     descripcion: "Galletas de mantequilla con glaseado decorativo.",
     descripcion_larga: "Nuestras Galletas Decoradas son pequeñas obras de arte comestibles. Elaboradas con masa de mantequilla de sabor exquisito y cubiertas con un glaseado real detallado, son perfectas para eventos temáticos, regalos personalizados o simplemente para disfrutar de un dulce con un toque especial.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 15 
   },
   {
     id: 11,
@@ -128,16 +148,18 @@ const lista_productos = [
     imagen: tortaZanahoria,
     descripcion: "Bizcocho húmedo con zanahoria, nueces y crema de queso.",
     descripcion_larga: "La Torta de Zanahoria es un manjar especiado y húmedo. Su bizcocho incorpora zanahoria rallada, nueces y canela, creando un sabor profundo. Está generosamente cubierta y rellena con nuestra suave y ácida crema de queso (cream cheese frosting), contrastando a la perfección.",
-    categoria: "Especialidades & Gourmet" // COINCIDE
+    categoria: "Especialidades & Gourmet",
+    stock: 8 
   },
   {
     id: 12,
-    nombre: "Tarta de Maracuyá",
+    nombre: "Tarta de Maracuya",
     precio: 9000,
     imagen: tartaMaracuya,
     descripcion: "Tarta refrescante con mousse de maracuyá natural.",
     descripcion_larga: "Una opción tropical y ligera: la Tarta de Maracuyá. Cuenta con una base crujiente y está rellena de una aireada mousse hecha con pulpa de maracuyá natural, lo que le otorga un sabor intensamente ácido y refrescante. Perfecta para los días cálidos.",
-    categoria: "Especialidades & Gourmet" // COINCIDE
+    categoria: "Especialidades & Gourmet",
+    stock: 12 
   },
   {
     id: 13,
@@ -146,7 +168,8 @@ const lista_productos = [
     imagen: tortaChocolate,
     descripcion: "Torta de bizcocho de cacao y crema de chocolate artesanal.",
     descripcion_larga: "La indulgencia pura en nuestra Torta de Chocolate. Capas de bizcocho de cacao oscuro y húmedo, intercaladas con una rica y sedosa crema de chocolate artesanal. Un postre profundo e intenso, garantizando una experiencia de sabor inolvidable para los verdaderos amantes del cacao.",
-    categoria: "Tortas & Pasteles" // COINCIDE
+    categoria: "Tortas & Pasteles",
+    stock: 11 
   },
   {
     id: 14,
@@ -156,7 +179,8 @@ const lista_productos = [
     descripcion:
       "Galletas suaves sabor red velvet con chips de chocolate blanco.",
     descripcion_larga: "Nuestras Red Velvet Cookies son suaves y masticables por dentro, con el distintivo color rojo terciopelo y un toque sutil a cacao. Están cargadas de chips de chocolate blanco, lo que añade un contraste cremoso y dulce a esta galleta tan popular.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 17 
   },
   {
     id: 15,
@@ -165,9 +189,10 @@ const lista_productos = [
     imagen: bananaMuffins,
     descripcion: "Muffins esponjosos de plátano con trocitos de nuez.",
     descripcion_larga: "Los Banana Muffins son la opción ideal para un desayuno o merienda reconfortante. Son increíblemente esponjosos, hechos con plátanos maduros para un dulzor natural y salpicados con trocitos de nuez que añaden un crunch delicioso. Un clásico casero y nutritivo.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 16 
   },
-  // --- 10 Productos Nuevos Añadidos ---
+
   {
     id: 16,
     nombre: "Tiramisú Clásico",
@@ -175,7 +200,8 @@ const lista_productos = [
     imagen: tiramisu,
     descripcion: "Postre italiano de mascarpone, café y bizcochos de soletilla.",
     descripcion_larga: "Auténtico Tiramisú italiano, con capas de cremoso queso mascarpone, bizcochos de soletilla bañados en café espresso y un toque de licor, espolvoreado con cacao puro. Un postre elegante y con sabor intenso.",
-    categoria: "Especialidades & Gourmet" // COINCIDE
+    categoria: "Especialidades & Gourmet",
+    stock: 9 
   },
   {
     id: 17,
@@ -184,7 +210,8 @@ const lista_productos = [
     imagen: macarons,
     descripcion: "Caja de 10 macarons franceses de sabores variados.",
     descripcion_larga: "Elegante surtido de 10 Macarons franceses. Con su textura crujiente por fuera y suave por dentro, rellenos de ganache o crema de mantequilla en sabores como frambuesa, pistacho, chocolate y vainilla.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 14 
   },
   {
     id: 18,
@@ -193,7 +220,8 @@ const lista_productos = [
     imagen: mousseChocolate,
     descripcion: "Mousse aireada de chocolate 70% cacao en copa.",
     descripcion_larga: "Un postre ligero y decadente. Nuestra Mousse de Chocolate Oscuro está hecha con un 70% de cacao, lo que le confiere un sabor profundo y amargo, con una textura increíblemente aireada y sedosa.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE (Ración individual)
+    categoria: "Individuales & Repostería Fina",
+    stock: 19 
   },
   {
     id: 19,
@@ -202,7 +230,8 @@ const lista_productos = [
     imagen: volcanChocolate,
     descripcion: "Bizcocho de chocolate caliente con centro líquido.",
     descripcion_larga: "El icónico Volcán de Chocolate: un pequeño bizcocho con un exterior firme y un interior fundente de chocolate oscuro que se derrama al cortar. Se recomienda servir con helado de vainilla.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE (Ración individual)
+    categoria: "Individuales & Repostería Fina",
+    stock: 12 
   },
   {
     id: 20,
@@ -211,7 +240,8 @@ const lista_productos = [
     imagen: tartaPecan,
     descripcion: "Tarta tradicional de nueces pecanas y relleno de caramelo.",
     descripcion_larga: "Clásica Tarta de Pecan, con una masa quebrada y un relleno dulce de caramelo denso, cubierto con una abundante capa de nueces pecanas enteras y tostadas. Ideal para los amantes del sabor a nuez.",
-    categoria: "Tartas & Pies" // COINCIDE
+    categoria: "Tartas & Pies",
+    stock: 10 
   },
   {
     id: 21,
@@ -220,7 +250,8 @@ const lista_productos = [
     imagen: lemonCurdCake,
     descripcion: "Torta de vainilla y limón, con relleno de crema ácida de limón.",
     descripcion_larga: "Una Torta húmeda y refrescante. Capas de bizcocho de vainilla intercaladas con un vibrante y ácido *Lemon Curd* (crema de limón) y cubierta con un suave glaseado de limón. Perfecta para días soleados.",
-    categoria: "Tortas & Pasteles" // COINCIDE
+    categoria: "Tortas & Pasteles",
+    stock: 7 
   },
   {
     id: 22,
@@ -229,7 +260,8 @@ const lista_productos = [
     imagen: eclair,
     descripcion: "Masa choux rellena de crema de café y glaseado.",
     descripcion_larga: "Delicados Éclairs hechos con masa *choux* ligera, rellenos de una suave crema pastelera con sabor a café y coronados con un glaseado brillante de moka. Un clásico de la pastelería francesa.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 18 
   },
   {
     id: 23,
@@ -238,7 +270,8 @@ const lista_productos = [
     imagen: rollosCanela,
     descripcion: "Roscas de masa tierna con canela y glaseado de queso crema.",
     descripcion_larga: "Pack de 6 Rollitos de canela (*Cinnamon Rolls*) recién horneadas, suaves y esponjosas, con abundante relleno de azúcar moreno y canela, cubiertas con un cremoso glaseado de queso.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 15 
   },
   {
     id: 24,
@@ -247,7 +280,8 @@ const lista_productos = [
     imagen: PastelImposible,
     descripcion: "Bizcocho de chocolate y flan de caramelo, horneados juntos.",
     descripcion_larga: "El fascinante Pastel Imposible o Chocoflan. Combina una base de bizcocho de chocolate húmedo con una capa superior de flan cremoso de vainilla, bañado en abundante caramelo. Al hornearse, el flan y el pastel invierten sus posiciones, creando un postre mágico y delicioso.",
-    categoria: "Especialidades & Gourmet" // COINCIDE
+    categoria: "Especialidades & Gourmet",
+    stock: 8 
   },
   {
     id: 25,
@@ -256,7 +290,79 @@ const lista_productos = [
     imagen: chocoChips,
     descripcion: "Pack de 4 galletas XL de mantequilla con chips de chocolate.",
     descripcion_larga: "El clásico americano llevado a un nivel superior. Cuatro galletas XL de mantequilla, suaves por dentro y ligeramente crujientes por fuera, con una dosis extra de chips de chocolate semi-amargo que se funden en la boca.",
-    categoria: "Individuales & Repostería Fina" // COINCIDE
+    categoria: "Individuales & Repostería Fina",
+    stock: 20 
+  },
+  // 7 nuevos
+  {
+    id: 26,
+    nombre: "Tarta de Tres Chocolates",
+    precio: 14500,
+    imagen: tresChocolates,
+    descripcion: "Tarta con capas de chocolate blanco, con leche y oscuro.",
+    descripcion_larga: "Un postre sin horno y con capas bien definidas: la Tarta Tres Chocolates. Combina una base de galleta de chocolate con mousses de chocolate blanco, con leche y oscuro, creando un degradado de sabor y textura inolvidable. Terminada con virutas de chocolate.",
+    categoria: "Especialidades & Gourmet",
+    stock: 10 
+  },
+  {
+    id: 27,
+    nombre: "Flan de Huevo Casero",
+    precio: 6900,
+    imagen: flanCasero,
+    descripcion: "Flan tradicional cremoso con abundante caramelo líquido.",
+    descripcion_larga: "Nuestro Flan de Huevo Casero es una receta de la abuela: suave, sedoso y con un sabor intenso a vainilla y huevo. Se hornea lentamente al baño maría para lograr una textura perfecta, bañado en un caramelo líquido dorado y abundante.",
+    categoria: "Especialidades & Gourmet",
+    stock: 13 
+  },
+  {
+    id: 28,
+    nombre: "Gofres de Lieja (Pack 4)",
+    precio: 8900,
+    imagen: gofresLiege,
+    descripcion: "Waffles belgas de masa brioche con azúcar perla caramelizada.",
+    descripcion_larga: "Auténticos Gofres de Lieja (Waffles): hechos con una masa brioche fermentada, incorporan trozos de azúcar perla que se caramelizan al hornear, dándoles un exterior crujiente y un interior suave. Perfectos para comer solos o con toppings.",
+    categoria: "Individuales & Repostería Fina",
+    stock: 16 
+  },
+  {
+    id: 29,
+    nombre: "Torta Ópera",
+    precio: 15000,
+    imagen: operaCake,
+    descripcion: "Clásico pastel francés de almendra, café y ganache de chocolate.",
+    descripcion_larga: "La elegante Torta Ópera es un postre de origen francés compuesto por capas de bizcocho Joconde (almendra), jarabe de café, crema de mantequilla de café y una rica ganache de chocolate, todo cubierto con un glaseado de chocolate brillante.",
+    categoria: "Tortas & Pasteles",
+    stock: 7 
+  },
+  {
+    id: 30,
+    nombre: "Scone de Arándanos",
+    precio: 4500,
+    imagen: sconeArandanos,
+    descripcion: "Panecillo inglés suave con arándanos frescos.",
+    descripcion_larga: "Scone de Arándanos tradicionalmente horneado: un panecillo ligeramente dulce, de textura tierna por dentro y dorada por fuera, relleno de arándanos jugosos. Ideal para acompañar el té con crema y mermelada.",
+    categoria: "Individuales & Repostería Fina",
+    stock: 19 
+  },
+  {
+    id: 31,
+    nombre: "Palmeritas de Chocolate (Pack 6)",
+    precio: 6000,
+    imagen: palmeraChocolate,
+    descripcion: "Palmeras de hojaldre crujiente cubiertas de chocolate.",
+    descripcion_larga: "Un clásico de la panadería, nuestras Palmeritas están hechas con hojaldre ultra crujiente y con una capa generosa de chocolate con leche. Su forma de corazón y su textura aireada las hacen irresistibles.",
+    categoria: "Individuales & Repostería Fina",
+    stock: 17 
+  },
+  {
+    id: 32,
+    nombre: "Pastel de Queso y Guayaba",
+    precio: 10800,
+    imagen: pastelGuayaba,
+    descripcion: "Cheesecake tropical con mermelada y trozos de guayaba.",
+    descripcion_larga: "Una fusión tropical. Este pastel combina la cremosidad de un cheesecake horneado con la dulzura y el ligero toque ácido de la guayaba. Con una base de galleta y una cobertura de mermelada y trozos de fruta.",
+    categoria: "Tartas & Pies",
+    stock: 11 
   },
 ];
 

@@ -1,25 +1,27 @@
 import React, { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
 import CardProductos from '../components/CardProductos';
-import lista_productos from '../data/dataProductos';
+import { useProductos } from '../context/InventarioContext';
 import Buscador from '../components/Buscador';
-import '../styles/base.css'; 
-import '../styles/cardProducto.css'; 
+import '../styles/base.css';
+import '../styles/cardProducto.css';
 import '../styles/detalle.css';
 
-export default function Productos(){
-  const [filtro, setFiltro] = useState(""); // estado para lo qeu viene desntro del buscador
+export default function Productos() {
+  const [filtro, setFiltro] = useState("");
+  const { productos } = useProductos(); // usa los productos del context
+
 
   const productosFiltrados = useMemo(() => { // memo es paara que no recalcule cada cosa 
-    if (!filtro) return lista_productos;
+    if (!filtro) return productos;
+
     const q = filtro.toLowerCase();
-    return lista_productos.filter(
+    return productos.filter(
       (p) =>
         (p.nombre && p.nombre.toLowerCase().includes(q)) ||
         (p.descripcion && p.descripcion.toLowerCase().includes(q)) ||
         (p.descripcion_larga && p.descripcion_larga.toLowerCase().includes(q))
     );
-  }, [filtro]);
+  }, [filtro, productos]);
 
   return (
 
@@ -35,17 +37,22 @@ export default function Productos(){
       />
 
 
-<div className="productos-grid">
+<div className="productos-grid-productos">
         {productosFiltrados.map((producto) => (
           <div key={producto.id}>
             <CardProductos producto={producto} />
           </div>
         ))}
       </div>
+
+      {productosFiltrados.length === 0 && (
+        <div className="text-center mt-5">
+          <p>No se encontraron productos que coincidan con "{filtro}"</p>
+        </div>
+      )}
     </div>
   );
 }
-
 
 
 

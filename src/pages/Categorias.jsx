@@ -46,7 +46,7 @@ export default function Categorias() {
       {categoriaSeleccionada && (
         <div className="productos-por-categoria">
           <h2 className="subtitulo-categoria">{categoriaSeleccionada}</h2>
-          <div className="productos-grid">
+          <div className="productos-grid-categoria">
             {productosFiltrados.map((producto) => (
               <CardProductos key={producto.id} producto={producto} />
             ))}

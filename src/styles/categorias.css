@@ -70,7 +70,7 @@
   font-weight: 600;
 }
 
-.productos-grid {
+.productos-grid-categoria {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
