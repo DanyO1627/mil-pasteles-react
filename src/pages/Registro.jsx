@@ -172,7 +172,6 @@ export default function Registro() {
               </select>
             </div>
           </div>
-
           <div className="actions">
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
