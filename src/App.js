@@ -9,6 +9,7 @@ import Chat from "./components/Chat.jsx";
 import Registro from "./pages/Registro.jsx";
 import Nosotros from "./pages/Nosotros.jsx";
 import Contacto from "./pages/Contacto.jsx";
+import Carrito from "./pages/Carrito.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/contacto" element={<Contacto/>}/>
+        <Route path="/carrito" element={<Carrito/>}/>
       </Routes>
 
       <Footer/>
