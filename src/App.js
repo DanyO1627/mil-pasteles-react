@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import { CarritoProvider } from "./pages/CarritoContext";
+
 //components
 import NavBar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -14,6 +16,7 @@ import Carrito from "./pages/Carrito.jsx";
 function App() {
   return (
     <BrowserRouter>
+    <CarritoProvider>
       <NavBar/>
       <Routes>
         <Route path="/registro" element={<Registro />} />
@@ -24,6 +27,7 @@ function App() {
 
       <Footer/>
       <Chat/>
+    </CarritoProvider>
     </BrowserRouter>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useCarrito } from '../pages/CarritoContext';
 import { useNavigate } from 'react-router-dom';
-import '../styles/base.css';
+import '../styles/style.css';
 
 export default function Carrito() {
   const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal } = useCarrito();
