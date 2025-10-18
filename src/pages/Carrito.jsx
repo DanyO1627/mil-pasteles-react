@@ -9,7 +9,7 @@ export default function Carrito() {
 
   if (carrito.length === 0) {
     return (
-      <div className="container mt-5 text-center">
+      <div className="carrito-vacio">
         <h2>Tu carrito está vacío</h2>
         <p className="text-muted">¡Agrega algunos productos deliciosos!</p>
         <button className="btn btn-danger mt-3" onClick={() => navigate('/')}>

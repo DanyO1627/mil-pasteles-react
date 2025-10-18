@@ -103,10 +103,11 @@ export default function Registro() {
       id: "USR" + Date.now(),
       nombre,
       email,
+      clave:clave1,
       region,
       comuna,
       estado: estadoAleatorio,
-      monto: 0
+      monto:0
     };
 
     // Obtener lista y guardar
@@ -119,7 +120,7 @@ export default function Registro() {
 
     // Redirección
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "/";
     }, 1000);
   };
 
