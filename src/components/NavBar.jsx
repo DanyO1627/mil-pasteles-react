@@ -15,9 +15,11 @@ export default function NavBar() {
         <nav className="menu" aria-label="principal">
           <NavLink to="/">Home</NavLink>
           <Link className="nav-link" to="/productos">Productos</Link>
+          <Link className="nav-link" to="/categorias">Categorías</Link>
           <a href="#nosotros">Nosotros</a>
           <Link className="nav-link" to="/blogs">Blogs</Link>
           <a href="#contacto">Contacto</a>
+          
         </nav>
 
         <div className="cta">

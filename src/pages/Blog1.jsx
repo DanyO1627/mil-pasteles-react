@@ -1,7 +1,5 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
 import {  useNavigate } from "react-router-dom";
-
 import "../styles/blogs.css"; 
 import matthei from "../assets/matthei1.jpeg";
 

@@ -14,6 +14,7 @@ import '../src/styles/cardProducto.css'
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Categorias from './pages/Categorias';
 
 
 
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blog1" element={<Blog1 />} />
             <Route path="/blog2" element={<Blog2 />} />
+            <Route path="/categorias" element={<Categorias />} />
           </Routes>
         </main>
         <Footer />
