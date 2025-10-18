@@ -6,54 +6,40 @@ export default function Contacto() {
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
     const [contenido, setContenido] = useState("");
-    const [mensaje, setMensaje] = useState(null); // para mostrar errores o éxito
+    const [mensaje, setMensaje] = useState(null);
 
     const validarFormulario = () => {
         const errores = [];
 
-        // Validar nombre
-        if (nombre.trim() === "") {
-            errores.push("El nombre no puede estar vacío.");
-        }
+        if (nombre.trim() === "") errores.push("El nombre no puede estar vacío.");
+        if (!email.includes("@")) errores.push("El correo electrónico no es válido.");
+        if (contenido.trim() === "") errores.push("El mensaje no puede estar vacío.");
 
-        // Validar correo
-        if (!email.includes("@")) {
-            errores.push("El correo electrónico no es válido.");
-        }
-
-        // Validar contenido
-        if (contenido.trim() === "") {
-            errores.push("El mensaje no puede estar vacío.");
-        }
-
-        // Mostrar mensajes
         if (errores.length > 0) {
-            setMensaje({
-                tipo: "error",
-                texto: errores,
-            });
+            setMensaje({ tipo: "error", texto: errores });
         } else {
-            setMensaje({
-                tipo: "exito",
-                texto: ["✅ Envío exitoso"],
-            });
-
-            // Opcional: limpiar los campos después del envío
+            setMensaje({ tipo: "exito", texto: ["✅ Envío exitoso"] });
             setNombre("");
             setEmail("");
             setContenido("");
+            // Redirección
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
         }
     };
-    return (
-        <main className="contacto-page">
-            <img src={logo} alt="Logo de la tienda" className="logo-formulario-img" />
-            <h1>Pastelería Mil Sabores</h1>
 
-            <div className="container mt-5">
-                {/* Mensajes dinámicos */}
+    return (
+        <main className="contacto-wrapper">
+            <img src={logo} alt="Logo de la tienda" className="contacto-logo" />
+            <h1 className="contacto-titulo">Pastelería Mil Sabores</h1>
+
+            <div className="contacto-contenedor">
                 {mensaje && (
                     <div
-                        className={`alert ${mensaje.tipo === "error" ? "alert-danger" : "alert-success"
+                        className={`contacto-alert ${mensaje.tipo === "error"
+                                ? "contacto-alert-error"
+                                : "contacto-alert-exito"
                             }`}
                     >
                         <ul>
@@ -65,46 +51,38 @@ export default function Contacto() {
                 )}
 
                 <form
+                    className="contacto-formulario"
                     onSubmit={(e) => {
-                        e.preventDefault(); // evita recargar la página
+                        e.preventDefault();
                         validarFormulario();
                     }}
                 >
-                    <h2 className="mb-4">Formulario de Contacto</h2>
+                    <h2 className="contacto-subtitulo">Formulario de Contacto</h2>
 
-                    <div className="mb-3">
-                        <label htmlFor="nombre" className="form-label">
-                            Nombre completo
-                        </label>
+                    <div className="contacto-campo">
+                        <label htmlFor="nombre">Nombre completo</label>
                         <input
                             type="text"
                             id="nombre"
-                            className="form-control"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                         />
                     </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">
-                            Correo electrónico
-                        </label>
+                    <div className="contacto-campo">
+                        <label htmlFor="email">Correo electrónico</label>
                         <input
                             type="email"
                             id="email"
-                            className="form-control"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="contenido" className="form-label">
-                            Contenido
-                        </label>
+                    <div className="contacto-campo">
+                        <label htmlFor="contenido">Contenido</label>
                         <textarea
                             id="contenido"
-                            className="form-control"
                             rows="6"
                             placeholder="Escribe tu mensaje aquí..."
                             value={contenido}
@@ -112,11 +90,11 @@ export default function Contacto() {
                         ></textarea>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="contacto-boton">
                         Enviar
                     </button>
                 </form>
             </div>
         </main>
-    )
+    );
 }

@@ -18,39 +18,39 @@ export default function Registro() {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
     Tarapaca: ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
     Antofagasta: ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
-    Atacama:["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
-    Coquimbo:["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
+    Atacama: ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+    Coquimbo: ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
     Valparaiso: ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache", "Olmué", "Villa Alemana"],
     Metropolitana: ["Santiago", "Puente Alto", "Maipú", "Las Condes", "La Florida", "Vitacura", "Ñuñoa", "Recoleta", "Providencia", "La Cisterna", "Pudahuel", "San Bernardo", "Renca", "La Granja", "Cerro Navia", "Estación Central", "Lo Prado", "Macul", "Peñalolén", "San Miguel", "Pedro Aguirre Cerda", "La Pintana", "Quilicura", "Lo Espejo", "El Bosque", "Huechuraba", "Lo Barnechea", "San Joaquín", "Maipú", "La Reina", "Ñuñoa", "Vitacura"],
     Libertador: ["Rancagua", "San Fernando", "Rengo", "Pichidegua", "Peumo", "Las Cabras", "Mostazal", "Codegua", "Requínoa", "Coltauco", "Graneros", "Machalí", "Olivar", "Pichidegua", "Peumo", "Las Cabras", "Mostazal", "Codegua", "Requínoa", "Coltauco", "Graneros", "Machalí", "Olivar"],
     Maule: ["Talca", "Curicó", "Linares", "San Javier", "Parral", "Retiro", "Villa Alegre", "San Clemente", "Yerbas Buenas", "Colbún", "Longaví", "Cauquenes", "Pelluhue", "Chanco", "Constitución", "Empedrado", "Maule", "San Rafael", "Río Claro", "San Clemente", "San Javier", "Colbún", "Longaví", "Parral", "Retiro", "Villa Alegre", "Yerbas Buenas", "Colbún", "Longaví", "Parral", "Retiro", "Villa Alegre", "Yerbas Buenas"],
     Ñuble: ["Chillán", "Bulnes", "Cobquecura", "Coelemu", "Coihueco", "Chillán Viejo", "El Carmen", "Ninhue", "Ñiquén", "Pemuco", "Pinto", "Portezuelo", "Quillón", "Quirihue", "Ránquil", "San Carlos", "San Fabián", "San Ignacio", "San Nicolás", "Treguaco"],
     BioBio: ["Concepción", "Talcahuano", "Penco", "Tomé", "Florida", "Hualpén", "Hualqui", "Santa Juana", "Lota", "Coronel", "San Pedro de la Paz", "Chiguayante", "Los Ángeles", "Cabrero", "Mulchén", "Nacimiento", "Laja", "San Rosendo", "Yumbel", "Alto Biobío", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "San Rosendo", "Yumbel", "Alto Biobío", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "San Rosendo", "Yumbel"],
-    Araucania:["Temuco", "Villarrica", "Angol",
+    Araucania: ["Temuco", "Villarrica", "Angol",
       "Victoria", "Traiguén", "Curacautín",
-      "Lonquimay", "Carahue", "Saavedra", 
-      "Pitrufquén", "Freire", "Gorbea", 
-      "Loncoche", "Pucón", "Vilcún", 
-      "Perquenco", "Melipeuco", "Cholchol", 
-      "Toltén", "Teodoro Schmidt", "Nueva Imperial", 
-      "Lautaro","Cunco","Padre Las Casas",
-      "Galvarino","Collipulli","Ercilla",
-      "Lonquimay","Los Sauces", "Lumaco",
-      "Purén","Reinaco"],
-    Rios:["Valdivia", "La Unión","Panguipulli","Futrono","Río Bueno",
-      "Lago Ranco", "Corral", "Paillaco","Máfil","Lanco","Mariquina","Los Lagos"],
-    Lagos:["Puerto Montt", "Osorno","Ancud","Calbuco",
-      "Castro","Chaitén","Chonchi","Cochamó", "Curaco de Vélez",
-      "Dalcahue","Frutillar","Fresia","Futaleufú","Hualaihué",
-      "Llanquihue","Los Muermos", "Maullín","Palena","Puerto Octay",
-      "Puerto Varas", "Puqueldón","Purranque","Puyehue","Queilén",
-      "Quemchi","Quellón","Quinchao","Río Negro","San Juan de la Costa",
+      "Lonquimay", "Carahue", "Saavedra",
+      "Pitrufquén", "Freire", "Gorbea",
+      "Loncoche", "Pucón", "Vilcún",
+      "Perquenco", "Melipeuco", "Cholchol",
+      "Toltén", "Teodoro Schmidt", "Nueva Imperial",
+      "Lautaro", "Cunco", "Padre Las Casas",
+      "Galvarino", "Collipulli", "Ercilla",
+      "Lonquimay", "Los Sauces", "Lumaco",
+      "Purén", "Reinaco"],
+    Rios: ["Valdivia", "La Unión", "Panguipulli", "Futrono", "Río Bueno",
+      "Lago Ranco", "Corral", "Paillaco", "Máfil", "Lanco", "Mariquina", "Los Lagos"],
+    Lagos: ["Puerto Montt", "Osorno", "Ancud", "Calbuco",
+      "Castro", "Chaitén", "Chonchi", "Cochamó", "Curaco de Vélez",
+      "Dalcahue", "Frutillar", "Fresia", "Futaleufú", "Hualaihué",
+      "Llanquihue", "Los Muermos", "Maullín", "Palena", "Puerto Octay",
+      "Puerto Varas", "Puqueldón", "Purranque", "Puyehue", "Queilén",
+      "Quemchi", "Quellón", "Quinchao", "Río Negro", "San Juan de la Costa",
       "San Pablo"],
-    Aysen:["Coyhaique", "Aysén","Cisnes","Guaitecas","Lago Verde",
-      "Coyhaique","Río Ibáñez","Chile Chico","Cochrane","O'Higgins","Tortel"],
-    Magallanes:["Punta Arenas", "Puerto Natales","Río Verde","San Gregorio",
-    "Laguna Blanca","Porvenir","Primavera","Timaukel","Natales",
-    "Cabo de Hornos","Antártica"]
+    Aysen: ["Coyhaique", "Aysén", "Cisnes", "Guaitecas", "Lago Verde",
+      "Coyhaique", "Río Ibáñez", "Chile Chico", "Cochrane", "O'Higgins", "Tortel"],
+    Magallanes: ["Punta Arenas", "Puerto Natales", "Río Verde", "San Gregorio",
+      "Laguna Blanca", "Porvenir", "Primavera", "Timaukel", "Natales",
+      "Cabo de Hornos", "Antártica"]
     // puedes agregar las demás regiones...
   };
 
@@ -93,6 +93,10 @@ export default function Registro() {
       return;
     }
 
+    // Generar estado aleatorio
+    const estados = ["Completado", "Pendiente", "Cancelado"];
+    const estadoAleatorio = estados[Math.floor(Math.random() * estados.length)];
+
     // Crear nuevo usuario
     const nuevoUsuario = {
       fecha: new Date().toISOString().slice(0, 10),
@@ -101,7 +105,7 @@ export default function Registro() {
       email,
       region,
       comuna,
-      estado: "Pendiente",
+      estado: estadoAleatorio,
       monto: 0
     };
 
