@@ -17,7 +17,7 @@ import AdminHome from './pagesAdmin/AdminHome';
 import PanelProductos from './pagesAdmin/PanelProductos';
 import ProductosCriticosAdmin from './pagesAdmin/ProductosCriticos';
 import EditarProducto from './pagesAdmin/EditarProducto'; // provisorio mio
-// falta  reportes
+import Reportes from './pagesAdmin/Reportes';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../src/styles/base.css'
@@ -49,11 +49,12 @@ export default function App() {
 
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/panel/productos" element={<PanelProductos />} />
-            <Route path="/admin/criticos" element={<ProductosCriticosAdmin />} />
+            <Route path="/criticos" element={<ProductosCriticosAdmin />} />
             <Route path="/admin/editar/:id" element={<EditarProducto />} />
+            <Route path="/reportes" element={<Reportes />} />
             
-            <Route path="/admin/productos/criticos" element={<div>Críticos - (pendiente)</div>} />
-            <Route path="/admin/reportes" element={<div>Reportes - (pendiente)</div>} />
+            
+            
 
 
           </Routes>

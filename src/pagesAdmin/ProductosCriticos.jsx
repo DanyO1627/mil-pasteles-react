@@ -29,7 +29,7 @@ export default function ProductosCriticosAdmin() {
         </button>
         <button 
           className="btn btn-outline-info" 
-          onClick={() => navigate("/admin/reportes")}
+          onClick={() => navigate("/reportes")}
         >
           📊 Ver reportes
         </button>

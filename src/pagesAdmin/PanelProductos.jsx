@@ -1,4 +1,3 @@
-// src/pagesAdmin/PanelProductos.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../context/InventarioContext";
@@ -15,12 +14,12 @@ export default function PanelProductos() {
     p.nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // Función para editar lleva a pag editar
+  // llevar a pag especifica del id
   const handleEditar = (id) => {
     navigate(`/admin/editar/${id}`);
   };
 
-  //Función para eliminar (con confirmación)
+  // eliminar y confimar
   const handleEliminar = (id) => {
     const producto = productos.find((p) => p.id === id);
     const confirmar = window.confirm(
@@ -35,15 +34,15 @@ export default function PanelProductos() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      {/* Header */}
+      
       <div style={{ marginBottom: "30px" }}>
         <h2>📦 Panel de Productos</h2>
         <p style={{ color: "#666" }}>
-          Gestiona el inventario completo de tu pastelería
+          Gestión de inventario - Pastelería Mil Sabores
         </p>
       </div>
 
-      {/* Acciones superiores */}
+      {/* BOTONES SUPERIORES*/}
       <div style={{ 
         display: "flex", 
         gap: "15px", 
@@ -63,11 +62,12 @@ export default function PanelProductos() {
         >
           ← Volver al inicio
         </button>
+
         <button
-          onClick={() => navigate("/admin/criticos")}
+          onClick={() => navigate("/criticos")}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#dc3545",
+            backgroundColor: "#a1555cff",
             color: "white",
             border: "none",
             borderRadius: "4px",
@@ -76,11 +76,12 @@ export default function PanelProductos() {
         >
           📉 Ver productos críticos
         </button>
+
         <button
           onClick={() => alert("Función de agregar producto en desarrollo")}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#28a745",
+            backgroundColor: "#897176",
             color: "white",
             border: "none",
             borderRadius: "4px",
@@ -89,13 +90,28 @@ export default function PanelProductos() {
         >
           Agregar producto
         </button>
+
+        <button
+          onClick={() => navigate("/reportes")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#734a4a",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer"
+          }}
+        >
+          🧮 Reportes de inventario
+        </button>
+
       </div>
 
       {/* Buscador */}
       <div style={{ marginBottom: "25px" }}>
         <input
           type="text"
-          placeholder="🔍 Buscar productos por nombre..."
+          placeholder="Buscar productos por nombre..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
           style={{
