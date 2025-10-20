@@ -3,6 +3,7 @@ import PasteleriaImg from "../assets/Pasteleria Imagen.png";
 import FundadoraImg from "../assets/Fundadora y Chef principal.png";
 import PasteleroImg from "../assets/Pastelero Principal.png";
 import DisenadoraImg from "../assets/Diseñadora de Pasteles.png";
+import "../styles/style.css";
 
 export default function Nosotros() {
   return (

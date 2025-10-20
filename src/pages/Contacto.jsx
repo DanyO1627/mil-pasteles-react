@@ -24,7 +24,7 @@ export default function Contacto() {
             setContenido("");
             // Redirección
             setTimeout(() => {
-                window.location.href = "index.html";
+                window.location.href = "/";
             }, 1000);
         }
     };
