@@ -11,9 +11,21 @@ export function ProductosProvider({ children }) {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        return JSON.parse(stored);
+        const productosGuardados = JSON.parse(stored);
+        
+        // validar que tengan id valido
+        const productosValidados = productosGuardados.map(prod => {
+          if (!prod.categoriaId || prod.categoriaId === 0) {
+            console.warn(`⚠️ Producto "${prod.nombre}" sin categoría válida`);
+            return { ...prod, categoriaId: null };
+          }
+          return prod;
+        });
+        
+        return productosValidados;
       }
-      // guardar datos iniciales /1vez
+      
+      // guardar datos iniciales // SI SE EDITA DE DATAPRODUCTOS, TENGO UN BOTON EN GESTIONAR CATEGORIAS
       localStorage.setItem(STORAGE_KEY, JSON.stringify(initialProductos));
       return initialProductos;
     } catch (error) {
@@ -22,7 +34,7 @@ export function ProductosProvider({ children }) {
     }
   });
 
-  // Sincroniza el localStorage
+  // sincroniza el localStorage
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
@@ -37,7 +49,8 @@ export function ProductosProvider({ children }) {
     const nuevoProducto = { 
       ...nuevo, 
       id: Date.now(),
-      stock: nuevo.stock || 0 
+      stock: nuevo.stock || 0,
+      categoriaId: nuevo.categoriaId || null // ✅ ASEGURAR que tenga categoriaId
     };
     setProductos((prev) => [nuevoProducto, ...prev]);
   };
@@ -54,9 +67,9 @@ export function ProductosProvider({ children }) {
     setProductos((prev) => prev.filter((prod) => prod.id !== id));
   };
 
-  // ===== GESTIÓN DE STOCK =====
+  // GESTIOANR STOCK
 
-  // Descontar stock (para compras)
+  // descontar stock cuando se haga compra
   const descontarStock = (id, cantidad = 1) => {
     setProductos((prev) =>
       prev.map((prod) => {
@@ -82,7 +95,7 @@ export function ProductosProvider({ children }) {
     );
   };
 
-// Establecer stock
+  // establecer stock
   const establecerStock = (id, nuevoStock) => {
     setProductos((prev) =>
       prev.map((prod) =>
@@ -90,8 +103,6 @@ export function ProductosProvider({ children }) {
       )
     );
   };
-
- 
 
   // producto por id
   const obtenerProducto = (id) => {
@@ -109,10 +120,31 @@ export function ProductosProvider({ children }) {
     return producto && (producto.stock ?? 0) >= cantidadRequerida;
   };
 
-  // Resetear a datos iniciales
+  //reasignar productos sin categoria
+  const reasignarProductosHuerfanos = (categoriaIdDestino = null) => {
+    let contadorReasignados = 0;
+    setProductos((prev) =>
+      prev.map((prod) => {
+        if (!prod.categoriaId || prod.categoriaId === 0) {
+          contadorReasignados++;
+          return { ...prod, categoriaId: categoriaIdDestino };
+        }
+        return prod;
+      })
+    );
+    return contadorReasignados;
+  };
+
+  // obtener productos sin categoría
+  const productosHuerfanos = () => {
+    return productos.filter((p) => !p.categoriaId || p.categoriaId === 0);
+  };
+
+  // resetear a datos iniciales
   const resetearInventario = () => {
     setProductos(initialProductos);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(initialProductos));
+    alert("✅ Inventario restaurado a valores iniciales");
   };
 
   return (
@@ -128,6 +160,8 @@ export function ProductosProvider({ children }) {
         obtenerProducto,
         productosCriticos,
         hayStock,
+        reasignarProductosHuerfanos, // ✅ NUEVA
+        productosHuerfanos, // ✅ NUEVA
         resetearInventario,
       }}
     >

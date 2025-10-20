@@ -11,6 +11,11 @@ export default function AdminHome() {
       <button className="admin-home__btn" onClick={() => navigate('/admin/panel/productos')}>
         Ir a Panel de Productos
       </button>
+
+      <button className="admin-home__btn" onClick={() => navigate('/admin/categorias')}>
+        Administrar categorias
+      </button>
+
     </div>
   );
 }

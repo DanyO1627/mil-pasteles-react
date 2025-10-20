@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { ProductosProvider } from './context/InventarioContext';
 import { CarritoProvider } from './context/CarritoContext'; 
+import { CategoriasProvider } from './context/CategoriasContext';
 
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
@@ -12,26 +13,32 @@ import Blog1 from "./pages/Blog1";
 import Blog2 from "./pages/Blog2";
 import Blog3 from "./pages/Blog3";
 import Blog4 from "./pages/Blog4";
+import Home from './pages/Home';
+import Categorias from './pages/Categorias';
 
 import AdminHome from './pagesAdmin/AdminHome'; 
 import PanelProductos from './pagesAdmin/PanelProductos';
 import ProductosCriticosAdmin from './pagesAdmin/ProductosCriticos';
 import EditarProducto from './pagesAdmin/EditarProducto'; // provisorio mio
 import Reportes from './pagesAdmin/Reportes';
+import GestionarCategorias from './pagesAdmin/GestionarCategorias';
+import NuevaCategoria from './pagesAdmin/NuevaCategoria';
+import EditarCategoria from './pagesAdmin/EditarCategoria';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../src/styles/base.css'
 import '../src/styles/cardProducto.css'
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Categorias from './pages/Categorias';
+
 
 
 export default function App() {
   return (
+    <CategoriasProvider>
     <ProductosProvider>
     <CarritoProvider>
+
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <NavBar />
         <main style={{ flex: 1 }}>
@@ -52,10 +59,11 @@ export default function App() {
             <Route path="/criticos" element={<ProductosCriticosAdmin />} />
             <Route path="/admin/editar/:id" element={<EditarProducto />} />
             <Route path="/reportes" element={<Reportes />} />
+            <Route path="/admin/categorias" element={<GestionarCategorias />} />
+            <Route path="/admin/categorias" element={<GestionarCategorias />} />
+            <Route path="/admin/categorias/nueva" element={<NuevaCategoria />} />
+            <Route path="/admin/categorias/editar/:id" element={<EditarCategoria />} />
             
-            
-            
-
 
           </Routes>
         </main>
@@ -63,5 +71,7 @@ export default function App() {
       </div>
     </CarritoProvider>
     </ProductosProvider>
+    </CategoriasProvider>
+
   );
 }

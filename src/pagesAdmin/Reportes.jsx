@@ -18,30 +18,30 @@ import "../stylesAdmin/reportes.css";
 
 export default function Reportes() {
   const navigate = useNavigate();
-  const { productos, productosCriticos } = useProductos();
+  const { productos, productosCriticos } = useProductos(); // obteiene los datos del context
 
-  // ========== CÁLCULOS Y ESTADÍSTICAS ==========
+  // Los cálculos
 
   // Total de productos
   const totalProductos = productos.length;
 
   // Valor total del inventario
-  const valorInventario = useMemo(() => {
-    return productos.reduce((sum, p) => sum + p.precio * (p.stock || 0), 0);
+  const valorInventario = useMemo(() => { // memo es react, si ya tiene los datos, no los va a buscar o ocalcular de nuevo
+    return productos.reduce((sum, p) => sum + p.precio * (p.stock || 0), 0); // el total
   }, [productos]);
 
-  // Productos con stock crítico (<=5)
+  // stock crítico (<=5)
   const criticos = productosCriticos(5);
   const totalCriticos = criticos.length;
 
-  // Stock total de todos los productos
+  // stock de todos los productos
   const stockTotal = useMemo(() => {
     return productos.reduce((sum, p) => sum + (p.stock || 0), 0);
   }, [productos]);
 
-  // ========== DATOS PARA GRÁFICAS ==========
+  // DATOS PARA LAS GRÁFICAS
 
-  // 1. Stock por categoría
+  //  stock por categoría -- suma el total y te hace gráfico de barras
   const stockPorCategoria = useMemo(() => {
     const categorias = {};
     productos.forEach((p) => {
@@ -57,7 +57,7 @@ export default function Reportes() {
     }));
   }, [productos]);
 
-  // 2. Distribución de productos por estado de stock
+  // productos por estado de stock
   const distribucionStock = useMemo(() => {
     const sinStock = productos.filter((p) => (p.stock || 0) === 0).length;
     const stockCritico = productos.filter(
@@ -76,7 +76,7 @@ export default function Reportes() {
     ];
   }, [productos]);
 
-  // 3. Top 5 productos más caros
+  // los 5 más caros, los busca y los ordena
   const topCaros = useMemo(() => {
     return [...productos]
       .sort((a, b) => b.precio - a.precio)
@@ -87,7 +87,7 @@ export default function Reportes() {
       }));
   }, [productos]);
 
-  // 4. Valor por categoría (precio * stock)
+  // valor de cada categoría / precio * stock
   const valorPorCategoria = useMemo(() => {
     const categorias = {};
     productos.forEach((p) => {
@@ -147,13 +147,14 @@ export default function Reportes() {
   };
 
 
+
   return (
     <div className="reportes-container">
       {/* ========== HEADER ========== */}
       <div className="reportes-header">
         <h2 className="reportes-title">📊 Panel de Reportes</h2>
         <p className="reportes-subtitle">
-          Análisis completo del inventario de tu pastelería
+          Análisis completo del inventario de pastelería 1000 sabores
         </p>
       </div>
 
@@ -179,7 +180,7 @@ export default function Reportes() {
         </button>
       </div>
 
-      {/* ========== CARDS DE ESTADÍSTICAS ========== */}
+      {/* CARDS ESTADÍSTICAS GENERALES */}
       <div className="reportes-stats-grid">
         <div className="reportes-stat-card reportes-stat-card--primary">
           <div className="reportes-stat-icon">📦</div>
