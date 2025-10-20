@@ -1,0 +1,79 @@
+/* SOLO LO QUE LE AFECTA A LOS PRODUCTOS */
+
+/* esto dice: que ocupe el ancho de la tarjeta, que la altura sea la misma para todas las fotos, 
+qe recorte la imagen sin deformarla y que las esquinas vayan redonditas, y esto como es de bootstrap, se 
+aplica automáticamente para todas las imagnes.*/
+.card-img-top { 
+    width:100%; 
+    height:220px; 
+    object-fit:cover; 
+    border-radius:8px; 
+}
+
+/* este es solo para las imagenes de las tarjetas: le saca el borde gris de bootstrap, 
+esquinas suaves, si algo sale del cuadro, lo recorta, le da una animación al pasar el mouse*/
+.card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* le da un toque  la animación, se levanta un poquito y le da una sombra */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card-container {
+  display: flex; /* Activa Flexbox */
+  align-items: flex-start; /* Alinea los ítems al inicio (arriba) */
+  gap: 20px; /* Añade un espacio de separación entre la imagen y el bloque de texto */
+  /* Puedes ajustar el 'gap' (20px) a tu gusto para el 'mínimo separado' */
+}
+
+/* 3. Contenedor del texto: agrupa el título y la descripción */
+.text-content {
+  display: flex; /* Activa Flexbox para su contenido */
+  flex-direction: column; /* Organiza el título y descripción en una columna */
+  /* El contenido se ajustará al espacio disponible al lado de la imagen */
+}
+
+.card-title {
+  color: var(--text);
+  font-weight: 600;
+  margin-top: 0; /* Elimina margen superior para alinearlo al borde */
+  text-align: left; /* Asegura que comience a la izquierda */
+}
+
+.card-text-descrip {
+  color: #7a6769;
+  font-size: 1.2rem;
+  margin-top: 5px; /* Pequeño espacio entre título y descripción */
+  text-align: left; /* Asegura que comience a la izquierda */
+}
+
+/* .card-title {
+  color: var(--text);
+  font-weight: 600;
+} */
+
+.card-text {
+  color: #7a6769;
+  font-size: 0.9rem;
+}
+
+/* .card-text-descrip {
+  color: #7a6769;
+  font-size: 1.2rem;
+} */
+
+
+.productos-grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+}

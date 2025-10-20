@@ -1,0 +1,27 @@
+/* src/styles/buscador.css */
+
+.buscador-class {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.buscador-input {
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 10px 12px;
+}
+
+#clear-search {
+  border-radius: 10px;
+  background: var(--accent-strong);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  transition: background .2s;
+}
+
+#clear-search:hover {
+  background: var(--accent);
+}

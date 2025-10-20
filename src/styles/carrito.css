@@ -1,0 +1,46 @@
+/* --- Estructura general --- */
+.carrito-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.carrito-container .col-md-6 {
+  flex: 1;
+}
+
+/* --- lado derecho (carrito) --- */
+.carrito-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* --- lado izquierdo(productos) --- */
+.productos-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.producto-mini {
+  transition: transform 0.2s ease;
+}
+
+.producto-mini:hover {
+  transform: scale(1.02);
+}
+
+.mini-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.carrito-titulo {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 100rem;
+}

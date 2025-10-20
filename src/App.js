@@ -18,26 +18,36 @@ import IniciarSesion from "./pages/IniciarSesion.jsx";
 import Boleta from "./pages/admin/Boleta.jsx"
 import OrdenCompra from "./pages/admin/OrdenCompra.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
+import Blogs from "./pages/Blogs";
+import Blog1 from "./pages/Blog1";
+import Blog2 from "./pages/Blog2";
+import Blog3 from "./pages/Blog3";
+import Blog4 from "./pages/Blog4";
 
 function App() {
   return (
     <CarritoProvider>
-      <NavBar/>
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/boleta" element={<Boleta />} />
-        <Route path="/ordenCompra" element={<OrdenCompra/>}/>
+        <Route path="/ordenCompra" element={<OrdenCompra />} />
         <Route path="/ofertas" element={<Ofertas />} />
         <Route path="/iniciar-sesion" element={<IniciarSesion />} />
         <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/contacto" element={<Contacto/>}/>
-        <Route path="/carrito" element={<Carrito/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog1" element={<Blog1 />} />
+        <Route path="/blog2" element={<Blog2 />} />
+        <Route path="/blog3" element={<Blog3 />} />
+        <Route path="/blog4" element={<Blog4 />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
 
-      <Footer/>
-      <Chat/>
+      <Footer />
+      <Chat />
     </CarritoProvider>
   );
 }

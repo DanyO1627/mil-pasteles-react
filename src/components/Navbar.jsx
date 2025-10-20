@@ -18,7 +18,7 @@ export default function NavBar() {
           <a href="#productos">Productos</a>
           <a href="#categorias">Categorias</a>
           <NavLink to="/nosotros">Nosotros</NavLink>
-          <a href="#blog">Blog</a>
+          <NavLink to="/blogs">Blog</NavLink>
           <NavLink to="/contacto">Contacto</NavLink>
         </nav>
 
