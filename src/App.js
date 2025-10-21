@@ -35,8 +35,8 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <CategoriasProvider>
     <ProductosProvider>
+    <CategoriasProvider>    
     <CarritoProvider>
 
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -70,8 +70,8 @@ export default function App() {
         <Footer />
       </div>
     </CarritoProvider>
-    </ProductosProvider>
     </CategoriasProvider>
+    </ProductosProvider>
 
   );
 }
