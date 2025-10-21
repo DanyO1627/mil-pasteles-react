@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import { CarritoProvider } from "./pages/CarritoContext";
+import { ProductosProvider } from "./context/InventarioContext.jsx";
+import { CategoriasProvider } from "./context/CategoriasContext.jsx";
 
 //components
 import NavBar from "./components/Navbar.jsx";
@@ -26,6 +28,8 @@ import Blog4 from "./pages/Blog4";
 import Categorias from "./pages/Categorias.jsx";
 function App() {
   return (
+    <CategoriasProvider>
+    <ProductosProvider>
     <CarritoProvider>
       <NavBar />
       <Routes>
@@ -50,6 +54,8 @@ function App() {
       <Footer />
       <Chat />
     </CarritoProvider>
+    </ProductosProvider>
+    </CategoriasProvider>
   );
 }
 
