@@ -1,4 +1,3 @@
-
 import "../styles/style.css";
 import { Link, NavLink } from "react-router-dom";
 import CartBadge from "./NavbarCartBadge.jsx";  
@@ -16,7 +15,7 @@ export default function NavBar() {
         <nav className="menu" aria-label="principal">
           <NavLink to="/">Home</NavLink>
           <a href="#productos">Productos</a>
-          <a href="#categorias">Categorias</a>
+          <NavLink to="/categorias">Categorias</NavLink>
           <NavLink to="/nosotros">Nosotros</NavLink>
           <NavLink to="/blogs">Blog</NavLink>
           <NavLink to="/contacto">Contacto</NavLink>

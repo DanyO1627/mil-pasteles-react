@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/blogs.css"; 
-import matthei from "../assets/matthei1.jpeg";
-import perroTorta from "../assets/foto_perro_torta.jpg";
-import tortaMinimalista from "../assets/torta_minimalista.jpg";
+import matthei from "../assets/matthei1.png";
+import perroTorta from "../assets/foto_perro_torta.png";
+import tortaMinimalista from "../assets/torta_minimalista.png";
 import tallerPasteleria from "../assets/taller_pasteleria.png";
 
 export default function Blogs() {

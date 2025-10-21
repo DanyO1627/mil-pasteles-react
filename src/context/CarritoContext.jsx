@@ -15,8 +15,8 @@ export function CarritoProvider({children}) {
     }
 
     setCarrito(prev => [...prev, { ...producto, itemId: Date.now() }]);
-        return true;
-      };
+    return true;
+  };
 
   const eliminarDelCarrito = (itemId) => {
     setCarrito(prev => prev.filter(item => item.itemId !== itemId));
@@ -26,20 +26,19 @@ export function CarritoProvider({children}) {
     setCarrito([]);
   };
 
-
-// Para procesar la compra, DESCUENTA STOCK
+  // para procesar la compra, DESCUENTA STOCK
   const procesarCompra = () => {
     if (carrito.length === 0) {
       return { success: false, message: 'El carrito está vacío' };
     }
 
     try {
-      // Descontar stock de cada producto
+      // descontar stock de cada producto
       carrito.forEach(item => {
         descontarStock(item.id, 1);
       });
 
-      // Vaciar el carrito después de comprar
+      // vaciar el carrito después de comprar
       vaciarCarrito();
 
       return { 
@@ -54,12 +53,11 @@ export function CarritoProvider({children}) {
     }
   };
 
-
   const cantidadTotal = carrito.length;
 
   const precioTotal = carrito.reduce((sum, item) => sum + item.precio, 0);
 
-return (
+  return (
     <CarritoContext.Provider value={{
       carrito,
       agregarAlCarrito,
@@ -80,6 +78,4 @@ export function useCarrito() {
     throw new Error('Error en useCarrito. Se debe usar dentro de CarritoProvider');
   }
   return context;
-
-
 }

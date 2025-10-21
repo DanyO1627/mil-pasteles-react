@@ -1,7 +1,7 @@
 import React from "react";
 import {  useNavigate } from "react-router-dom";
 import "../styles/blogs.css"; 
-import matthei from "../assets/matthei1.jpeg";
+import matthei from "../assets/matthei1.png";
 
 export default function Blog1() {
     const navigate = useNavigate();

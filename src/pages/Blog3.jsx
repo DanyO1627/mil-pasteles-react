@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/blogs.css"; 
-import tortaMinimalista from "../assets/torta_minimalista.jpg";
+import tortaMinimalista from "../assets/torta_minimalista.png";
 
 export default function Blog3() {
     const navigate = useNavigate();

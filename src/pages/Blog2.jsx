@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import {  useNavigate } from "react-router-dom";
 
 import "../styles/blogs.css"; 
-import perroTorta from "../assets/foto_perro_torta.jpg";
+import perroTorta from "../assets/foto_perro_torta.png";
 
 export default function Blog2() {
     const navigate = useNavigate();
