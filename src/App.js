@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
 // Components
 import NavBar from "./components/Navbar.jsx";
@@ -21,6 +22,7 @@ import UsuariosRegistrados from "./pages/UsuariosRegistrados.jsx";
 export default function App() {
   return (
     <>
+    <BrowserRouter>
       <NavBar />
 
       <Routes>
@@ -40,6 +42,7 @@ export default function App() {
 
       <Footer />
       <Chat />
+      </BrowserRouter>
     </>
   );
 }
