@@ -7,7 +7,7 @@ import cheesecake from "../assets/cheesecake.jpg";
 import brownie from "../assets/brownie.webp";
 import pieLimon from "../assets/pie_limon.webp";
 import selvaNegra from "../assets/tarta-selva-negra.jpg";
-import tartaFrambuesa from "../assets/tarta_frambuesa.jpg";
+import tartaFrambuesa from "../assets/tarta_berries2_home.jpg";
 import tortaMilHojas from "../assets/torta mil hojas.jpg";
 import cupcakes from "../assets/cupcakes de vainilla.jpg";
 import galletas from "../assets/Galletas Decoradas.webp";
@@ -44,7 +44,8 @@ import EVE_TortaChocoBlanco from "../assets/EVE_TortaChocoBlanco.jpg";
 import EVE_TortaSanFelipe from "../assets/EVE_TortaSanFelipe.jpeg";
 import Eve_TortaSanDaniela from "../assets/Eve_TortaSanDaniela.png";
 import Eve_TortaChocoyFrutas from "../assets/Eve_TortaChocoyFrutas.png";
-import EVE_TartaFrambuesa from "../assets/EVE_TartaFrambuesa.png";
+// import EVE_TartaFrambuesa from "../assets/EVE_TartaFrambuesa.png";
+import tartaBerries2 from "../assets/tarta_berries2_home.jpg";
 
 
 
@@ -417,7 +418,7 @@ const lista_productos = [
       id: 37,
       nombre: "Tarta de Frambuesa (Grande)",
       precio: 10500,
-      imagen: EVE_TartaFrambuesa,
+      imagen: tartaBerries2,
       descripcion: "Tarta clásica de masa dulce rellena de crema y frambuesas.",
       descripcion_larga: "Versión grande de nuestra popular tarta, con una base de masa sablée tierna, una capa generosa de crema pastelera de vainilla y cubierta totalmente con frambuesas frescas que aportan un toque ácido y muy refrescante. Ideal para compartir.",
       categoriaId: 2, 

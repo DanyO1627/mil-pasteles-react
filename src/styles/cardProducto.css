@@ -77,3 +77,16 @@ esquinas suaves, si algo sale del cuadro, lo recorta, le da una animación al pa
   max-width: 1200px;
   padding: 1rem;
 }
+
+
+.card-body {
+  padding: 16px;
+}
+
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+

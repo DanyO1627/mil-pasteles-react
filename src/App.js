@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { ProductosProvider } from './context/InventarioContext';
 import { CarritoProvider } from './context/CarritoContext'; 
 import { CategoriasProvider } from './context/CategoriasContext';
+import { dataAdministradores } from './data/dataAdministradores'; // no es context, pero es el localstorage de admins
 
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
@@ -15,6 +16,8 @@ import Blog3 from "./pages/Blog3";
 import Blog4 from "./pages/Blog4";
 import Home from './pages/Home';
 import Categorias from './pages/Categorias';
+import Registro from './pages/Registro';
+import IniciarSesion from './pages/IniciarSesion';
 
 import AdminHome from './pagesAdmin/AdminHome'; 
 import PanelProductos from './pagesAdmin/PanelProductos';
@@ -24,6 +27,7 @@ import Reportes from './pagesAdmin/Reportes';
 import GestionarCategorias from './pagesAdmin/GestionarCategorias';
 import NuevaCategoria from './pagesAdmin/NuevaCategoria';
 import EditarCategoria from './pagesAdmin/EditarCategoria';
+import PerfilAdmin from './pagesAdmin/PerfilAdmin';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../src/styles/base.css'
@@ -34,6 +38,14 @@ import Footer from './components/Footer';
 
 
 export default function App() {
+
+// acá estoy inicializando los admin en el localstorage si no existieran
+  React.useEffect(() => {
+    if (!localStorage.getItem("dataAdministradores")) {
+      localStorage.setItem("dataAdministradores", JSON.stringify(dataAdministradores));
+    }
+  }, []);
+
   return (
     <CategoriasProvider>
     <ProductosProvider>
@@ -53,6 +65,8 @@ export default function App() {
             <Route path="/blog3" element={<Blog3 />} />
             <Route path="/blog4" element={<Blog4 />} />
             <Route path="/categorias" element={<Categorias />} />
+            <Route path="/registrarse" element={<Registro />} />
+            <Route path="/iniciar-sesion" element={<IniciarSesion />} />
 
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/panel/productos" element={<PanelProductos />} />
@@ -63,6 +77,7 @@ export default function App() {
             <Route path="/admin/categorias" element={<GestionarCategorias />} />
             <Route path="/admin/categorias/nueva" element={<NuevaCategoria />} />
             <Route path="/admin/categorias/editar/:id" element={<EditarCategoria />} />
+            <Route path="/admin/perfil" element={<PerfilAdmin />} />
             
 
           </Routes>

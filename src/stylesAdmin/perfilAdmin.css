@@ -1,0 +1,275 @@
+/* CONTENEDOR PRINCIPAL */
+.perfil-admin-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fffaf9 0%, #fdebed 100%);
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.perfil-admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* CARD DEL ADMIN  */
+.perfil-admin-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(107, 61, 69, 0.1);
+  padding: 40px;
+  border: 2px solid #f3d1d5;
+}
+
+/* HEADER: FOTO(AVATAR) + NOMBRE */
+.perfil-admin-header {
+  text-align: center;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f3d1d5;
+  margin-bottom: 30px;
+}
+
+.perfil-admin-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #d8a1a7;
+  box-shadow: 0 8px 20px rgba(216, 161, 167, 0.3);
+  margin-bottom: 20px;
+}
+
+.perfil-admin-nombre {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6b3d45;
+  margin: 15px 0 10px 0;
+}
+
+.perfil-admin-rol-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #d8a1a7 0%, #b87f86 100%);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(216, 161, 167, 0.3);
+}
+
+/* INFO DEL PERFIL */
+.perfil-admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.perfil-admin-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #fef9fa;
+  border-radius: 12px;
+  border-left: 4px solid #d8a1a7;
+  transition: all 0.3s ease;
+}
+
+.perfil-admin-info-item:hover {
+  background: #fdebed;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(216, 161, 167, 0.15);
+}
+
+.perfil-admin-info-label {
+  font-weight: 600;
+  color: #6b3d45;
+  font-size: 1rem;
+}
+
+.perfil-admin-info-value {
+  color: #3e2328;
+  font-size: 1rem;
+  text-align: right;
+}
+
+/* BOTONES */
+.perfil-admin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.perfil-admin-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-family: inherit;
+}
+
+.perfil-admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.perfil-admin-btn-secondary {
+  background: #f3d1d5;
+  color: #6b3d45;
+}
+
+.perfil-admin-btn-secondary:hover {
+  background: #e8bec3;
+}
+
+.perfil-admin-btn-dashboard {
+  background: #d8a1a7;
+  color: white;
+}
+
+.perfil-admin-btn-dashboard:hover {
+  background: #c88e95;
+}
+
+.perfil-admin-btn-danger {
+  background: #6b3d45;
+  color: white;
+}
+
+.perfil-admin-btn-danger:hover {
+  background: #532f37;
+}
+
+.perfil-admin-btn-primary {
+  background: #d8a1a7;
+  color: white;
+}
+
+.perfil-admin-btn-primary:hover {
+  background: #c88e95;
+}
+
+/* ========== ESTADÍSTICAS ADICIONALES ========== */
+.perfil-admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 2px solid #f3d1d5;
+}
+
+.perfil-admin-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #fef9fa;
+  border-radius: 12px;
+  border: 1px solid #f3d1d5;
+}
+
+.perfil-admin-stat-icon {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: #fdebed;
+  border-radius: 50%;
+}
+
+.perfil-admin-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-admin-stat-label {
+  font-size: 0.85rem;
+  color: #6b3d45;
+  font-weight: 500;
+}
+
+.perfil-admin-stat-value {
+  font-size: 1.2rem;
+  color: #3e2328;
+  font-weight: 700;
+}
+
+/* ========== PANTALLA SIN SESIÓN ========== */
+.perfil-admin-no-sesion {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(107, 61, 69, 0.1);
+  border: 2px solid #f3d1d5;
+}
+
+.perfil-admin-no-sesion-icono {
+  font-size: 5rem;
+  margin-bottom: 20px;
+}
+
+.perfil-admin-no-sesion-titulo {
+  font-size: 1.8rem;
+  color: #6b3d45;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.perfil-admin-no-sesion-texto {
+  color: #7d5a61;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+/* LA RESPONSIVA (PARA QUE SE PUEDA ADAPTAR A MÁS DE UN TIPO DE PANTALLA) */
+@media (max-width: 768px) {
+  .perfil-admin-wrapper {
+    padding: 20px 15px;
+  }
+
+  .perfil-admin-card {
+    padding: 25px;
+  }
+
+  .perfil-admin-nombre {
+    font-size: 1.6rem;
+  }
+
+  .perfil-admin-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .perfil-admin-info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .perfil-admin-info-value {
+    text-align: left;
+  }
+
+  .perfil-admin-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-admin-nombre {
+    font-size: 1.4rem;
+  }
+
+  .perfil-admin-btn {
+    font-size: 0.95rem;
+    padding: 12px 20px;
+  }
+}

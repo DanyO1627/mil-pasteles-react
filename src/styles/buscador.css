@@ -25,3 +25,31 @@
 #clear-search:hover {
   background: var(--accent);
 }
+
+
+
+/* LOS CSS DE BUSQUEDA DE LA EVE */
+/* === BÚSQUEDA === */
+.search-box {
+  display: flex;
+  justify-content: left; 
+  padding-left: 60px;
+  margin: 1.5rem auto;
+  width: 100%;
+}
+
+.search-input {
+  width: 60%; 
+  max-width: 600px; 
+  padding: 10px 14px;
+  border: 1px solid #6b3d45;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #b25a64;
+  box-shadow: 0 0 6px rgba(210, 100, 120, 0.3);
+}

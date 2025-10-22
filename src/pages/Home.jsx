@@ -1,42 +1,83 @@
-import React from "react";
-import { Link } from 'react-router-dom';
-import '../styles/home.css';
+import { useState } from "react";
+import "../styles/home.css";
+import "../styles/navbar.css";
+import "../styles/footer.css";
+import "../styles/variables.css";
+import "../styles/buscador.css"
+import '../styles/cardProducto.css';
+
+import { useEffect } from "react";
+import CardHomeProducto from "../components/CardHomeProducto";
+import { useProductos } from "../context/InventarioContext"; // esto hace que usemos los productos globales
+
+import chefImg from "../assets/chef.png";
 
 export default function Home() {
+
+
+  // usar los productos
+  const { productos } = useProductos();
+
+  const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
+
+const [query, setQuery] = useState("");
+
+const productosFiltrados = productosHome.filter((p) =>
+  p.nombre.toLowerCase().includes(query.toLowerCase())
+);
+
+  useEffect(() => {
+  console.log("Productos cargados en Home:", productos);
+}, [productos]);
+
+
   return (
-    <div className="home-container">
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>Bienvenidos a Pastelería Mil Sabores</h1>
-          <p className="hero-subtitle">Endulzando tus momentos especiales desde 2010</p>
-          <Link to="/productos" className="btn btn-danger btn-lg">
-            Ver nuestros productos
-          </Link>
-        </div>
-      </section>
+    <main className="home">
+ 
+      <section className="hero">
+  <div className="hero-container">
+    {/* izquierda el titulo*/}
+    <div className="hero-text">
+      <h1>Pastelería Mil Sabores</h1>
+      <p className="lead">Endulza tu día con nuestras tortas artesanales.</p>
 
-      <section id="nosotros" className="info-section">
-        <div className="container">
-          <h2>Sobre Nosotros</h2>
-          <p>Somos una pastelería artesanal con más de 10 años de experiencia.</p>
-        </div>
-      </section>
-
-      <section id="blog" className="info-section">
-        <div className="container">
-          <h2>Blog</h2>
-          <p>Próximamente: recetas, tips y novedades.</p>
-        </div>
-      </section>
-
-      <section id="contacto" className="info-section">
-        <div className="container">
-          <h2>Contacto</h2>
-          <p>📞 Tel: +56 986739543</p>
-          <p>📧 Email: contacto@mil-sabores.cl</p>
-          <p>📍 Av. Providencia 1900, Santiago, Chile</p>
-        </div>
-      </section>
+      
     </div>
+
+    {/* a la derecha*/}
+    <div className="hero-img">
+      <img src={chefImg} alt="Chef pastelero" />
+    </div>
+  </div>
+</section>
+
+
+
+      {/* PRODUCTOS */}
+      <section id="productos" className="container">
+        <h2 className = "container2" > Nuestros productos </h2>
+
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="search-input"
+          />
+        </div>
+
+        {productosFiltrados.length > 0 ? (
+          <div className="grid">
+            {productosFiltrados.map((p) => (
+              <CardHomeProducto key={p.id} producto={p} />
+            ))}
+          </div>
+        ) : (
+          <p className="no-results">No se encontraron productos con ese nombre...</p>
+        )}
+      </section>
+    </main>
   );
 }
+
