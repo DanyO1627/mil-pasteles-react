@@ -1,0 +1,450 @@
+/* CATEGORÍAS ADMIN CSS */
+
+
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.gestion-categorias-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* ========== HEADER ========== */
+.gestion-categorias-header {
+  margin-bottom: 30px;
+}
+
+.gestion-categorias-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.gestion-categorias-subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* ========== ALERTA DE HUÉRFANOS ========== */
+.alerta-huerfanos {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 2px solid #ffc107;
+  border-left: 6px solid #ff9800;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px rgba(255, 152, 0, 0.2);
+  animation: pulseWarning 2s ease-in-out infinite;
+}
+
+@keyframes pulseWarning {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.alerta-huerfanos-contenido {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.alerta-huerfanos-icono {
+  font-size: 2.5rem;
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.alerta-huerfanos-texto {
+  flex: 1;
+}
+
+.alerta-huerfanos-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #856404;
+  margin: 0 0 5px 0;
+}
+
+.alerta-huerfanos-desc {
+  color: #856404;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.alerta-huerfanos-btn {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.alerta-huerfanos-btn:hover {
+  background-color: #f57c00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== BOTONES DE ACCIÓN ========== */
+.gestion-categorias-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.gestion-cat-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.gestion-cat-btn--volver {
+  background-color: #6c757d;
+  color: white;
+}
+
+.gestion-cat-btn--volver:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+.gestion-cat-btn--nueva {
+  background-color: #28a745;
+  color: white;
+}
+
+.gestion-cat-btn--nueva:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.gestion-cat-btn--productos {
+  background-color: #007bff;
+  color: white;
+}
+
+.gestion-cat-btn--productos:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ========== GRID DE CATEGORÍAS ========== */
+.categorias-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* ========== CARD DE CATEGORÍA ========== */
+.categoria-admin-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.categoria-admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+.categoria-admin-card--inactiva {
+  opacity: 0.6;
+  border-color: #dc3545;
+}
+
+.categoria-admin-imagen-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.categoria-admin-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.categoria-admin-card:hover .categoria-admin-imagen {
+  transform: scale(1.1);
+}
+
+.categoria-admin-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.categoria-admin-badge--activa {
+  background-color: #28a745;
+}
+
+.categoria-admin-badge--inactiva {
+  background-color: #dc3545;
+}
+
+.categoria-admin-contenido {
+  padding: 20px;
+}
+
+.categoria-admin-nombre {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.categoria-admin-descripcion {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  min-height: 40px;
+}
+
+.categoria-admin-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+}
+
+.categoria-admin-stat {
+  text-align: center;
+}
+
+.categoria-admin-stat-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.categoria-admin-stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.categoria-admin-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.categoria-admin-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.categoria-admin-btn--editar {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.categoria-admin-btn--editar:hover {
+  background-color: #e0a800;
+  transform: scale(1.05);
+}
+
+.categoria-admin-btn--eliminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.categoria-admin-btn--eliminar:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.categoria-admin-btn--eliminar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ========== MENSAJE VACÍO ========== */
+.categorias-admin-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categorias-admin-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.categorias-admin-empty-text {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* ========== FORMULARIO (Nueva/Editar) ========== */
+.categoria-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.categoria-form-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.categoria-form-group {
+  margin-bottom: 20px;
+}
+
+.categoria-form-label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.categoria-form-input,
+.categoria-form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.categoria-form-input:focus,
+.categoria-form-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.categoria-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.categoria-form-helper {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.categoria-form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.categoria-form-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.categoria-form-btn--guardar {
+  background-color: #28a745;
+  color: white;
+}
+
+.categoria-form-btn--guardar:hover {
+  background-color: #218838;
+}
+
+.categoria-form-btn--cancelar {
+  background-color: #6c757d;
+  color: white;
+}
+
+.categoria-form-btn--cancelar:hover {
+  background-color: #5a6268;
+}
+
+.categoria-form-mensaje {
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.categoria-form-mensaje--exito {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.categoria-form-mensaje--error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .categorias-admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alerta-huerfanos {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .gestion-categorias-actions {
+    flex-direction: column;
+  }
+
+  .gestion-cat-btn {
+    width: 100%;
+  }
+}

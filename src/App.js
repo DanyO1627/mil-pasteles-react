@@ -26,6 +26,8 @@ import Blog2 from "./pages/Blog2";
 import Blog3 from "./pages/Blog3";
 import Blog4 from "./pages/Blog4";
 import Categorias from "./pages/Categorias.jsx";
+import AdminHome from "./pages/admin/AdminHome.jsx";
+
 function App() {
   return (
     <CategoriasProvider>
@@ -49,6 +51,7 @@ function App() {
         <Route path="/blog4" element={<Blog4 />} />
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/adminHome" element ={<AdminHome/>}/>
       </Routes>
 
       <Footer />

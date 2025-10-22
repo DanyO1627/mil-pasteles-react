@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/style.css";
 
 export default function IniciarSesion() {
   const [form, setForm] = useState({ correo: "", clave: "" });
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -15,31 +17,31 @@ export default function IniciarSesion() {
       return setMsg("⚠️ Por favor completa todos los campos.");
     }
 
-    // Obtener los usuarios registrados desde localStorage
     const usuarios = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
-
-    // Buscar usuario por correo
-    const usuarioEncontrado = usuarios.find(u => u.email === correo);
+    const usuarioEncontrado = usuarios.find((u) => u.email === correo);
 
     if (!usuarioEncontrado) {
       return setMsg("❌ No existe una cuenta registrada con este correo.");
     }
 
-    // Validar contraseña
     if (usuarioEncontrado.clave !== clave) {
       return setMsg("❌ Contraseña incorrecta.");
     }
 
-    // Si pasa las validaciones → éxito
+    // Si llega aquí, el login fue exitoso
     setMsg(`✅ Inicio de sesión exitoso, bienvenido/a ${usuarioEncontrado.nombre}!`);
 
-    // Guardar sesión en localStorage (opcional)
+    // Guardar sesión
     localStorage.setItem("usuarioActivo", JSON.stringify(usuarioEncontrado));
 
-    // Redirigir (ejemplo: a la página principal)
+    // Redirección condicional según dominio
     setTimeout(() => {
-      window.location.href = "/";
-    }, 1500);
+      if (correo.includes("@milsabores.cl")) {
+        navigate("/adminHome");
+      } else {
+        navigate("/");
+      }
+    }, 1000);
   };
 
   return (
@@ -75,9 +77,7 @@ export default function IniciarSesion() {
           </div>
 
           <div className="actions">
-            <button type="submit" className="btn-primary">
-              Ingresar
-            </button>
+            <button type="submit" className="btn-primary">Ingresar</button>
           </div>
         </form>
       </div>
