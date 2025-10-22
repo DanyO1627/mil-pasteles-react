@@ -145,24 +145,7 @@ export default function IniciarSesion() {
             </button>
           </div>
 
-          {/* 🔄 Botón restaurar */}
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <button
-              type="button"
-              onClick={handleResetCompleto}
-              style={{
-                backgroundColor: "#dc3545",
-                color: "white",
-                border: "none",
-                padding: "10px 18px",
-                borderRadius: "10px",
-                cursor: "pointer",
-                fontWeight: "600",
-              }}
-            >
-              🔄 Restaurar Todo
-            </button>
-          </div>
+          
 
           <div style={{ marginTop: "15px", textAlign: "center" }}>
             <a
@@ -174,6 +157,18 @@ export default function IniciarSesion() {
           </div>
         </form>
       </div>
+
+      {/* Botón oculto para restaurar sistema (por lo de los admin que están en data) */}
+      <button
+        type="button"
+        onClick={handleResetCompleto}
+        className="btn-reset-total"
+        title="Restaurar datos del sistema"
+      >
+        🔄
+      </button>
+
+
     </main>
   );
 }

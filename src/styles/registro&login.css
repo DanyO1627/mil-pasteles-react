@@ -206,3 +206,33 @@
 .perfil-admin-btn:hover {
   background: #b73a49;
 }
+
+
+
+/*  BOTÓN OCULTO RESTAURAR TODO */
+.btn-reset-total {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  background-color: #fffaf9; /* mismo color que el fondo */
+  color: #b4a1a1; /* gris rosado para camuflar */
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-total:hover {
+  opacity: 1;
+  border-color: #e5d0d2;
+  color: #d84d5c;
+  transform: scale(1.1);
+}
+
+.login-wrapper {
+  position: relative; /* para que el botón se posicione dentro */
+}
