@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 import { useProductos } from "../context/InventarioContext";
 import { useNavigate } from "react-router-dom";
-import lista_productos from "../data/dataProductos";
+// import lista_productos from "../data/dataProductos";
 import "../styles/base.css";
 import "../styles/carrito.css";
 
 export default function Carrito() {
-  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra } = useCarrito();
+  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra, disminuirCantidad } = useCarrito();
   const { productos } = useProductos();
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState("");
@@ -29,6 +29,18 @@ export default function Carrito() {
     }
   };
 
+
+  // para que todo se sincronice bien después de que el usuario o el admin manipulen el inventario
+  React.useEffect(() => {
+  const stored = localStorage.getItem("pasteleria_inventario");
+  if (stored) {
+    console.log("📦 Inventario actualizado en localStorage detectado");
+  }
+}, [productos]);
+
+
+
+
   return (
     <div className="container mt-5 carrito-page">
       <h2 className="text-center mb-4">🛒 Carrito de Compras</h2>
@@ -38,7 +50,7 @@ export default function Carrito() {
         <div className="col-md-6 productos-col">
           <h4 className="mb-3">Agrega más productos</h4>
           <div className="row">
-            {lista_productos.map((producto) => (
+            {productos.map((producto) => (
               <div key={producto.id} className="col-12 col-sm-6 mb-3">
                 <div className="card small-card">
                   <img 
@@ -76,27 +88,52 @@ export default function Carrito() {
           ) : (
             <>
               <h4 className="mb-3">Tus productos</h4>
+              
               {carrito.map((item) => (
-                <div key={item.itemId} className="card mb-3 p-2 d-flex flex-row align-items-center">
-                  <img 
-                    src={item.imagen} 
-                    alt={item.nombre}
-                    className="img-thumbnail me-3"
-                    style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                  />
-                  <div className="flex-grow-1">
-                    <h6 className="mb-1">{item.nombre}</h6>
-                    <p className="text-muted mb-1">${item.precio.toLocaleString()}</p>
-                    <p className="text-muted mb-1 small">Subtotal: ${item.precio.toLocaleString()}</p>
-                  </div>
-                  <button 
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => eliminarDelCarrito(item.itemId)}
-                  >
-                    🗑️
-                  </button>
-                </div>
-              ))}
+  <div key={item.id} className="card mb-3 p-2 d-flex flex-row align-items-center">
+    <img 
+      src={item.imagen} 
+      alt={item.nombre}
+      className="img-thumbnail me-3"
+      style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+    />
+    <div className="flex-grow-1">
+      <h6 className="mb-1">{item.nombre}</h6>
+      <p className="text-muted mb-1">${item.precio.toLocaleString()}</p>
+
+      {/* 👇 contador de cantidad */}
+      <div className="d-flex align-items-center gap-2">
+        <button
+          className="btn btn-sm btn-outline-secondary"
+          onClick={() => agregarAlCarrito({ ...item, stock: item.stock })} // suma uno más
+        >
+          +
+        </button>
+
+        <span>{item.cantidad}</span>
+
+        <button
+  className="btn btn-sm btn-outline-secondary"
+  onClick={() => disminuirCantidad(item.id)}
+>
+  −
+</button>
+      </div>
+
+      <p className="text-muted mb-1 small">
+        Subtotal: ${(item.precio * item.cantidad).toLocaleString()}
+      </p>
+    </div>
+
+    <button
+      className="btn btn-outline-danger btn-sm"
+      onClick={() => eliminarDelCarrito(item.itemId)}
+    >
+      🗑️
+    </button>
+  </div>
+))}
+
 
               {/*total y acciones*/}
               <div className="card mt-4 p-4 text-center shadow-sm">

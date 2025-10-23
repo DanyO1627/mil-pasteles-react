@@ -9,16 +9,19 @@ import '../styles/cardProducto.css';
 import { useEffect } from "react";
 import CardHomeProducto from "../components/CardHomeProducto";
 import { useProductos } from "../context/InventarioContext"; // esto hace que usemos los productos globales
+import ChatBot from "../components/Chatbot";
 
 import chefImg from "../assets/chef.png";
+import chatBotImg from "../assets/chatbot.png";
+
 
 export default function Home() {
 
 
   // usar los productos
-  const { productos } = useProductos();
+const { productos } = useProductos();
 
-  const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
+const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
 
 const [query, setQuery] = useState("");
 
@@ -31,7 +34,22 @@ const productosFiltrados = productosHome.filter((p) =>
 }, [productos]);
 
 
+    const handleResetHome = () => {
+    const confirmar = window.confirm(
+      "⚠️ Esto eliminará los productos y categorías almacenados en el navegador. ¿Deseas continuar?"
+    );
+    if (confirmar) {
+      localStorage.removeItem("categorias");
+      localStorage.removeItem("inventario");
+      localStorage.removeItem("productos");
+      alert("✅ Datos de productos restaurados. Recarga la página.");
+      window.location.reload();
+    }
+  };
+
+
   return (
+    <> 
     <main className="home">
  
       <section className="hero">
@@ -78,6 +96,19 @@ const productosFiltrados = productosHome.filter((p) =>
         )}
       </section>
     </main>
+
+      {/* Botón oculto de restauración de datos */}
+  <button
+    className="btn-reset-oculto"
+    onClick={handleResetHome}
+    title="Restaurar productos y categorías"
+  >
+    🔄
+  </button>
+
+  <ChatBot />
+  </>
+
   );
 }
 

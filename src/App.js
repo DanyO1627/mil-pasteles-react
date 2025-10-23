@@ -19,7 +19,7 @@ import Categorias from './pages/Categorias';
 import Registro from './pages/Registro';
 import IniciarSesion from './pages/IniciarSesion';
 
-import AdminHome from './pagesAdmin/AdminHome'; 
+import AdminHome from './pagesAdmin/Dashboard'; 
 import PanelProductos from './pagesAdmin/PanelProductos';
 import ProductosCriticosAdmin from './pagesAdmin/ProductosCriticos';
 import EditarProducto from './pagesAdmin/EditarProducto'; // provisorio mio

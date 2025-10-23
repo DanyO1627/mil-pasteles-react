@@ -42,10 +42,16 @@ import pastelGuayaba from "../assets/pastel_guayaba.jpg";
 // 5 nuevos más
 import EVE_TortaChocoBlanco from "../assets/EVE_TortaChocoBlanco.jpg";
 import EVE_TortaSanFelipe from "../assets/EVE_TortaSanFelipe.jpeg";
-import Eve_TortaSanDaniela from "../assets/Eve_TortaSanDaniela.png";
+import Eve_TortaSanDaniela from "../assets/tortaSanDaniela.png";
 import Eve_TortaChocoyFrutas from "../assets/Eve_TortaChocoyFrutas.png";
 // import EVE_TartaFrambuesa from "../assets/EVE_TartaFrambuesa.png";
 import tartaBerries2 from "../assets/tarta_berries2_home.jpg";
+
+// los productos gluten free
+import GF_quequeVainilla from "../assets/GF_queque_vainilla.jpg";
+import GF_pastelChocolate from "../assets/GF_choco_pastel.jpg";
+import GF_pastelZanahoria from "../assets/GF_Pastel_zanahoria.jpg";
+
 
 
 
@@ -395,14 +401,14 @@ const lista_productos = [
       stock: 6 
     },
     {
-      id: 35,
-      nombre: "Torta San Daniela",
-      precio: 12500,
-      imagen: Eve_TortaSanDaniela,
-      descripcion: "Torta de hojarasca con crema pastelera y mermelada de damasco.",
-      descripcion_larga: "La Torta San Daniela es una variante deliciosa de la torta de hojarasca. Combina capas crujientes de hojarasca, crema pastelera suave de vainilla y una capa de mermelada ácida de damasco, creando un equilibrio perfecto entre dulzor y textura.",
-      categoriaId: 1, 
-      stock: 8 
+      "id": 35,
+      "nombre": "Torta San Daniela",
+      "precio": 12500,
+      "imagen": Eve_TortaSanDaniela,
+      "descripcion": "Torta de bizcocho con crema de vainilla y frutas frescas.",
+      "descripcion_larga": "La Torta San Daniela es una exquisita creación de bizcochos suaves intercalados con capas de crema de vainilla y relleno frutal. Su cobertura lisa de fondant blanco y glasé azul pastel le da un toque elegante, mientras las fresas y arándanos frescos aportan color y frescura. Ideal para celebraciones, combina un sabor delicado con una presentación gourmet irresistible.",
+      "categoriaId": 1,
+      "stock": 8
     },
     {
       id: 36,
@@ -424,6 +430,39 @@ const lista_productos = [
       categoriaId: 2, 
       stock: 12 
     },
+    {
+    id: 38,
+    nombre: "Queque de Vainilla Gluten Free",
+    precio: 8500,
+    imagen: GF_quequeVainilla,
+    descripcion: "Delicioso queque de vainilla sin gluten, suave y esponjoso.",
+    descripcion_larga:
+      "Nuestro Queque de Vainilla Gluten Free es perfecto para quienes buscan un postre liviano y sin gluten. Elaborado con harinas alternativas y esencia natural de vainilla, ofrece una textura húmeda y un sabor clásico que encanta a todos. Ideal para acompañar con café o té.",
+    categoriaId: 5,
+    stock: 10,
+  },
+  {
+    id: 39,
+    nombre: "Pastel de Chocolate Gluten Free",
+    precio: 9900,
+    imagen: GF_pastelChocolate,
+    descripcion: "Pastel intenso de chocolate sin gluten, húmedo y sabroso.",
+    descripcion_larga:
+      "Este Pastel de Chocolate Gluten Free combina el sabor profundo del cacao con una textura suave y esponjosa. Sin harinas con gluten, pero con todo el placer del chocolate. Perfecto para celebraciones o como postre gourmet sin restricciones.",
+    categoriaId: 5,
+    stock: 8,
+  },
+  {
+    id: 40,
+    nombre: "Pastel de Zanahoria Gluten Free",
+    precio: 9200,
+    imagen: GF_pastelZanahoria,
+    descripcion: "Pastel casero de zanahoria sin gluten, con cobertura cremosa.",
+    descripcion_larga:
+      "El Pastel de Zanahoria Gluten Free es una deliciosa opción saludable: hecho con harina de almendras y zanahoria rallada, ofrece una textura húmeda y un sabor natural. Su cobertura de queso crema le da un toque irresistible que lo hace uno de los favoritos de la casa.",
+    categoriaId: 5,
+    stock: 9,
+  },
 ];
 
 export default lista_productos;

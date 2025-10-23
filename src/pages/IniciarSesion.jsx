@@ -55,7 +55,7 @@ export default function IniciarSesion() {
       setMsg(`✅ Bienvenido/a ${adminEncontrado.nombre}!`);
 
       setTimeout(() => {
-        navigate("/admin/perfil");
+        navigate("/admin");
       }, 1500);
 
       return;
@@ -101,6 +101,10 @@ export default function IniciarSesion() {
       window.location.reload();
     }
   };
+
+
+
+
 
   return (
     <main className="login-wrapper">

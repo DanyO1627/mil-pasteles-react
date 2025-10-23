@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CategoriasContext = createContext();
 
+
 const STORAGE_KEY = "pasteleria_categorias";
 
 // Categorías iniciales con ID FIJOS
@@ -37,6 +38,15 @@ const categoriasIniciales = [
     imagen: require("../assets/Tiramisu2.webp"),
     activa: true,
     fechaCreacion: "2025-10-19"
+  }, 
+  {
+    id: 5,
+    nombre: "Gluten Free",
+    descripcion:
+      "Productos elaborados sin gluten, ideales para personas con celiaquía o que prefieren una alimentación libre de gluten.",
+    imagen: require("../assets/GF_choco_pastel.jpg"),
+    activa: true,
+    fechaCreacion: "2025-10-22"
   }
 ];
 

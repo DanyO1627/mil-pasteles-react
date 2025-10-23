@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import "../styles/buscador.css";
 import Productos from "../pages/Productos";
 
+// PARA EL TESTING
+import "../utils/Buscador.logic.js"; 
+
+
 /*
   Props:
    - onSearch(term): función que recibe el texto del buscador cada vez que se "confirma" la búsqueda.
@@ -38,15 +42,27 @@ export default function Buscador({
     onSearch && onSearch(debouncedTerm.trim());
   }, [debouncedTerm, onSearch]);
 
-  const handleChange = (e) => {
-    setTerm(e.target.value);
-  };
 
-  const clear = () => {
-    setTerm("");
-    // si no hay debounce, onSearch se llama en el effect anterior
-    if (debounceMs === 0) onSearch && onSearch("");
-  };
+  // ASÍ ESTÁ ANTES DE LAS PRUEBAS UNITARIAS
+ const handleChange = (e) => {
+  setTerm(e.target.value);
+};
+
+const clear = () => {
+  setTerm("");
+  if (debounceMs === 0) onSearch && onSearch("");
+};
+
+
+// ESTO ES LO QUE ME DICE CHAT GPT QUE REEMPLACE CUANDO LE DIGO LO DE LAS PRUEBAS UNITARIAS
+// const handleChange = (e) => {
+//   setTerm(window.BuscadorLogic.handleChange(e));
+// };
+
+// const clear = () => {
+//   const value = window.BuscadorLogic.clear(onSearch, debounceMs);
+//   setTerm(value);
+// };
 
   return (
     <div className="buscador-class d-flex align-items-center">
