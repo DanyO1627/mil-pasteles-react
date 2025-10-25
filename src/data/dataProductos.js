@@ -4,7 +4,7 @@
 // en react hay que importarlas una por una f
 import tortaTresLeches from "../assets/torta_tres_leches_8910_orig.jpg";
 import tartaManzana from "../assets/Tarta-de-manzana-ajustada-web-570x458.jpg";
-import cheesecake from "../assets/cheesecake.jpg";
+import cheesecake from "../assets/cheesecake.png";
 import brownie from "../assets/brownie.webp";
 import pieLimon from "../assets/pie_limon.webp";
 import selvaNegra from "../assets/tarta-selva-negra.jpg";

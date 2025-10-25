@@ -4,7 +4,7 @@ import "../styles/style.css";
 //  LAS IMÁGENES
 import chefImg from "../assets/chef.png";
 import imgPrincipal from "../assets/torta para 8p.jpg";
-import imgCheesecake from "../assets/cheesecake.jpg";
+import imgCheesecake from "../assets/cheesecake.png";
 import imgManzana from "../assets/Tarta-de-manzana-ajustada-web-570x458.jpg";
 import imgTresLeches from "../assets/torta_tres_leches_8910_orig.jpg";
 import imgSanFelipe from "../assets/torta_san felipe.jpeg";
