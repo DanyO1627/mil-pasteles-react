@@ -32,6 +32,7 @@ import DetalleProductos from "./pages/DetalleProducto.jsx";
 import PanelProductos from "./pages/admin/PanelProductos.jsx";
 import EditarProducto from "./pages/admin/EditarProducto.jsx";
 import ProductosCriticos from "./pages/admin/ProductosCriticos.jsx";
+import Reportes from "./pages/admin/Reportes.jsx";
 function App() {
   return (
     <CategoriasProvider>
@@ -53,6 +54,7 @@ function App() {
         <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
         <Route path="/editar/:id" element={<EditarProducto />} />
         <Route path="/criticos" element={<ProductosCriticos />} />
+        <Route path="/reportes" element={<Reportes />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog1" element={<Blog1 />} />
         <Route path="/blog2" element={<Blog2 />} />
