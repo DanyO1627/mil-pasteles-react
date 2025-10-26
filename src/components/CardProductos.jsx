@@ -38,7 +38,7 @@ export default function CardProductos({ producto}) {
                 </button>
 
                 <button className="btn-outline-primary" 
-                onClick={() => navigate(`/producto/${producto.id}`)}> 
+                onClick={() => navigate(`/detalleProductos/${producto.id}`)}> 
                 Ver detalles
                 </button>
                 

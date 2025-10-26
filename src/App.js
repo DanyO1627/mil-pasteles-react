@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import { CarritoProvider } from "./pages/CarritoContext";
+import { CarritoProvider } from "./context/CarritoContext";
 import { ProductosProvider } from "./context/InventarioContext.jsx";
 import { CategoriasProvider } from "./context/CategoriasContext.jsx";
 
@@ -27,7 +27,11 @@ import Blog3 from "./pages/Blog3";
 import Blog4 from "./pages/Blog4";
 import Categorias from "./pages/Categorias.jsx";
 import AdminHome from "./pages/admin/AdminHome.jsx";
-
+import Productos from "./pages/Productos.jsx";
+import DetalleProductos from "./pages/DetalleProducto.jsx";
+import PanelProductos from "./pages/admin/PanelProductos.jsx";
+import EditarProducto from "./pages/admin/EditarProducto.jsx";
+import ProductosCriticos from "./pages/admin/ProductosCriticos.jsx";
 function App() {
   return (
     <CategoriasProvider>
@@ -44,6 +48,11 @@ function App() {
         <Route path="/iniciar-sesion" element={<IniciarSesion />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/panelProductos" element={<PanelProductos />} />
+        <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
+        <Route path="/editar/:id" element={<EditarProducto />} />
+        <Route path="/criticos" element={<ProductosCriticos />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog1" element={<Blog1 />} />
         <Route path="/blog2" element={<Blog2 />} />
