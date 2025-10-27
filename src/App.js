@@ -34,7 +34,6 @@ export default function App() {
         <Route path="/ofertas" element={<Ofertas />} />
         <Route path="/iniciar-sesion" element={<IniciarSesion />} />
         <Route path="/registrarse" element={<Registrarse />} />
-       
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
         <Route path="*" element={<Home />} />
