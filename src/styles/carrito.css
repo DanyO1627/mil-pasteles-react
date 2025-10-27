@@ -1,49 +1,54 @@
-/* --- Contenedor general --- */
+/* 🌸 --- Contenedor general --- */
 .carrito-page {
-  background-color: #fff8f8;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 182, 193, 0.3);
+  background: linear-gradient(135deg, #fff6f9, #ffeef3);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  border-radius: 16px;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* --- Título principal --- */
-.carrito-page h2 {
-  color: #b22222;
-  font-weight: 700;
-}
-
-/* --- Columnas --- */
+/* 🧁 --- Columnas --- */
 .productos-col, .carrito-col {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* --- Tarjetas de producto (lado izquierdo) --- */
+.productos-col:hover, .carrito-col:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+}
+
+/* 🍰 --- Tarjetas de productos --- */
 .small-card {
-  border: 1px solid #f3d6d6;
-  border-radius: 10px;
+  border: none;
+  background: #fffafa;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .small-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(255, 182, 193, 0.4);
 }
 
 .small-img {
   width: 100%;
-  height: 120px;
+  height: 130px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   object-fit: cover;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
-/* --- Sección del carrito (lado derecho) --- */
+/* 💸 --- Carrito lado derecho --- */
 .carrito-col .card {
-  border: 1px solid #f3d6d6;
-  border-radius: 10px;
+  border: none;
+  background: #fffafa;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(255, 182, 193, 0.25);
   transition: transform 0.15s ease;
 }
 
@@ -51,37 +56,12 @@
   transform: scale(1.01);
 }
 
-/* --- Botones --- */
-.btn-danger {
-  background-color: #b22222 !important;
-  border: none !important;
-  transition: background-color 0.2s ease;
-}
-
-.btn-danger:hover {
-  background-color: #8b1a1a !important;
-}
-
-.btn-outline-secondary {
-  color: #555;
-  border-color: #ccc;
-}
-
-.btn-outline-secondary:hover {
-  background-color: #eee;
-}
-
-/* --- Imagen en el carrito --- */
-.img-thumbnail {
-  border-radius: 10px;
-}
-
-/* --- Scroll en lista de productos --- */
+/* 🌷 --- Scroll en productos --- */
 .productos-col .row {
   max-height: 70vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #f9c0c0 #fff;
+  scrollbar-color: #fcb7c3 #fff;
 }
 
 .productos-col .row::-webkit-scrollbar {
@@ -89,28 +69,33 @@
 }
 
 .productos-col .row::-webkit-scrollbar-thumb {
-  background-color: #f9c0c0;
+  background-color: #fcb7c3;
   border-radius: 8px;
 }
 
-/* --- Mensaje de compra o error --- */
+/* ✨ --- Mensaje de compra --- */
 .mensaje-compra {
-  text-align: center;
+  background-color: #ffe4eb;
   color: #b22222;
-  font-weight: 600;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
   margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.25);
+  animation: fadeIn 0.5s ease;
 }
 
-/* --- Responsivo --- */
+/* 💫 --- Animación --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 --- Responsivo --- */
 @media (max-width: 768px) {
-  .carrito-page {
-    padding: 1rem;
-  }
-
-  .small-img {
-    height: 100px;
-  }
-
+  .carrito-page { padding: 1rem; }
+  .small-img { height: 100px; }
   .carrito-col .card {
     flex-direction: column !important;
     align-items: flex-start !important;

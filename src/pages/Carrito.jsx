@@ -4,7 +4,7 @@ import { useProductos } from "../context/InventarioContext";
 import { useNavigate } from "react-router-dom";
 // import lista_productos from "../data/dataProductos";
 import "../styles/carrito.css";
-
+import "../styles/base.css"
 export default function Carrito() {
   const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra, disminuirCantidad } = useCarrito();
   const { productos } = useProductos();
