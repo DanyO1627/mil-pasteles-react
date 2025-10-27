@@ -3,8 +3,9 @@ import { useCarrito } from "../context/CarritoContext";
 import { useProductos } from "../context/InventarioContext";
 import { useNavigate } from "react-router-dom";
 // import lista_productos from "../data/dataProductos";
+import "../styles/base.css";
 import "../styles/carrito.css";
-import "../styles/base.css"
+
 export default function Carrito() {
   const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra, disminuirCantidad } = useCarrito();
   const { productos } = useProductos();
@@ -50,7 +51,7 @@ export default function Carrito() {
           <h4 className="mb-3">Agrega más productos</h4>
           <div className="row">
             {productos.map((producto) => (
-              <div key={producto.id} className="col-12 col-sm-6 mb-3">
+              <div key={producto.id} className="mb-3">
                 <div className="card small-card">
                   <img 
                     src={producto.imagen} 
