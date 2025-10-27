@@ -33,7 +33,7 @@ export default function AdminHome() {
         <ul>
           <li className="active" onClick={() => navigate("/admin")}>📊 Panel de control</li>
           <li onClick={handleEnConstruccion}>🧾 Órdenes</li>
-          <li onClick={() => navigate("/admin/panel/productos")}>📦 Inventario</li>
+          <li onClick={() => navigate("/panelProductos")}>📦 Inventario</li>
           <li onClick={() => navigate("/reportes")}>📈 Reportes</li>
           <li onClick={handleEnConstruccion}>👩‍🍳 Empleados</li>
           <li onClick={handleEnConstruccion}>🧍 Clientes</li>
@@ -83,7 +83,7 @@ export default function AdminHome() {
 
         {/* === ACCESOS RÁPIDOS === */}
         <div className="quick-access">
-          <div className="qa-card" onClick={() => navigate("/admin")}>
+          <div className="qa-card" onClick={() => navigate("/adminHome")}>
             <h4>📊 Dashboard</h4>
             <p>Visión general de métricas y estadísticas.</p>
           </div>
@@ -95,7 +95,7 @@ export default function AdminHome() {
             <h4>📦 Productos</h4>
             <p>Administración del inventario y detalles.</p>
           </div>
-          <div className="qa-card" onClick={() => navigate("/categorias")}>
+          <div className="qa-card" onClick={() => navigate("/gestionarCategorias")}>
             <h4>🏷 Categorías</h4>
             <p>Organización de productos en secciones.</p>
           </div>

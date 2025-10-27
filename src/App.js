@@ -19,7 +19,6 @@ import Ofertas from "./pages/Ofertas.jsx";
 import IniciarSesion from "./pages/IniciarSesion.jsx";
 import Boleta from "./pages/admin/Boleta.jsx"
 import OrdenCompra from "./pages/admin/OrdenCompra.jsx";
-import Dashboard from "./pages/admin/Dashboard.jsx";
 import Blogs from "./pages/Blogs";
 import Blog1 from "./pages/Blog1";
 import Blog2 from "./pages/Blog2";
@@ -33,6 +32,9 @@ import PanelProductos from "./pages/admin/PanelProductos.jsx";
 import EditarProducto from "./pages/admin/EditarProducto.jsx";
 import ProductosCriticos from "./pages/admin/ProductosCriticos.jsx";
 import Reportes from "./pages/admin/Reportes.jsx";
+import EditarCategoria from "./pages/admin/EditarCategoria.jsx";
+import GestionarCategorias from "./pages/admin/GestionarCategorias.jsx";
+import NuevaCategoria from "./pages/admin/NuevaCategoria.jsx";
 function App() {
   return (
     <CategoriasProvider>
@@ -54,6 +56,8 @@ function App() {
         <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
         <Route path="/editar/:id" element={<EditarProducto />} />
         <Route path="/criticos" element={<ProductosCriticos />} />
+        <Route path="/editarCategoria/:id" element={<EditarCategoria />} />
+        <Route path="/gestionarCategorias" element={<GestionarCategorias />} />
         <Route path="/reportes" element={<Reportes />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog1" element={<Blog1 />} />
@@ -61,8 +65,8 @@ function App() {
         <Route path="/blog3" element={<Blog3 />} />
         <Route path="/blog4" element={<Blog4 />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/adminHome" element ={<AdminHome/>}/>
+        <Route path="/nuevaCategoria" element ={<NuevaCategoria/>}/>
       </Routes>
 
       <Footer />

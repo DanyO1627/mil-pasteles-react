@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import initialProductos from "../data/dataProductos";
-
+import { useCategorias } from "./CategoriasContext";
 const InventarioContext = createContext();
 
 const STORAGE_KEY = "pasteleria_inventario";
 
 export function ProductosProvider({ children }) {
+  const { existeCategoria } = useCategorias();
   // Inicializar desde LocalStorage o usar datos iniciales
   const [productos, setProductos] = useState(() => {
     try {
@@ -30,6 +31,17 @@ export function ProductosProvider({ children }) {
       console.error("Error guardando productos:", error);
     }
   }, [productos]);
+
+  useEffect(() => {
+  const productosValidados = productos.map((p) => {
+    if (!p.categoriaId || !existeCategoria(p.categoriaId)) {
+      console.warn(`⚠️ Producto "${p.nombre}" tenía categoría inválida. Se movió a "Sin categoría".`);
+      return { ...p, categoriaId: null };
+    }
+    return p;
+  });
+    setProductos(productosValidados);
+  }, []);
 
   // CRUD
   
@@ -108,7 +120,10 @@ export function ProductosProvider({ children }) {
     const producto = obtenerProducto(id);
     return producto && (producto.stock ?? 0) >= cantidadRequerida;
   };
-
+  // Productos sin categoría (huérfanos)
+  const productosHuerfanos = () => {
+    return productos.filter((p) => !p.categoriaId);
+  };
   // Resetear a datos iniciales
   const resetearInventario = () => {
     setProductos(initialProductos);
@@ -129,6 +144,7 @@ export function ProductosProvider({ children }) {
         productosCriticos,
         hayStock,
         resetearInventario,
+        productosHuerfanos,
       }}
     >
       {children}

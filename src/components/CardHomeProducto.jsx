@@ -24,7 +24,7 @@ export default function CardHomeProducto({ producto }) {
 
         <button
           className="btn btn-outline-primary mt-auto"
-          onClick={() => navigate(`/producto/${producto.id}`)}
+          onClick={() => navigate(`/detalleProductos/${producto.id}`)}
         >
           Ver detalles
         </button>

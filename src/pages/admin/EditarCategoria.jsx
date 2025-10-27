@@ -1,10 +1,10 @@
 // src/pagesAdmin/EditarCategoria.jsx
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useCategorias } from "../context/CategoriasContext";
-import { useProductos } from "../context/InventarioContext";
-import "../stylesAdmin/categoriasAdmin.css";
-import "../"
+import { useCategorias } from "../../context/CategoriasContext";
+import { useProductos } from "../../context/InventarioContext";
+import "../../styles/stylesAdmin/categoriasAdmin.css";
+
 export default function EditarCategoria() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function EditarCategoria() {
   const [formData, setFormData] = useState({
     nombre: categoria?.nombre || "",
     descripcion: categoria?.descripcion || "",
-    imagen: categoria?.imagen || "",
+    imagen: categoria?.imagenNombre || "", // solo el nombre del archivo
   });
 
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
@@ -29,7 +29,7 @@ export default function EditarCategoria() {
           <p>La categoría que intentas editar no existe.</p>
           <button
             className="categoria-form-btn categoria-form-btn--cancelar"
-            onClick={() => navigate("/admin/categorias")}
+            onClick={() => navigate("/categorias")}
           >
             ← Volver a categorías
           </button>
@@ -59,17 +59,17 @@ export default function EditarCategoria() {
       return;
     }
 
-    // Verificar que no exista otra categoría con el mismo nombre
+    // Verificar duplicados
     const nombreExiste = categorias.some(
-      (cat) => 
-        cat.id !== categoria.id && 
+      (cat) =>
+        cat.id !== categoria.id &&
         cat.nombre.toLowerCase() === formData.nombre.toLowerCase()
     );
 
     if (nombreExiste) {
-      setMensaje({ 
-        tipo: "error", 
-        texto: `Ya existe otra categoría con el nombre "${formData.nombre}"` 
+      setMensaje({
+        tipo: "error",
+        texto: `Ya existe otra categoría con el nombre "${formData.nombre}"`,
       });
       return;
     }
@@ -79,22 +79,25 @@ export default function EditarCategoria() {
       actualizarCategoria(categoria.id, {
         nombre: formData.nombre.trim(),
         descripcion: formData.descripcion.trim(),
-        imagen: formData.imagen.trim() || categoria.imagen,
+        imagen: formData.imagen
+          ? require(`../../assets/${formData.imagen}`)
+          : categoria.imagen,
+        imagenNombre: formData.imagen, // guardamos también el nombre
       });
 
-      setMensaje({ 
-        tipo: "exito", 
-        texto: `✅ Categoría "${formData.nombre}" actualizada exitosamente` 
+      setMensaje({
+        tipo: "exito",
+        texto: `✅ Categoría "${formData.nombre}" actualizada exitosamente`,
       });
 
-      // Redirigir después de 1.5 segundos
       setTimeout(() => {
-        navigate("/admin/categorias");
+        navigate("/categorias");
       }, 1500);
     } catch (error) {
-      setMensaje({ 
-        tipo: "error", 
-        texto: "Error al actualizar la categoría. Intenta nuevamente." 
+      console.error(error);
+      setMensaje({
+        tipo: "error",
+        texto: "Error al actualizar la categoría. Intenta nuevamente.",
       });
     }
   };
@@ -105,22 +108,30 @@ export default function EditarCategoria() {
         <h2 className="categoria-form-title">✏️ Editar Categoría</h2>
 
         {/* Info de productos asociados */}
-        <div style={{
-          padding: "15px",
-          backgroundColor: cantidadProductos > 0 ? "#e7f3ff" : "#f8f9fa",
-          border: `1px solid ${cantidadProductos > 0 ? "#007bff" : "#ddd"}`,
-          borderRadius: "6px",
-          marginBottom: "20px"
-        }}>
+        <div
+          style={{
+            padding: "15px",
+            backgroundColor: cantidadProductos > 0 ? "#e7f3ff" : "#f8f9fa",
+            border: `1px solid ${cantidadProductos > 0 ? "#007bff" : "#ddd"}`,
+            borderRadius: "6px",
+            marginBottom: "20px",
+          }}
+        >
           <strong>📦 Productos asociados:</strong> {cantidadProductos}
           {cantidadProductos > 0 && (
-            <p style={{ margin: "5px 0 0 0", fontSize: "0.9rem", color: "#666" }}>
+            <p
+              style={{
+                margin: "5px 0 0 0",
+                fontSize: "0.9rem",
+                color: "#666",
+              }}
+            >
               Los cambios afectarán cómo se muestra esta categoría en la tienda
             </p>
           )}
         </div>
 
-        {/* Mensaje de feedback */}
+        {/* Mensaje */}
         {mensaje.texto && (
           <div
             className={`categoria-form-mensaje categoria-form-mensaje--${mensaje.tipo}`}
@@ -130,7 +141,7 @@ export default function EditarCategoria() {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* Campo: Nombre */}
+          {/* Nombre */}
           <div className="categoria-form-group">
             <label className="categoria-form-label">
               Nombre de la categoría *
@@ -150,11 +161,9 @@ export default function EditarCategoria() {
             </p>
           </div>
 
-          {/* Campo: Descripción */}
+          {/* Descripción */}
           <div className="categoria-form-group">
-            <label className="categoria-form-label">
-              Descripción (opcional)
-            </label>
+            <label className="categoria-form-label">Descripción (opcional)</label>
             <textarea
               name="descripcion"
               value={formData.descripcion}
@@ -164,52 +173,66 @@ export default function EditarCategoria() {
               maxLength={200}
             />
             <p className="categoria-form-helper">
-              Máximo 200 caracteres. Ayuda a los clientes a entender qué productos encontrarán.
+              Máximo 200 caracteres. Ayuda a los clientes a entender qué
+              productos encontrarán.
             </p>
           </div>
 
-          {/* Campo: Imagen (URL) */}
+          {/* Imagen */}
           <div className="categoria-form-group">
             <label className="categoria-form-label">
-              URL de la imagen
+              Nombre del archivo de imagen (en /src/assets)
             </label>
             <input
-              type="url"
+              type="text"
               name="imagen"
               value={formData.imagen}
               onChange={handleChange}
               className="categoria-form-input"
-              placeholder="https://ejemplo.com/imagen.jpg"
+              placeholder="Ej: tiramisu.webp"
             />
             <p className="categoria-form-helper">
-              Puede ser una URL externa
+              Ingresa solo el nombre del archivo (debe estar en <code>src/assets/</code>)
             </p>
           </div>
 
-          {/* preview de la imagen a cargar */}
+          {/* Preview */}
           {formData.imagen && (
             <div className="categoria-form-group">
               <label className="categoria-form-label">Vista previa:</label>
-              <div style={{ 
-                width: "100%", 
-                height: "200px", 
-                borderRadius: "8px", 
-                overflow: "hidden",
-                border: "2px solid #ddd"
-              }}>
+              <div
+                style={{
+                  width: "100%",
+                  height: "200px",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  border: "2px solid #ddd",
+                }}
+              >
                 <img
-                  src={formData.imagen}
+                  src={
+                    formData.imagen.startsWith("http")
+                      ? formData.imagen
+                      : (() => {
+                          try {
+                            return require(`../../assets/${formData.imagen}`);
+                          } catch {
+                            return "https://via.placeholder.com/400x300?text=Imagen+no+encontrada";
+                          }
+                        })()
+                  }
                   alt="Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/400x300?text=Error+al+cargar";
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
                 />
               </div>
             </div>
           )}
 
-          {/* BTNS */}
+          {/* Botones */}
           <div className="categoria-form-actions">
             <button
               type="submit"
