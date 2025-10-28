@@ -2,150 +2,138 @@ import React, { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 import { useProductos } from "../context/InventarioContext";
 import { useNavigate } from "react-router-dom";
-// import lista_productos from "../data/dataProductos";
 import "../styles/base.css";
 import "../styles/carrito.css";
 
 export default function Carrito() {
-  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, procesarCompra, disminuirCantidad } = useCarrito();
+  const { carrito, eliminarDelCarrito, vaciarCarrito, precioTotal, agregarAlCarrito, disminuirCantidad } = useCarrito();
   const { productos } = useProductos();
   const navigate = useNavigate();
-  const [mensaje, setMensaje] = useState("");
 
   const handleComprar = () => {
-  const resultado = procesarCompra();
-
-  setMensaje(resultado.message);
-
-  if (resultado.success) {
-      // mensaje 3 segundos y redirigir a los productos
-      setTimeout(() => {
-        setMensaje("");
-        navigate("/productos");
-      }, 3000);
-    } else {
-      // Limpiar mensaje de error
-      setTimeout(() => setMensaje(""), 3000);
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío");
+      return;
     }
+    // Navegar a la página de checkout
+    navigate("/compra");
   };
 
-
-  // para que todo se sincronice bien después de que el usuario o el admin manipulen el inventario
   React.useEffect(() => {
-  const stored = localStorage.getItem("pasteleria_inventario");
-  if (stored) {
-    console.log("📦 Inventario actualizado en localStorage detectado");
-  }
-}, [productos]);
-
-
-
+    const stored = localStorage.getItem("pasteleria_inventario");
+    if (stored) {
+      console.log("📦 Inventario actualizado en localStorage detectado");
+    }
+  }, [productos]);
 
   return (
-    <div className="container mt-5 carrito-page">
-      <h2 className="text-center mb-4">🛒 Carrito de Compras</h2>
+    <div className="carrito-container">
+      <h2 className="carrito-titulo">🛒 Carrito de Compras</h2>
 
-      <div className="row">
-        {/* lado izquierod lista de productos */}
-        <div className="col-md-6 productos-col">
-          <h4 className="mb-3">Agrega más productos</h4>
-          <div className="row">
+      <div className="carrito-contenido">
+        {/* Columna izquierda - Lista de productos */}
+        <div className="carrito-productos">
+          <h4 className="seccion-titulo">Agrega más productos</h4>
+          <div className="productos-grid">
             {productos.map((producto) => (
-              <div key={producto.id} className="mb-3">
-                <div className="card small-card">
-                  <img 
-                    src={producto.imagen} 
-                    alt={producto.nombre} 
-                    className="card-img-top small-img"
-                  />
-                  <div className="card-body p-2 text-center">
-                    <h6>{producto.nombre}</h6>
-                    <p className="text-muted">${producto.precio.toLocaleString()}</p>
-                    <p className="text-muted small">Stock: {producto.stock ?? 0}</p>
-                    
-                    <button 
-                      className="btn btn-danger btn-sm"
-                      onClick={() => agregarAlCarrito(producto)}
-                      disabled={(producto.stock ?? 0) === 0}> {(producto.stock ?? 0) === 0 ? 'Sin stock' : 'Añadir'}
-                    </button>
-
-                  </div>
+              <div key={producto.id} className="producto-card">
+                <img 
+                  src={producto.imagen} 
+                  alt={producto.nombre} 
+                  className="producto-imagen"
+                />
+                <div className="producto-info">
+                  <h6 className="producto-nombre">{producto.nombre}</h6>
+                  <p className="producto-precio">${producto.precio.toLocaleString()}</p>
+                  <p className="producto-stock">Stock: {producto.stock ?? 0}</p>
+                  
+                  <button 
+                    className="btn-agregar"
+                    onClick={() => agregarAlCarrito(producto)}
+                    disabled={(producto.stock ?? 0) === 0}
+                  >
+                    {(producto.stock ?? 0) === 0 ? 'Sin stock' : 'Añadir'}
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/*derecha - carrito*/}
-        <div className="col-md-6 carrito-col">
+        {/* Columna derecha - Carrito */}
+        <div className="carrito-resumen">
           {carrito.length === 0 ? (
-            <div className="text-center mt-5">
+            <div className="carrito-vacio">
               <h5>Tu carrito está vacío</h5>
-              <button className="btn btn-danger mt-3" onClick={() => navigate('/productos')}>
+              <button className="btn-ver-productos" onClick={() => navigate('/productos')}>
                 Ver productos
               </button>
             </div>
           ) : (
             <>
-              <h4 className="mb-3">Tus productos</h4>
+              <h4 className="seccion-titulo">Tus productos</h4>
               
-              {carrito.map((item) => (
-  <div key={item.id} className="card mb-3 p-2 d-flex flex-row align-items-center">
-    <img 
-      src={item.imagen} 
-      alt={item.nombre}
-      className="img-thumbnail me-3"
-      style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-    />
-    <div className="flex-grow-1">
-      <h6 className="mb-1">{item.nombre}</h6>
-      <p className="text-muted mb-1">${item.precio.toLocaleString()}</p>
+              <div className="carrito-items">
+                {carrito.map((item) => (
+                  <div key={item.id} className="carrito-item">
+                    <img 
+                      src={item.imagen} 
+                      alt={item.nombre}
+                      className="item-imagen"
+                    />
+                    <div className="item-detalles">
+                      <h6 className="item-nombre">{item.nombre}</h6>
+                      <p className="item-precio">${item.precio.toLocaleString()}</p>
 
-      {/* 👇 contador de cantidad */}
-      <div className="d-flex align-items-center gap-2">
-        <button
-          className="btn btn-sm btn-outline-secondary"
-          onClick={() => agregarAlCarrito({ ...item, stock: item.stock })} // suma uno más
-        >
-          +
-        </button>
+                      {/* Contador de cantidad */}
+                      <div className="item-cantidad">
+                        <button
+                          className="btn-cantidad"
+                          onClick={() => agregarAlCarrito({ ...item, stock: item.stock })}
+                        >
+                          +
+                        </button>
 
-        <span>{item.cantidad}</span>
+                        <span className="cantidad-numero">{item.cantidad}</span>
 
-        <button
-  className="btn btn-sm btn-outline-secondary"
-  onClick={() => disminuirCantidad(item.id)}
->
-  −
-</button>
-      </div>
+                        <button
+                          className="btn-cantidad"
+                          onClick={() => disminuirCantidad(item.id)}
+                        >
+                          −
+                        </button>
+                      </div>
 
-      <p className="text-muted mb-1 small">
-        Subtotal: ${(item.precio * item.cantidad).toLocaleString()}
-      </p>
-    </div>
+                      <p className="item-subtotal">
+                        Subtotal: ${(item.precio * item.cantidad).toLocaleString()}
+                      </p>
+                    </div>
 
-    <button
-      className="btn btn-outline-danger btn-sm"
-      onClick={() => eliminarDelCarrito(item.itemId)}
-    >
-      🗑️
-    </button>
-  </div>
-))}
+                    <button
+                      className="btn-eliminar"
+                      onClick={() => eliminarDelCarrito(item.itemId)}
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                ))}
+              </div>
 
-
-              {/*total y acciones*/}
-              <div className="card mt-4 p-4 text-center shadow-sm">
-                <h5>Total: ${precioTotal.toLocaleString()}</h5>
-                <div className="d-flex flex-column gap-2 mt-3">
+              {/* Total y acciones */}
+              <div className="carrito-total">
+                <h5 className="total-precio">Total: ${precioTotal.toLocaleString()}</h5>
+                <div className="carrito-acciones">
                   <button 
-                    className="btn btn-danger"
+                    className="btn-comprar"
                     onClick={handleComprar}
-                  > Comprar ahora
+                  >
+                    Comprar ahora
                   </button>
                   
-                  <button className="btn btn-outline-secondary" onClick={vaciarCarrito}>
+                  <button 
+                    className="btn-vaciar" 
+                    onClick={vaciarCarrito}
+                  >
                     Vaciar carrito
                   </button>
                 </div>
