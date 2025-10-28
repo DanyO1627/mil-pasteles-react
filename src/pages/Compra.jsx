@@ -123,7 +123,7 @@ export default function Compra() {
       const carritoParaEnviar = [...carrito];
       
       // Redirigir a página de compra exitosa con todos los datos
-      navigate("/compra-exitosa", {
+      navigate("/compraExitosa", {
         state: {
           formData: formData,
           carrito: carritoParaEnviar,

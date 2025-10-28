@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUsuarios } from "../../context/UsuariosContext.jsx";
 import "../../styles/global.css";
 
 export default function EditarUsuario() {
+  
+  const { usuarios, editarUsuario, obtenerUsuario } = useUsuarios(); // obtiene los usuarios y las funciones desde el contect
+  const location = useLocation();
+  const navigate = useNavigate();
+ 
+
+  // estado local del usuario a editar
   const [usuario, setUsuario] = useState({
+    id: "", // ahora el context funciona con ids
     nombre: "",
     email: "",
     telefono: "",
@@ -15,27 +24,26 @@ export default function EditarUsuario() {
     index: null, 
   });
 
-  const [mensaje, setMensaje] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [comunas, setComunas] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
-  const navigate = useNavigate();
+  const [mensaje, setMensaje] = useState("");
 
-  // Cargar datos del usuario a editar desde localStorage
+  // Cargar datos del usuario desde el localstorage
   useEffect(() => {
-    const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    setUsuarios(listaUsuarios);
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
 
-   
-    const params = new URLSearchParams(window.location.search);
-    const index = params.get("index");
-
-    if (index !== null && listaUsuarios[index]) {
-      setUsuario({ ...listaUsuarios[index], index: Number(index) });
-      cambiarComunas(listaUsuarios[index].region);
+    if (id) {
+      const user = obtenerUsuario(id);
+      if (user) {
+        setUsuario({ ...user });
+        cambiarComunas(user.region);
+      }
     }
-  }, []);
+  }, [usuarios, location.search]);
 
  
+  // cambiar comunas desde la región
   const cambiarComunas = (region) => {
     const regiones = {
       rm: ["Santiago", "Puente Alto", "Maipú", "La Florida"],
@@ -45,14 +53,15 @@ export default function EditarUsuario() {
     setComunas(regiones[region] || []);
   };
 
- 
+ // determinar el color del badge según el estado que se le haya asignado
   const badgeClass = {
     Activo: "bg-success",
     Pendiente: "bg-warning text-dark",
     Suspendido: "bg-danger",
   }[usuario.estado] || "bg-secondary";
 
-  //  Guardar cambios del usuario en localStorage
+
+// CAMBIO: ahora usa usuario.id en vez de un indice
   const guardarCambios = () => {
     if (!usuario.nombre || !usuario.email) {
       setMensaje("Por favor completa los campos obligatorios.");
@@ -67,44 +76,29 @@ export default function EditarUsuario() {
       return;
     }
 
-    const actualizados = [...usuarios];
-    const idx = usuario.index;
-
-    if (idx !== null && idx >= 0) {
-      actualizados[idx] = {
-        ...usuario,
-        clave1: usuario.clave1 || usuarios[idx].clave1, 
-        clave2: usuario.clave2 || usuarios[idx].clave2,
-      };
-
-      localStorage.setItem("usuarios", JSON.stringify(actualizados));
-      setUsuarios(actualizados);
-      setMensaje(" Cambios guardados correctamente.");
-
-      //  Redirigir después de guardar
-      setTimeout(() => {
-        navigate("/usuariosRegistrados");
-      }, 1000);
-    } else {
-      setMensaje(" No se pudo identificar el usuario a actualizar.");
-    }
+    editarUsuario(usuario.id, usuario); // id
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+    setTimeout(() => navigate("/usuariosRegistrados"), 1000);
   };
 
-  // Restaurar los datos originales
+  // y se restaura con el id
   const resetFormulario = () => {
-    const lista = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const user = lista[usuario.index];
+    const user = obtenerUsuario(usuario.id);
     if (user) {
-      setUsuario({ ...user, index: usuario.index });
+      setUsuario({ ...user });
       cambiarComunas(user.region);
       setMensaje("Campos restaurados a su valor original.");
     }
   };
 
- 
   const limpiarCampo = (campo) => {
     setUsuario({ ...usuario, [campo]: "" });
   };
+
+
+
+
 
   return (
     <div className="editar-usuario-page">
@@ -325,11 +319,17 @@ export default function EditarUsuario() {
             </div>
           </div>
         </div>
+        {showToast && (
+        <div className="toast-noti toast-exito">
+        Cambios guardados correctamente
+        </div>
+        )}
       </main>
 
       <footer className="text-center text-muted mt-5 py-3">
         <small>© 2025 Pastelería Mil Sabores - Sistema de Administración</small>
       </footer>
     </div>
+
   );
 }

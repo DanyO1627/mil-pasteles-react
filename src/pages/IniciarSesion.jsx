@@ -61,8 +61,9 @@ export default function IniciarSesion() {
       return;
     }
 
-    // 2️⃣ Si no es empleado, buscar en clientes registrados
-    const usuarios = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
+   // 2️⃣ Si no es empleado, buscar en clientes registrados
+    
+    const usuarios = JSON.parse(localStorage.getItem("pasteleria_usuarios") || "[]");
     const usuarioEncontrado = usuarios.find((u) => u.email === correo);
 
     if (!usuarioEncontrado) {
@@ -72,6 +73,7 @@ export default function IniciarSesion() {
     if (usuarioEncontrado.clave !== clave) {
       return setMsg("❌ Contraseña incorrecta.");
     }
+
 
     // ✅ Login exitoso como cliente
     setMsg(`✅ Inicio de sesión exitoso, bienvenido/a ${usuarioEncontrado.nombre}!`);
@@ -94,7 +96,7 @@ export default function IniciarSesion() {
       localStorage.removeItem("usuarioActivo");
       localStorage.removeItem("categorias");
       localStorage.removeItem("inventario");
-      localStorage.removeItem("usuariosExtra");
+      localStorage.removeItem("pasteleria_usuarios");
       
 
       alert("✅ Sistema restaurado. Recarga la página para aplicar los cambios.");

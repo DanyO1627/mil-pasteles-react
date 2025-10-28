@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
+import { useUsuarios } from "../context/UsuariosContext.jsx"; // el import de los usuarios context (para acceder a ellos)
+import { useNavigate } from "react-router-dom"; // para no tener qu recargar
+import Toast from "../components/MensajeFlotante"; // para el mensaje flotante
+import "../styles/mensaje.css";
 import "../styles/style.css";
 
+
 export default function Registro() {
+  const { usuarios, agregarUsuario } = useUsuarios(); // aquí usamos la funcion del contexto
+  const navigate = useNavigate();
+
+
   const [form, setForm] = useState({
     nombre: "",
     email: "",
@@ -12,6 +21,7 @@ export default function Registro() {
   });
   const [msg, setMsg] = useState("");
   const [comunas, setComunas] = useState([]);
+  const [showToast, setShowToast] = useState(false); // mensaje toast
 
   // Objeto de regiones y comunas
   const comunasPorRegion = {
@@ -63,8 +73,9 @@ export default function Registro() {
     }
   }, [form.region]);
 
-  // Control de cambios en los inputs
+
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
 
   // Validación y guardado en localStorage
   const onSubmit = (e) => {
@@ -89,39 +100,60 @@ export default function Registro() {
     if (!comuna) errores.push("Debes seleccionar una comuna.");
 
     if (errores.length > 0) {
-      setMsg(<div className="alert alert-danger"><ul>{errores.map((err, i) => <li key={i}>{err}</li>)}</ul></div>);
+      setMsg(
+        <div className="alert alert-danger">
+          <ul>{errores.map((err, i) => <li key={i}>{err}</li>)}</ul>
+        </div>
+      );
       return;
     }
 
+
+    // Verificar si el correo ya está registrado / DUPLICADO
+    const correoExistente = usuarios.some(
+      (u) => u.email?.toLowerCase() === email.toLowerCase()
+    );
+
+    if (correoExistente) {
+      setMsg(
+        <div className="alert alert-warning">
+          ⚠️ Este correo ya está registrado. Intenta con otro.
+        </div>
+      );
+      return;
+    }
+
+
+    // y si pasa todas esas pruebas, entonces viene esto
     // Generar estado aleatorio
-    const estados = ["Completado", "Pendiente", "Cancelado"];
+    const estados = ["Activo", "Pendiente", "Suspendido"];
     const estadoAleatorio = estados[Math.floor(Math.random() * estados.length)];
 
     // Crear nuevo usuario
     const nuevoUsuario = {
-      fecha: new Date().toISOString().slice(0, 10),
       id: "USR" + Date.now(),
+      fecha: new Date().toISOString().slice(0, 10),
       nombre,
       email,
-      clave:clave1,
+      clave: clave1,
       region,
       comuna,
       estado: estadoAleatorio,
-      monto:0
+      monto: 0,
+      rol: "cliente" // se agrega el rol como en el contexto
     };
 
-    // Obtener lista y guardar
-    const usuariosExtra = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
-    usuariosExtra.push(nuevoUsuario);
-    localStorage.setItem("usuariosExtra", JSON.stringify(usuariosExtra));
 
-    // Mensaje de éxito
+     // Cambio: Ahora usamos el contexto en vez de el localstorage directo
+    agregarUsuario(nuevoUsuario);
+
+    // Y le mostramos el tast verde
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+
     setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
 
-    // Redirección
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
+    setTimeout(() => navigate("/"), 1200);
   };
 
   return (
@@ -177,7 +209,15 @@ export default function Registro() {
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
         </form>
+
+        {/* toast de registro exitoso al final*/}
+        {showToast && (
+          <div className="toast-noti toast-exito">
+            Usuario registrado correctamente
+          </div>
+        )}
       </div>
     </main>
   );
 }
+  

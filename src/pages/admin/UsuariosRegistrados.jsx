@@ -1,33 +1,19 @@
 import { useEffect, useState } from "react";
+import { useUsuarios } from "../../context/UsuariosContext.jsx"; // import de los contextusuario
 import { Link } from "react-router-dom"; 
 import "../../styles/global.css";
 
+
+// acá leemos en tiempo real los usuarios desde el usuarioCOntext, sin depender del localstorage. 
+// acá tmb mostramos la lista de usuarios registrados desde el contexto (useUsuarios())
+// se refleja cualquier cambio (agregar, editar o eliminar)
+
 export default function UsuariosRegistrados() {
-  const [usuarios, setUsuarios] = useState([]);
+  // Con esto obtenemos los datos y funciones del contexto
+  const { usuarios, eliminarUsuario } = useUsuarios(); // la lita y la función elimianr
+  const [showToast, setShowToast] = useState(false);
 
-  // Leer usuarios desde localStorage
-useEffect(() => {
-  const cargarUsuarios = () => {
-    const datos = JSON.parse(localStorage.getItem("usuarios")) || [];
-    setUsuarios(datos);
-  };
 
-  cargarUsuarios();
-
-  //  Si el usuario vuelve desde editarUsuario, recarga automáticamente
-  window.addEventListener("storage", cargarUsuarios);
-
-  return () => window.removeEventListener("storage", cargarUsuarios);
-}, []);
-
-  //  Eliminar un usuario
-  const eliminarUsuario = (index) => {
-    if (window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
-      const actualizados = usuarios.filter((_, i) => i !== index);
-      setUsuarios(actualizados);
-      localStorage.setItem("usuarios", JSON.stringify(actualizados));
-    }
-  };
 
   return (
     <main className="registro-wrapper">
@@ -47,29 +33,36 @@ useEffect(() => {
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Edad</th>
-                <th>Acciones</th> {/*  nueva columna */}
+                <th>Acciones</th> {/* acá los botones*/}
               </tr>
             </thead>
             <tbody>
               {usuarios.map((u, i) => (
-                <tr key={i}>
+                <tr key={u.id || i}>
+                  {/* Fecha: si no existe, se muestra la fecha actual */}
                   <td>{u.fecha || new Date().toLocaleDateString()}</td>
+
+                  {/* Datos principales */}
                   <td>{u.nombre}</td>
-                  <td>{u.correo}</td>
-                  <td>{u.edad}</td>
+                  <td>{u.email || u.correo}</td>
+                  <td>{u.edad || "—"}</td>
+                  <td>{u.estado} </td>
+
+                  {/* Botones de acción */}
                   <td>
-                    {/* Ir al editor */}
-                    <Link
-                      to={`/editarUsuario?index=${i}`}
-                      className="btn btn-sm btn-outline-primary me-2"
-                    >
-                      Editar
+                    {/* BTN EDITAR */}
+                    <Link to={`/editarUsuario?id=${u.id}`} className="btn btn-sm btn-outline-primary me-2">
+                     Editar
                     </Link>
 
-                    {/*  Botón eliminar */}
-                   <button
+                    {/* BTN ELMINAIR USUARIO */}
+                    <button
                       className="btn-eliminar"
-                        onClick={() => eliminarUsuario(i)}
+                      onClick={() => {
+                        eliminarUsuario(u.id);
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 2000);
+                      }}
                     >
                       Eliminar
                     </button>
@@ -78,8 +71,16 @@ useEffect(() => {
               ))}
             </tbody>
           </table>
+          
         )}
+        {showToast && (
+          <div className="toast-noti toast-exito">
+            Usuario eliminado correctamente
+          </div>
+        )}
+        
       </div>
     </main>
+    
   );
 }

@@ -1,11 +1,16 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
+import { useUsuarios } from "../../context/UsuariosContext";
 import "../../styles/stylesAdmin/admin.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
   const { productos } = useProductos();
+
+  // USUARIOS REGISTRADOS DEL CONTEXT
+const { usuarios } = useUsuarios();
+const totalUsuarios = usuarios.length;
 
   // DATOS DINAMICOS
   const totalProductos = productos.length;
@@ -14,9 +19,12 @@ export default function AdminHome() {
     [productos]
   );
 
-  // USUARIOS REGISTRADOS DEL LOCALSTORAGE
-  const usuarios = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
-  const totalUsuarios = usuarios.length || 890; // usa 890 si aún no hay usuarios
+
+const nuevosUsuarios = useMemo(() => {
+  return usuarios.filter(u => u.origen === "nuevo").length;
+}, [usuarios]);
+
+
 
   // Compras (dato temporal)
   const totalCompras = 1234;
@@ -36,12 +44,15 @@ export default function AdminHome() {
           <li onClick={() => navigate("/panelProductos")}>📦 Inventario</li>
           <li onClick={() => navigate("/reportes")}>📈 Reportes</li>
           <li onClick={handleEnConstruccion}>👩‍🍳 Empleados</li>
-          <li onClick={handleEnConstruccion}>🧍 Clientes</li>
+          <li onClick={() => navigate("/UsuariosRegistrados")}>🧍 Clientes</li>
           <li onClick={handleEnConstruccion}>⚙ Configuración</li>
-          <li onClick={handleEnConstruccion}>💬 Ofertas</li>
+          <li onClick={() => navigate("/ofertas")}>💬 Ofertas</li>
           <li onClick={handleEnConstruccion}>🔍 Buscar</li>
           <li onClick={handleEnConstruccion}>❓ Ayuda</li>
           <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
+
+    {/* <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/> */}
+
         </ul>
       </aside>
 
@@ -71,15 +82,16 @@ export default function AdminHome() {
               Stock total: <strong>{totalStock}</strong> unidades
             </p>
           </div>
-
-          <div className="stat-card usuarios">
-            <h3>👥 Usuarios</h3>
-            <p className="stat-number">{totalUsuarios}</p>
-            <p className="stat-info">
-              Nuevos este mes: <strong>+{Math.floor(totalUsuarios * 0.1)}</strong>
-            </p>
           </div>
-        </div>
+          
+
+          <div className="stat-card usuarios" onClick={() => navigate("/UsuariosRegistrados")}>
+          <h3>👥 Usuarios</h3>
+          <p className="stat-number">{totalUsuarios}</p>
+          <p className="stat-info">
+            Nuevos esta semana: <strong>+{nuevosUsuarios}</strong>
+          </p>
+        </div> 
 
         {/* === ACCESOS RÁPIDOS === */}
         <div className="quick-access">
@@ -111,12 +123,13 @@ export default function AdminHome() {
             <h4>⚙ Perfil</h4>
             <p>Configuración de datos personales y cuenta.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
+          <div className="qa-card" onClick={() => navigate("/")}>
             <h4>🏬 Tienda</h4>
-            <p>Visualiza las ventas y estadísticas de tienda.</p>
+            <p>Regresar a la tienda.</p>
           </div>
         </div>
       </main>
     </div>
+    
   );
 }
