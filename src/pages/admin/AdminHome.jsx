@@ -41,7 +41,7 @@ export default function AdminHome() {
           <li onClick={handleEnConstruccion}>💬 Ofertas</li>
           <li onClick={handleEnConstruccion}>🔍 Buscar</li>
           <li onClick={handleEnConstruccion}>❓ Ayuda</li>
-          <li onClick={() => navigate("/admin/perfil")}>🔒 Perfil</li>
+          <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
         </ul>
       </aside>
 
@@ -107,7 +107,7 @@ export default function AdminHome() {
             <h4>📈 Reportes</h4>
             <p>Generación de reportes detallados.</p>
           </div>
-          <div className="qa-card" onClick={() => navigate("/admin/perfil")}>
+          <div className="qa-card" onClick={() => navigate("/perfilAdmin")}>
             <h4>⚙ Perfil</h4>
             <p>Configuración de datos personales y cuenta.</p>
           </div>

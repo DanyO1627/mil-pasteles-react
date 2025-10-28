@@ -37,6 +37,10 @@ import GestionarCategorias from "./pages/admin/GestionarCategorias.jsx";
 import NuevaCategoria from "./pages/admin/NuevaCategoria.jsx";
 import Compra from "./pages/Compra.jsx";
 import CompraExitosa from "./pages/CompraExitosa.jsx";
+import PerfilAdmin from "./pages/admin/PerfilAdmin.jsx";
+import EditarUsuario from "./pages/admin/EditarUsuario.jsx";
+import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
+import Usuarios from "./pages/admin/Usuarios.jsx";
 function App() {
   return (
     <CategoriasProvider>
@@ -71,10 +75,13 @@ function App() {
         <Route path="/compra" element ={<Compra/>}/>
         <Route path="/compraExitosa" element ={<CompraExitosa/>}/>
         <Route path="/boleta" element ={<Boleta/>}/>
+        <Route path="/perfilAdmin" element ={<PerfilAdmin/>}/>
+        <Route path="/editarUsuario" element ={<EditarUsuario/>}/>
+        <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/>
+        <Route path="/usuarios" element ={<Usuarios/>}/>
 
 
       </Routes>
-
       <Footer />
       <Chat />
     </CarritoProvider>
