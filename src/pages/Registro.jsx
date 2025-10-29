@@ -164,6 +164,7 @@ export default function Registro() {
 
             <div className="field">
               <label htmlFor="clave1">Contraseña</label>
+              <input id="clave1" name="clave1" type="password" onChange={onChange} value={form.clave1} />
             </div>
 
             <div className="field">
