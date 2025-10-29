@@ -29,27 +29,27 @@
 
 
 /* LOS CSS DE BUSQUEDA DE LA EVE */
-/* === BÚSQUEDA === */
-.search-box {
+#productos .search-box {
   display: flex;
-  justify-content: left; 
-  padding-left: 60px;
-  margin: 1.5rem auto;
-  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  /* elimina centrados previos */
+  margin: 1.5rem 0;
+  padding-left: 0;
+
+  /* alinea visualmente con el título */
+  margin-left: 2rem; /* <-- ajusta este valor según el margen del h2 */
 }
 
 .search-input {
-  width: 60%; 
-  max-width: 600px; 
+  flex: 1;
+  max-width: 600px;
   padding: 10px 14px;
   border: 1px solid #6b3d45;
   border-radius: 12px;
   font-size: 1rem;
   outline: none;
   transition: all 0.3s ease;
-}
-
-.search-input:focus {
-  border-color: #b25a64;
-  box-shadow: 0 0 6px rgba(210, 100, 120, 0.3);
 }
