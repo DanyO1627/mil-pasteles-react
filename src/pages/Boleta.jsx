@@ -3,20 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/boleta.css";
 import logo from "../assets/logo.png";
+import { guardarBoleta } from "../data/dataBoletas"; // ✅ Importar función de guardado
 
 export default function Boleta() {
   const navigate = useNavigate();
   const location = useLocation();
   const { formData = {}, carrito = [], precioTotal = 0, costoEnvio = 0 } = location.state || {};
-
-  // Debug (puedes eliminar estos console.log si ya no los necesitas)
-  useEffect(() => {
-    console.log("🧾 Datos recibidos en Boleta:");
-    console.log("FormData:", formData);
-    console.log("Carrito:", carrito);
-    console.log("Precio Total:", precioTotal);
-    console.log("Costo Envío:", costoEnvio);
-  }, [formData, carrito, precioTotal, costoEnvio]);
 
   // Calcular totales
   const subtotal = precioTotal || 0;
@@ -30,18 +22,55 @@ export default function Boleta() {
   });
   const numeroFactura = Math.floor(Math.random() * 1000000);
 
-  // ✅ Método de pago aleatorio
+  // Método de pago aleatorio
   const metodosPago = ["Tarjeta de débito", "Tarjeta de crédito"];
   const metodoPago = metodosPago[Math.floor(Math.random() * metodosPago.length)];
 
-  // ✅ Atendido por aleatorio
-  const empleados = [
-    "Daniela Oliveros",
-    "Constanza Pino",
-    "Evelin Calderon",
-  ];
+  // Atendido por aleatorio
+  const empleados = ["Daniela Oliveros", "Constanza Pino", "Evelin Calderon"];
   const atendidoPor = empleados[Math.floor(Math.random() * empleados.length)];
 
+  // ✅ Registrar la boleta en LocalStorage
+  useEffect(() => {
+    if (formData.nombre && carrito.length > 0) {
+      const nuevaBoleta = {
+        id: numeroFactura,
+        fecha,
+        cliente: {
+          nombre: formData.nombre,
+          apellido: formData.apellido,
+          email: formData.email,
+          telefono: formData.telefono,
+          direccion: `${formData.calle}${
+            formData.departamento ? ", Depto " + formData.departamento : ""
+          }, ${formData.comuna}, ${formData.region}`,
+        },
+        carrito: carrito.map((item) => ({
+          id: item.id,
+          nombre: item.nombre,
+          cantidad: item.cantidad,
+          precio: item.precio,
+          total: item.precio * item.cantidad,
+        })),
+        subtotal,
+        costoEnvio,
+        totalFinal,
+        metodoPago,
+        atendidoPor,
+      };
+
+      // Evitar duplicados si se recarga la página
+      const boletasPrevias = JSON.parse(localStorage.getItem("boletas")) || [];
+      const yaExiste = boletasPrevias.some((b) => b.id === nuevaBoleta.id);
+
+      if (!yaExiste) {
+        guardarBoleta(nuevaBoleta);
+        console.log("💾 Boleta guardada:", nuevaBoleta);
+      }
+    }
+  }, []); // Solo se ejecuta una vez
+
+  // Manejo de ausencia de datos
   if (!location.state || !formData.nombre) {
     return (
       <div className="compra-exitosa-container">
@@ -56,6 +85,7 @@ export default function Boleta() {
     );
   }
 
+  // Imprimir boleta
   const handleImprimir = () => {
     window.print();
   };
@@ -72,8 +102,10 @@ export default function Boleta() {
             <p><strong>Cliente:</strong> {formData.nombre} {formData.apellido}</p>
             <p><strong>Correo:</strong> {formData.email}</p>
             <p><strong>Teléfono:</strong> {formData.telefono}</p>
-            <p><strong>Dirección:</strong> {formData.calle}
-              {formData.departamento && `, Depto ${formData.departamento}`}, {formData.comuna}, {formData.region}
+            <p>
+              <strong>Dirección:</strong> {formData.calle}
+              {formData.departamento && `, Depto ${formData.departamento}`}, {formData.comuna},{" "}
+              {formData.region}
             </p>
           </div>
         </div>

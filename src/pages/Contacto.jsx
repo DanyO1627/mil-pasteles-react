@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import logo from "../assets/logo.png";
-import "../styles/style.css"
-
+import "../styles/style.css";
 export default function Contacto() {
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");

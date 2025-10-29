@@ -7,7 +7,7 @@ import "../styles/compra.css";
 export default function Compra() {
   const { carrito, precioTotal, vaciarCarrito, procesarCompra } = useCarrito();
   const navigate = useNavigate();
-  
+
   // Objeto de regiones y comunas de Chile
   const comunasPorRegion = {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
@@ -45,7 +45,7 @@ export default function Compra() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Si es el campo de teléfono, solo permitir números
     if (name === "telefono") {
       const soloNumeros = value.replace(/\D/g, "");
@@ -67,7 +67,7 @@ export default function Compra() {
         [name]: value
       }));
     }
-    
+
     // Limpiar error del campo cuando el usuario escribe
     if (errors[name]) {
       setErrors(prev => ({
@@ -79,22 +79,22 @@ export default function Compra() {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.nombre.trim()) newErrors.nombre = "El nombre es requerido";
     if (!formData.apellido.trim()) newErrors.apellido = "El apellido es requerido";
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "El email es requerido";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email inválido";
     }
-    
+
     if (!formData.telefono.trim()) {
       newErrors.telefono = "El teléfono es requerido";
     } else if (formData.telefono.length < 9) {
       newErrors.telefono = "El teléfono debe tener al menos 9 dígitos";
     }
-    
+
     if (!formData.calle.trim()) newErrors.calle = "La dirección es requerida";
     if (!formData.region) newErrors.region = "Selecciona una región";
     if (!formData.comuna) newErrors.comuna = "Selecciona una comuna";
@@ -103,9 +103,12 @@ export default function Compra() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Calcular costo de envío dinámico según región
+  const costoEnvio = formData.region === "Metropolitana" ? 3000 : 5000;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (carrito.length === 0) {
       alert("Tu carrito está vacío");
       navigate("/productos");
@@ -113,17 +116,11 @@ export default function Compra() {
     }
 
     if (validateForm()) {
-      // NO procesar la compra aún, solo validar
-      // const resultado = procesarCompra();
-      
-      // Calcular costo de envío
-      const costoEnvio = 3000;
-      
       // Guardar una copia del carrito antes de vaciar
       const carritoParaEnviar = [...carrito];
-      
+
       // Redirigir a página de compra exitosa con todos los datos
-      navigate("/compra-exitosa", {
+      navigate("/compraExitosa", {
         state: {
           formData: formData,
           carrito: carritoParaEnviar,
@@ -131,7 +128,7 @@ export default function Compra() {
           costoEnvio: costoEnvio
         }
       });
-      
+
       // Procesar la compra y vaciar carrito después de navegar
       setTimeout(() => {
         procesarCompra();
@@ -167,7 +164,7 @@ export default function Compra() {
             <section className="form-seccion">
               <h3 className="form-seccion-titulo">Información del cliente</h3>
               <p className="form-seccion-subtitulo">Completa la siguiente información</p>
-              
+
               <div className="form-row">
                 <div className="form-group">
                   <label>Nombre*</label>
@@ -180,7 +177,7 @@ export default function Compra() {
                   />
                   {errors.nombre && <span className="error-text">{errors.nombre}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Apellido*</label>
                   <input
@@ -206,7 +203,7 @@ export default function Compra() {
                   />
                   {errors.email && <span className="error-text">{errors.email}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Teléfono* (solo números)</label>
                   <input
@@ -227,7 +224,7 @@ export default function Compra() {
             <section className="form-seccion">
               <h3 className="form-seccion-titulo">Dirección de entrega de los productos</h3>
               <p className="form-seccion-subtitulo">Ingresa dirección de forma detallada</p>
-              
+
               <div className="form-row">
                 <div className="form-group">
                   <label>Calle*</label>
@@ -241,7 +238,7 @@ export default function Compra() {
                   />
                   {errors.calle && <span className="error-text">{errors.calle}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Departamento (opcional)</label>
                   <input
@@ -272,7 +269,7 @@ export default function Compra() {
                   </select>
                   {errors.region && <span className="error-text">{errors.region}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Comuna*</label>
                   <select
@@ -306,7 +303,7 @@ export default function Compra() {
             </section>
 
             <button type="submit" className="btn-pagar">
-              Pagar ahora ${precioTotal.toLocaleString()}
+              Pagar ahora ${(precioTotal + costoEnvio).toLocaleString()}
             </button>
           </form>
         </div>
@@ -315,8 +312,21 @@ export default function Compra() {
         <div className="checkout-resumen">
           <div className="resumen-card">
             <div className="resumen-header">
-              <h3>Total a pagar:</h3>
+              <h3>Subtotal:</h3>
               <h2 className="resumen-total">${precioTotal.toLocaleString()}</h2>
+              <p className="resumen-envio">
+                Envío: ${costoEnvio.toLocaleString()}
+                <span style={{ fontSize: "0.9rem", color: "#555" }}>
+                  {" "}
+                  ({formData.region === "Metropolitana" ? "Región Metropolitana" : formData.region ? "Otra región" : "Selecciona región"})
+                </span>
+              </p>
+
+              <hr />
+
+              <h2 className="resumen-total">
+                Total final: ${(precioTotal + costoEnvio).toLocaleString()}
+              </h2>
             </div>
 
             <div className="resumen-tabla">

@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
 import { CarritoProvider } from "./context/CarritoContext";
 import { ProductosProvider } from "./context/InventarioContext.jsx";
 import { CategoriasProvider } from "./context/CategoriasContext.jsx";
+import ScrollToTop from "./components/ScrollToTop";
 
 //components
 import NavBar from "./components/Navbar.jsx";
@@ -41,11 +41,16 @@ import PerfilAdmin from "./pages/admin/PerfilAdmin.jsx";
 import EditarUsuario from "./pages/admin/EditarUsuario.jsx";
 import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
 import Usuarios from "./pages/admin/Usuarios.jsx";
+import HistorialCompras from "./pages/admin/HistorialCompras.jsx";
+import Empleados from "./pages/admin/Empleados.jsx";
+import NuevoProducto from "./pages/admin/NuevoProducto.jsx";
+
 function App() {
   return (
     <CategoriasProvider>
     <ProductosProvider>
     <CarritoProvider>
+      <ScrollToTop />
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -79,7 +84,10 @@ function App() {
         <Route path="/editarUsuario" element ={<EditarUsuario/>}/>
         <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/>
         <Route path="/usuarios" element ={<Usuarios/>}/>
-
+        <Route path="/nuevoProducto" element={<NuevoProducto/>}/>
+        <Route path="/historialCompras" element ={<HistorialCompras/>}/>
+        <Route path="/empleados" element ={<Empleados/>}/>
+        <Route path="/perfilAdmin/:id" element={<PerfilAdmin />} />
 
       </Routes>
       <Footer />

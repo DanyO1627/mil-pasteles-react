@@ -153,7 +153,7 @@ export default function IniciarSesion() {
 
           <div style={{ marginTop: "15px", textAlign: "center" }}>
             <a
-              href="/registrarse"
+              href="/registro"
               style={{ color: "#d8a1a7", textDecoration: "none" }}
             >
               ¿No tienes cuenta? Regístrate aquí

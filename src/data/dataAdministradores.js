@@ -46,7 +46,7 @@ export const dataAdministradores = [
     clave: "empleado123",
     rol: "Desarrolladora",
     sucursal: "Mil Sabores Providencia",
-    avatar: DanyImagen,
+    avatar: "/avatares/imagen_perfil_dani.jpeg",
     ultimoAcceso: null,
   },
 ];

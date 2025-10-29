@@ -29,7 +29,7 @@ export default function EditarCategoria() {
           <p>La categoría que intentas editar no existe.</p>
           <button
             className="categoria-form-btn categoria-form-btn--cancelar"
-            onClick={() => navigate("/categorias")}
+            onClick={() => navigate("/gestionarCategorias")}
           >
             ← Volver a categorías
           </button>
@@ -91,7 +91,7 @@ export default function EditarCategoria() {
       });
 
       setTimeout(() => {
-        navigate("/categorias");
+        navigate("/gestionarCategorias");
       }, 1500);
     } catch (error) {
       console.error(error);
@@ -243,7 +243,7 @@ export default function EditarCategoria() {
             <button
               type="button"
               className="categoria-form-btn categoria-form-btn--cancelar"
-              onClick={() => navigate("/admin/categorias")}
+              onClick={() => navigate("/gestionarCategorias")}
             >
               ↩️ Cancelar
             </button>

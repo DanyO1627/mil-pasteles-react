@@ -31,16 +31,13 @@ export default function AdminHome() {
       <aside className="sidebar">
         <h2>🧁 Mil Sabores</h2>
         <ul>
-          <li className="active" onClick={() => navigate("/admin")}>📊 Panel de control</li>
-          <li onClick={handleEnConstruccion}>🧾 Órdenes</li>
+          <li className="active" onClick={() => navigate("/adminHome")}>📊 Panel de control</li>
+          <li onClick={() => navigate("/historialCompras")}>🧾 Historial Compras</li>
           <li onClick={() => navigate("/panelProductos")}>📦 Inventario</li>
           <li onClick={() => navigate("/reportes")}>📈 Reportes</li>
-          <li onClick={handleEnConstruccion}>👩‍🍳 Empleados</li>
+          <li onClick={() => navigate("/empleados")}>👩‍🍳 Empleados</li>
           <li onClick={handleEnConstruccion}>🧍 Clientes</li>
-          <li onClick={handleEnConstruccion}>⚙ Configuración</li>
           <li onClick={handleEnConstruccion}>💬 Ofertas</li>
-          <li onClick={handleEnConstruccion}>🔍 Buscar</li>
-          <li onClick={handleEnConstruccion}>❓ Ayuda</li>
           <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
         </ul>
       </aside>
@@ -87,8 +84,8 @@ export default function AdminHome() {
             <h4>📊 Dashboard</h4>
             <p>Visión general de métricas y estadísticas.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
-            <h4>🧾 Órdenes</h4>
+          <div className="qa-card" onClick={() => navigate("/historialCompra")}>
+            <h4>🧾 Historial Compra</h4>
             <p>Gestión y seguimiento de pedidos en curso.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/panelProductos")}>
@@ -111,7 +108,7 @@ export default function AdminHome() {
             <h4>⚙ Perfil</h4>
             <p>Configuración de datos personales y cuenta.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
+          <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>🏬 Tienda</h4>
             <p>Visualiza las ventas y estadísticas de tienda.</p>
           </div>

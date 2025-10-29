@@ -78,7 +78,7 @@ export default function PanelProductos() {
         </button>
 
         <button
-          onClick={() => alert("Función de agregar producto en desarrollo")}
+          onClick={() =>navigate("/nuevoProducto")}
           style={{
             padding: "10px 20px",
             backgroundColor: "#897176",

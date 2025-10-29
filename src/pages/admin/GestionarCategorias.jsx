@@ -152,7 +152,7 @@ export default function GestionarCategorias() {
                     borderRadius: "4px",
                     cursor: "pointer"
                   }}
-                  onClick={() => navigate(`/admin/editar/${p.id}`)}
+                  onClick={() => navigate(`/editarCategoria/${p.id}`)}
                 >
                   Asignar categoría
                 </button>
@@ -200,7 +200,7 @@ export default function GestionarCategorias() {
           </p>
           <button
             className="gestion-cat-btn gestion-cat-btn--nueva"
-            onClick={() => navigate("/admin/categorias/nueva")}
+            onClick={() => navigate("/nuevaCategoria")}
           >
             Crear primera categoría
           </button>
@@ -275,7 +275,7 @@ export default function GestionarCategorias() {
                   <div className="categoria-admin-acciones">
                     <button
                       className="categoria-admin-btn categoria-admin-btn--editar"
-                      onClick={() => navigate(`/admin/categorias/editar/${categoria.id}`)}
+                      onClick={() => navigate(`/editarCategoria/${categoria.id}`)}
                     >
                       ✏️ Editar
                     </button>

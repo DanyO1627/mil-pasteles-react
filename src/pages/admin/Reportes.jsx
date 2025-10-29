@@ -162,7 +162,7 @@ export default function Reportes() {
       <div className="reportes-actions">
         <button
           className="reportes-btn reportes-btn--volver"
-          onClick={() => navigate("/admin")}
+          onClick={() => navigate("/adminHome")}
         >
           ← Volver al inicio
         </button>
