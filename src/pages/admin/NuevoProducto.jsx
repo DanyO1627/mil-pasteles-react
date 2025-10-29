@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../utils/NuevoProducto.logic.js";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
 import { useCategorias } from "../../context/CategoriasContext"; // ✅ Importar categorías
@@ -26,26 +27,9 @@ export default function NuevoProducto() {
   // =======================
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    // Si se está modificando la imagen, genera la vista previa
-    if (name === "imagen") {
-      if (value.trim() === "") {
-        setPreview("/assets/sin_imagen.webp");
-      } else if (value.startsWith("/assets/")) {
-        // Soporte para imágenes locales dentro de src/assets
-        try {
-          const localPath = new URL(`../../..${value}`, import.meta.url).href;
-          setPreview(localPath);
-        } catch (err) {
-          console.warn("⚠️ No se pudo cargar la imagen local:", err);
-          setPreview("https://via.placeholder.com/150?text=Sin+imagen");
-        }
-      } else {
-        // Si es una URL externa (https://...)
-        setPreview(value);
-      }
-    }
+    const result = window.NuevoProductoLogic.handleChange(formData, name, value);
+    setFormData(result.nuevoFormData);
+    setPreview(result.preview);
   };
 
   // =======================
@@ -53,38 +37,13 @@ export default function NuevoProducto() {
   // =======================
   const handleSubmit = (e) => {
     e.preventDefault();
+    const result = window.NuevoProductoLogic.handleSubmit(formData);
+    setMensaje(result.mensaje);
 
-    if (!formData.nombre || !formData.precio) {
-      setMensaje("⚠️ Debes completar al menos nombre y precio.");
-      return;
+    if (result.valido) {
+      agregarProducto(result.nuevoProducto);
+      setTimeout(() => navigate(window.NuevoProductoLogic.getRedirectUrl()), 1500);
     }
-
-    // 🔧 Resolver imagen correctamente
-    let imagenFinal = formData.imagen;
-    if (!imagenFinal || imagenFinal.trim() === "") {
-      imagenFinal = "/assets/sin_imagen.webp";
-    } else if (imagenFinal.startsWith("/assets/")) {
-      try {
-        imagenFinal = new URL(`../../..${imagenFinal}`, import.meta.url).href;
-      } catch {
-        imagenFinal = "https://via.placeholder.com/150?text=Sin+imagen";
-      }
-    }
-
-    // ✅ Producto coherente con contextos (usa categoriaId)
-    const nuevoProducto = {
-      id: Date.now(),
-      nombre: formData.nombre.trim(),
-      precio: Number(formData.precio),
-      stock: Number(formData.stock) || 0,
-      categoriaId: formData.categoriaId ? Number(formData.categoriaId) : null,
-      imagen: imagenFinal,
-      descripcion: formData.descripcion.trim() || "Producto sin descripción",
-    };
-
-    agregarProducto(nuevoProducto);
-    setMensaje(`✅ Producto agregado: ${formData.nombre}`);
-    setTimeout(() => navigate("/panelProductos"), 1500);
   };
 
   // =======================
@@ -175,8 +134,8 @@ export default function NuevoProducto() {
                   src={preview}
                   alt="Previsualización del producto"
                   onError={(e) =>
-                    (e.target.src =
-                      "https://via.placeholder.com/150?text=Sin+imagen")
+                  (e.target.src =
+                    "https://via.placeholder.com/150?text=Sin+imagen")
                   }
                 />
               </div>

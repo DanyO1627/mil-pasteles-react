@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUsuarios } from "../context/UsuariosContext.jsx"; // el import de los usuarios context (para acceder a ellos)
 import { useNavigate } from "react-router-dom"; // para no tener qu recargar
+import "../utils/Registro.logic.js";
 import "../styles/mensaje.css";
 import "../styles/style.css";
 
@@ -62,86 +63,39 @@ export default function Registro() {
 
   // Actualiza el listado de comunas cuando cambia la región
   useEffect(() => {
-    if (form.region && comunasPorRegion[form.region]) {
-      setComunas(comunasPorRegion[form.region]);
-    } else {
-      setComunas([]);
-    }
+    const lista = window.RegistroLogic.computeComunas(form.region, comunasPorRegion);
+    setComunas(lista);
   }, [form.region]);
 
   // Control de cambios en los inputs
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    const next = window.RegistroLogic.changeHandler(form, e.target.name, e.target.value);
+    setForm(next);
+  };
 
   // Validación y guardado en localStorage
   const onSubmit = (e) => {
     e.preventDefault();
-    const { nombre, email, clave1, clave2, region, comuna } = form;
-    const errores = [];
-
-    // Validar nombre
-    if (nombre.trim() === "") errores.push("El nombre no puede estar vacío.");
-
-    // Validar correo
-    if (!email.includes("@")) errores.push("El correo electrónico no es válido.");
-
-    // Validar contraseña
-    if (clave1.length < 6) errores.push("La contraseña debe tener al menos 6 caracteres.");
-
-    // Confirmar contraseña
-    if (clave1 !== clave2) errores.push("Las contraseñas no coinciden.");
-
-    // Validar región y comuna
-    if (!region) errores.push("Debes seleccionar una región.");
-    if (!comuna) errores.push("Debes seleccionar una comuna.");
-
-    if (errores.length > 0) {
-      setMsg(<div className="alert alert-danger"><ul>{errores.map((err, i) => <li key={i}>{err}</li>)}</ul></div>);
-      return;
-    }
-
-    // Verificar si el correo ya está registrado / DUPLICADO
-    const correoExistente = usuarios.some(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
+    const estados = ["Completado", "Pendiente", "Cancelado"];
+    const res = window.RegistroLogic.submitRegistro(
+      form,
+      usuarios,
+      comunasPorRegion,
+      estados
     );
 
-    if (correoExistente) {
-      setMsg(
-        <div className="alert alert-warning">
-          ⚠️ Este correo ya está registrado. Intenta con otro.
-        </div>
-      );
-      return;
-    }
+    // Mostrar mensaje HTML ya formateado (opcional)
+    setMsg(<div dangerouslySetInnerHTML={{ __html: res.messageHtml }} />);
 
-    // Generar estado aleatorio
-    const estados = ["Completado", "Pendiente", "Cancelado"];
-    const estadoAleatorio = estados[Math.floor(Math.random() * estados.length)];
+    if (!res.ok) return; // errores o duplicado: no continuar
 
-    // Crear nuevo usuario
-    const nuevoUsuario = {
-      fecha: new Date().toISOString().slice(0, 10),
-      id: "USR" + Date.now(),
-      nombre,
-      email,
-      clave:clave1,
-      region,
-      comuna,
-      estado: estadoAleatorio,
-      monto:0,
-      rol:"cliente"
-    };
-
-     // Cambio: Ahora usamos el contexto en vez de el localstorage directo
-    agregarUsuario(nuevoUsuario);
-
-    // Y le mostramos el tast verde
+    // Éxito: persistir mediante el contexto y efectos visuales
+    agregarUsuario(res.nuevoUsuario);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
-
-    setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
-
-    setTimeout(() => navigate("/"), 1200);
+    setTimeout(() => navigate(res.navigateTo), 1200);
   };
+
 
   return (
     <main className="registro-wrapper">
@@ -196,7 +150,7 @@ export default function Registro() {
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
         </form>
-         {showToast && (
+        {showToast && (
           <div className="toast-noti toast-exito">
             Usuario registrado correctamente
           </div>
