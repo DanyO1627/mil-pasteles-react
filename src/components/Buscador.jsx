@@ -1,5 +1,6 @@
 // src/components/Buscador.jsx
 import React, { useState, useEffect } from "react";
+import "../utils/Buscador.logic.js"; // PARA LAS PRUEBAS UNITARIAS
 import PropTypes from "prop-types";
 import "../styles/buscador.css";
 import Productos from "../pages/Productos";
@@ -35,18 +36,22 @@ export default function Buscador({
 
   // Llamamos a onSearch cuando cambia debouncedTerm
   useEffect(() => {
-    onSearch && onSearch(debouncedTerm.trim());
-  }, [debouncedTerm, onSearch]);
+  window.BuscadorLogic.triggerSearch(onSearch, debouncedTerm);
+}, [debouncedTerm, onSearch]);
 
   const handleChange = (e) => {
-    setTerm(e.target.value);
-  };
+  const nuevoValor = window.BuscadorLogic.handleChange(e);
+  setTerm(nuevoValor);
+};
+
 
   const clear = () => {
-    setTerm("");
-    // si no hay debounce, onSearch se llama en el effect anterior
-    if (debounceMs === 0) onSearch && onSearch("");
-  };
+  const nuevoValor = window.BuscadorLogic.clear(onSearch, debounceMs);
+  setTerm(nuevoValor);
+};
+
+const valorFinal = window.BuscadorLogic.debounceUpdate(term, debounceMs);
+
 
   return (
     <div className="buscador-class d-flex align-items-center">

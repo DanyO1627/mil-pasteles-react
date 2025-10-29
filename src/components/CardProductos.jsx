@@ -7,7 +7,7 @@ import '../styles/mensaje.css';
 import '../styles/cardProducto.css';
 import '../styles/base.css';
 
-export default function CardProductos({ producto}) {
+export default function CardProductos({ producto}) { // RECIBE PROP LLAMADO PRODUCTO
     const navigate = useNavigate();
     const { agregarAlCarrito } = useCarrito();
       const [showToast, setShowToast] = useState(false);

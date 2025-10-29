@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCarrito } from '../context/CarritoContext';
 import { useProductos } from '../context/InventarioContext';
+import '../utils/DetalleProducto.logic.js'; // PARA PRUEBAS UNITARIAS
+
 import Toast from '../components/MensajeFlotante';
 
 import '../styles/mensaje.css';
@@ -23,16 +25,18 @@ export default function DetalleProducto() {
     return <p>Producto no encontrado.</p>;
   }
 
+  // cambiado para las pruebas unitarias 
+  const sinStock = window.DetalleProductoLogic.esSinStock(producto);
+  const stockBajo = window.DetalleProductoLogic.esStockBajo(producto);
+
   const handleAgregar = () => {
-    const agregado = agregarAlCarrito(producto);
-    if (agregado) {
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000); // 2 seg
-    }
+    window.DetalleProductoLogic.handleAgregar(
+      producto,
+      agregarAlCarrito,
+      setShowToast
+    );
   };
 
-  const sinStock = (producto.stock ?? 0) === 0;
-  const stockBajo = (producto.stock ?? 0) > 0 && (producto.stock ?? 0) <= 3;
 
   return (
     <div className="detalle-card detalle-flex">
@@ -62,20 +66,20 @@ export default function DetalleProducto() {
         </div>
 
         <div className="detalle-botones">
-          <button 
-            className="btn btn-danger btn-agregar" 
+          <button
+            className="btn btn-danger btn-agregar"
             onClick={handleAgregar}
             disabled={sinStock}
           >
             {sinStock ? 'Sin stock' : 'Agregar al carrito'}
           </button>
-          <button 
+          <button
             className="btn-carrito"
             onClick={() => navigate(`/productos`)}
           >
             Ver más productos
           </button>
-          <button 
+          <button
             className="btn-carrito"
             onClick={() => navigate(`/carrito`)}
           >

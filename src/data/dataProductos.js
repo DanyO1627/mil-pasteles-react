@@ -68,7 +68,9 @@ const lista_productos = [
     descripcion: "Tarta con manzanas caramelizadas y toque de canela.",
     descripcion_larga: "Disfruta de nuestra Tarta de Manzana con su base de masa quebrada crujiente, rellena de láminas de manzana fresca, suavemente caramelizadas y sazonadas con un toque cálido de canela. Horneada a la perfección, es ideal para servir tibia, sola o acompañada de helado.",
     categoriaId: 2, // Antes: "Tartas & Pies"
-    stock: 14 
+    stock: 14 , 
+    // oferta: true
+
   },
   {
     id: 3,

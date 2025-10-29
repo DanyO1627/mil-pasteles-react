@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // ACÁ IMPORTAMOS EL USE STATE
 import { useParams, useNavigate } from "react-router-dom";
+import "../../utils/EditarProducto.logic.js"; // IMPORTA LA LÓGICA PARA LAS PRUEBAS UNITARIAS
 import { useProductos } from "../../context/InventarioContext";
 
 export default function EditarProducto() {
@@ -9,7 +10,7 @@ export default function EditarProducto() {
 
   const producto = obtenerProducto(id);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({ // Y ACÁ EL FOMRDATA GUARDA LOS CAMBIOS Y EL SET LOS ACTUALIZA
     nombre: producto?.nombre || "",
     precio: producto?.precio || "",
     stock: producto?.stock || 0,
@@ -37,13 +38,14 @@ export default function EditarProducto() {
     );
   }
 
-  // 🔧 Maneja cambios en los inputs
+  // 🔧 Maneja cambios en los inputs (usa la lógica externa)
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const nuevo = window.EditarProductoLogic.handleChange(e, formData);
+    setFormData(nuevo);
 
     // Previsualizar imagen si cambia
-    if (name === "imagen") {
+    if (e.target.name === "imagen") {
+      const value = e.target.value;
       if (value.trim() === "") {
         setPreview("/assets/sin_imagen.webp");
       } else if (value.startsWith("/assets/")) {
@@ -59,32 +61,13 @@ export default function EditarProducto() {
     }
   };
 
-  // Guardar cambios
+  // 💾 Guardar cambios (usa la lógica externa)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Resolver imagen local al guardar
-    let imagenFinal = formData.imagen;
-    if (!imagenFinal || imagenFinal.trim() === "") {
-      imagenFinal = "/assets/sin_imagen.webp";
-    } else if (imagenFinal.startsWith("/assets/")) {
-      try {
-        imagenFinal = new URL(`../../..${imagenFinal}`, import.meta.url).href;
-      } catch {
-        imagenFinal = "https://via.placeholder.com/150?text=Sin+imagen";
-      }
-    }
-
-    actualizarProducto(producto.id, {
-      nombre: formData.nombre,
-      precio: Number(formData.precio),
-      stock: Number(formData.stock),
-      categoria: formData.categoria,
-      imagen: imagenFinal,
-      descripcion: formData.descripcion,
-    });
-
-    setMensaje(`✅ Producto actualizado: ${formData.nombre}`);
+    const datosFinales = window.EditarProductoLogic.prepararProducto(formData);
+    actualizarProducto(producto.id, datosFinales);
+    setMensaje(window.EditarProductoLogic.generarMensajeExito(datosFinales.nombre));
 
     setTimeout(() => navigate("/panelProductos"), 1500);
   };
@@ -250,10 +233,7 @@ export default function EditarProducto() {
 
         {/* Botones */}
         <div style={{ display: "flex", gap: "10px", marginTop: "30px" }}>
-          <button 
-            type="submit" 
-            onClick={() => navigate("/panelProductos")} 
-            style={btnGuardar}>
+          <button type="submit" style={btnGuardar}>
             💾 Guardar cambios
           </button>
           <button
