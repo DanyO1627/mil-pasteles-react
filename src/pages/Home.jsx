@@ -6,74 +6,64 @@ import "../styles/variables.css";
 import "../styles/buscador.css"
 import '../styles/cardProducto.css';
 
+import { useNavigate } from "react-router-dom";
+import '../styles/cardProducto.css'; // usa mismo css
+
 import { useEffect } from "react";
 import CardHomeProducto from "../components/CardHomeProducto";
 import { useProductos } from "../context/InventarioContext"; // esto hace que usemos los productos globales
-import ChatBot from "../components/Chatbot";
 
 import chefImg from "../assets/chef.png";
-import chatBotImg from "../assets/chatbot.png";
-
 
 export default function Home() {
+  const navigate = useNavigate();
 
 
   // usar los productos
-const { productos } = useProductos();
+  const { productos } = useProductos();
 
-const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
+  const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
 
-const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
 
-const productosFiltrados = productosHome.filter((p) =>
-  p.nombre.toLowerCase().includes(query.toLowerCase())
-);
+  const productosFiltrados = productosHome.filter((p) =>
+    p.nombre.toLowerCase().includes(query.toLowerCase())
+  );
 
   useEffect(() => {
-  console.log("Productos cargados en Home:", productos);
-}, [productos]);
-
-
-    const handleResetHome = () => {
-    const confirmar = window.confirm(
-      "⚠️ Esto eliminará los productos y categorías almacenados en el navegador. ¿Deseas continuar?"
-    );
-    if (confirmar) {
-      localStorage.removeItem("categorias");
-      localStorage.removeItem("inventario");
-      localStorage.removeItem("productos");
-      alert("✅ Datos de productos restaurados. Recarga la página.");
-      window.location.reload();
-    }
-  };
+    console.log("Productos cargados en Home:", productos);
+  }, [productos]);
 
 
   return (
-    <> 
     <main className="home">
- 
       <section className="hero">
-  <div className="hero-container">
-    {/* izquierda el titulo*/}
-    <div className="hero-text">
-      <h1>Pastelería Mil Sabores</h1>
-      <p className="lead">Endulza tu día con nuestras tortas artesanales.</p>
+        <div className="hero-container">
 
-      
-    </div>
+          {/* izquierda el titulo*/}
+          <div className="hero-text">
+            <h1>Pastelería Mil Sabores</h1>
+            <p className="lead">Endulza tu día con nuestras tortas artesanales.</p>
 
-    {/* a la derecha*/}
-    <div className="hero-img">
-      <img src={chefImg} alt="Chef pastelero" />
-    </div>
-  </div>
-</section>
+
+          </div>
+
+          {/* a la derecha*/}
+          <div className="hero-img">
+            <img src={chefImg} alt="Chef pastelero" />
+          </div>
+        </div>
+      </section>
 
 
 
       {/* PRODUCTOS */}
+
       <section id="productos" className="container">
-        <h2 className = "container2" > Nuestros productos </h2>
+        <h2 className="container2" > Nuestros productos </h2>
+
+        
+
 
         <div className="search-box">
           <input
@@ -83,6 +73,14 @@ const productosFiltrados = productosHome.filter((p) =>
             onChange={(e) => setQuery(e.target.value)}
             className="search-input"
           />
+
+        <button
+          className="btn btn-outline-primary mt-auto"
+          onClick={() => navigate(`/ofertas`)}
+        >
+          Ver productos con ofertas
+        </button>
+
         </div>
 
         {productosFiltrados.length > 0 ? (
@@ -96,19 +94,5 @@ const productosFiltrados = productosHome.filter((p) =>
         )}
       </section>
     </main>
-
-      {/* Botón oculto de restauración de datos */}
-  <button
-    className="btn-reset-oculto"
-    onClick={handleResetHome}
-    title="Restaurar productos y categorías"
-  >
-    🔄
-  </button>
-
-  <ChatBot />
-  </>
-
   );
 }
-
