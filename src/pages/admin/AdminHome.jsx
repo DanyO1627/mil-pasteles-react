@@ -6,10 +6,28 @@ import "../../styles/stylesAdmin/admin.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
-  const { productos } = useProductos();
+
+  const { productos, resetearInventario } = useProductos();
+  const { usuarios, resetearUsuarios } = useUsuarios();
+
+
+// RESTAURAR USUARIOS
+  const handleResetCompleto = () => {
+    const confirmar = window.confirm(
+      "⚠️ ¿Estás seguro de que deseas restaurar los datos del sistema?\nEsto eliminará todos los productos y usuarios actuales."
+    );
+    if (confirmar) {
+      resetearInventario();
+      resetearUsuarios();
+      localStorage.clear();
+      alert("✅ Sistema restaurado correctamente.");
+      window.location.reload();
+    }
+  };
+
 
   // USUARIOS REGISTRADOS DEL CONTEXT
-const { usuarios } = useUsuarios();
+//const { usuarios } = useUsuarios();
 const totalUsuarios = usuarios.length;
 
   // DATOS DINAMICOS
@@ -54,6 +72,15 @@ const nuevosUsuarios = useMemo(() => {
     {/* <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/> */}
 
         </ul>
+        <ul> ... </ul>
+        <button
+          type="button"
+          onClick={handleResetCompleto}
+          className="btn-reset-total"
+          title="Restaurar datos del sistema"
+        >
+          🔄
+        </button>
       </aside>
 
       {/* HOLA ADMINISTRADOR */}
@@ -89,7 +116,7 @@ const nuevosUsuarios = useMemo(() => {
           <h3>👥 Usuarios</h3>
           <p className="stat-number">{totalUsuarios}</p>
           <p className="stat-info">
-            Nuevos esta semana: <strong>+{nuevosUsuarios}</strong>
+            Nuevos usuarios del día de hoy: <strong>+{nuevosUsuarios}</strong>
           </p>
         </div> 
 
@@ -111,9 +138,9 @@ const nuevosUsuarios = useMemo(() => {
             <h4>🏷 Categorías</h4>
             <p>Organización de productos en secciones.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
+          <div className="qa-card" onClick={() => navigate("/usuariosRegistrados")}>
             <h4>👥 Usuarios</h4>
-            <p>Gestión de usuarios y roles en el sistema.</p>
+            <p>Gestión de usuarios.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>📈 Reportes</h4>

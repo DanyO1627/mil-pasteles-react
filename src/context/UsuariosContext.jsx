@@ -36,7 +36,7 @@ export const UsuariosProvider = ({ children }) => {
         clave: nuevo.clave,
         rol: nuevo.rol || "cliente",
         fecha: new Date().toISOString().slice(0, 10),
-        origen: "nuevo", // 🔹 marca los nuevos
+        origen: "nuevo", // marca los nuevos
     };
 
     setUsuarios((prev) => [...prev, usuario]);
@@ -59,6 +59,12 @@ export const UsuariosProvider = ({ children }) => {
     );
   };
 
+    // 🔄 Restaurar usuarios (borra y deja los del dataUsuarios base)
+  const resetearUsuarios = () => {
+    setUsuarios(dataUsuarios); // vuelve a los usuarios iniciales del dataUsuarios.js
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUsuarios));
+  };
+
   const eliminarUsuario = (id) => {
     setUsuarios((prev) => prev.filter((u) => u.id !== id));
   };
@@ -67,10 +73,7 @@ export const UsuariosProvider = ({ children }) => {
     return usuarios.find((u) => u.id === id);
   };
 
-  const resetearUsuarios = () => {
-    setUsuarios([]);
-    localStorage.removeItem(STORAGE_KEY);
-  };
+
 
   return (
     <UsuariosContext.Provider
