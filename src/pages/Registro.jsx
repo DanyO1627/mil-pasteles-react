@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
+import { useUsuarios } from "../context/UsuariosContext.jsx"; // el import de los usuarios context (para acceder a ellos)
+import { useNavigate } from "react-router-dom"; // para no tener qu recargar
+import Toast from "../components/MensajeFlotante"; // para el mensaje flotante
+import "../styles/mensaje.css";
 import "../styles/style.css";
 
 export default function Registro() {
+  const { usuarios, agregarUsuario } = useUsuarios(); // aquí usamos la funcion del contexto
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     nombre: "",
     email: "",
@@ -12,7 +19,7 @@ export default function Registro() {
   });
   const [msg, setMsg] = useState("");
   const [comunas, setComunas] = useState([]);
-
+  const [showToast, setShowToast] = useState(false); // mensaje toast
   // Objeto de regiones y comunas
   const comunasPorRegion = {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
@@ -93,6 +100,20 @@ export default function Registro() {
       return;
     }
 
+    // Verificar si el correo ya está registrado / DUPLICADO
+    const correoExistente = usuarios.some(
+      (u) => u.email?.toLowerCase() === email.toLowerCase()
+    );
+
+    if (correoExistente) {
+      setMsg(
+        <div className="alert alert-warning">
+          ⚠️ Este correo ya está registrado. Intenta con otro.
+        </div>
+      );
+      return;
+    }
+
     // Generar estado aleatorio
     const estados = ["Completado", "Pendiente", "Cancelado"];
     const estadoAleatorio = estados[Math.floor(Math.random() * estados.length)];
@@ -107,21 +128,20 @@ export default function Registro() {
       region,
       comuna,
       estado: estadoAleatorio,
-      monto:0
+      monto:0,
+      rol:"cliente"
     };
 
-    // Obtener lista y guardar
-    const usuariosExtra = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
-    usuariosExtra.push(nuevoUsuario);
-    localStorage.setItem("usuariosExtra", JSON.stringify(usuariosExtra));
+     // Cambio: Ahora usamos el contexto en vez de el localstorage directo
+    agregarUsuario(nuevoUsuario);
 
-    // Mensaje de éxito
+    // Y le mostramos el tast verde
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+
     setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
 
-    // Redirección
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
+    setTimeout(() => navigate("/"), 1200);
   };
 
   return (
@@ -177,6 +197,11 @@ export default function Registro() {
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
         </form>
+         {showToast && (
+          <div className="toast-noti toast-exito">
+            Usuario registrado correctamente
+          </div>
+        )}
       </div>
     </main>
   );

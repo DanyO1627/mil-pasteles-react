@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CarritoProvider } from "./context/CarritoContext";
 import { ProductosProvider } from "./context/InventarioContext.jsx";
 import { CategoriasProvider } from "./context/CategoriasContext.jsx";
+import { UsuariosProvider } from "./context/UsuariosContext.jsx";
 import ScrollToTop from "./components/ScrollToTop";
 
 //components
@@ -40,7 +41,6 @@ import CompraExitosa from "./pages/CompraExitosa.jsx";
 import PerfilAdmin from "./pages/admin/PerfilAdmin.jsx";
 import EditarUsuario from "./pages/admin/EditarUsuario.jsx";
 import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
-import Usuarios from "./pages/admin/Usuarios.jsx";
 import HistorialCompras from "./pages/admin/HistorialCompras.jsx";
 import Empleados from "./pages/admin/Empleados.jsx";
 import NuevoProducto from "./pages/admin/NuevoProducto.jsx";
@@ -50,6 +50,7 @@ function App() {
     <CategoriasProvider>
     <ProductosProvider>
     <CarritoProvider>
+    <UsuariosProvider>
       <ScrollToTop />
       <NavBar />
       <Routes>
@@ -83,7 +84,6 @@ function App() {
         <Route path="/perfilAdmin" element ={<PerfilAdmin/>}/>
         <Route path="/editarUsuario" element ={<EditarUsuario/>}/>
         <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/>
-        <Route path="/usuarios" element ={<Usuarios/>}/>
         <Route path="/nuevoProducto" element={<NuevoProducto/>}/>
         <Route path="/historialCompras" element ={<HistorialCompras/>}/>
         <Route path="/empleados" element ={<Empleados/>}/>
@@ -92,6 +92,7 @@ function App() {
       </Routes>
       <Footer />
       <Chat />
+    </UsuariosProvider>
     </CarritoProvider>
     </ProductosProvider>
     </CategoriasProvider>

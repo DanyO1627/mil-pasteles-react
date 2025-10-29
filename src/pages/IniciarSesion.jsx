@@ -62,7 +62,7 @@ export default function IniciarSesion() {
     }
 
     // 2️⃣ Si no es empleado, buscar en clientes registrados
-    const usuarios = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
+    const usuarios = JSON.parse(localStorage.getItem("pasteleria_usuarios") || "[]");
     const usuarioEncontrado = usuarios.find((u) => u.email === correo);
 
     if (!usuarioEncontrado) {
@@ -94,7 +94,7 @@ export default function IniciarSesion() {
       localStorage.removeItem("usuarioActivo");
       localStorage.removeItem("categorias");
       localStorage.removeItem("inventario");
-      localStorage.removeItem("usuariosExtra");
+      localStorage.removeItem("pasteleria_usuarios");
       
 
       alert("✅ Sistema restaurado. Recarga la página para aplicar los cambios.");

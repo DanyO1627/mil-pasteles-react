@@ -1,11 +1,33 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
+import { useUsuarios } from "../../context/UsuariosContext";
 import "../../styles/stylesAdmin/admin.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
-  const { productos } = useProductos();
+  const { productos, resetearInventario } = useProductos();
+  const { usuarios, resetearUsuarios } = useUsuarios();
+
+
+  // RESTAURAR USUARIOS
+  const handleResetCompleto = () => {
+    const confirmar = window.confirm(
+      "⚠️ ¿Estás seguro de que deseas restaurar los datos del sistema?\nEsto eliminará todos los productos y usuarios actuales."
+    );
+    if (confirmar) {
+      resetearInventario();
+      resetearUsuarios();
+      localStorage.clear();
+      alert("✅ Sistema restaurado correctamente.");
+      window.location.reload();
+    }
+  };
+
+
+  // USUARIOS REGISTRADOS DEL CONTEXT
+  //const { usuarios } = useUsuarios();
+  const totalUsuarios = usuarios.length;
 
   // DATOS DINAMICOS
   const totalProductos = productos.length;
@@ -14,9 +36,10 @@ export default function AdminHome() {
     [productos]
   );
 
-  // USUARIOS REGISTRADOS DEL LOCALSTORAGE
-  const usuarios = JSON.parse(localStorage.getItem("usuariosExtra") || "[]");
-  const totalUsuarios = usuarios.length || 890; // usa 890 si aún no hay usuarios
+
+  const nuevosUsuarios = useMemo(() => {
+    return usuarios.filter(u => u.origen === "nuevo").length;
+  }, [usuarios]);
 
   // Compras (dato temporal)
   const totalCompras = 1234;
@@ -36,8 +59,8 @@ export default function AdminHome() {
           <li onClick={() => navigate("/panelProductos")}>📦 Inventario</li>
           <li onClick={() => navigate("/reportes")}>📈 Reportes</li>
           <li onClick={() => navigate("/empleados")}>👩‍🍳 Empleados</li>
-          <li onClick={handleEnConstruccion}>🧍 Clientes</li>
-          <li onClick={handleEnConstruccion}>💬 Ofertas</li>
+          <li onClick={() => navigate("/UsuariosRegistrados")}>🧍 Clientes</li>
+          <li onClick={() => navigate("/ofertas")}>💬 Ofertas</li>
           <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
         </ul>
       </aside>
@@ -73,7 +96,7 @@ export default function AdminHome() {
             <h3>👥 Usuarios</h3>
             <p className="stat-number">{totalUsuarios}</p>
             <p className="stat-info">
-              Nuevos este mes: <strong>+{Math.floor(totalUsuarios * 0.1)}</strong>
+              Nuevos usuarios del día de hoy: <strong>+{nuevosUsuarios}</strong>
             </p>
           </div>
         </div>
@@ -96,7 +119,7 @@ export default function AdminHome() {
             <h4>🏷 Categorías</h4>
             <p>Organización de productos en secciones.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
+          <div className="qa-card" onClick={() => navigate("/usuariosRegistrados")}>
             <h4>👥 Usuarios</h4>
             <p>Gestión de usuarios y roles en el sistema.</p>
           </div>
@@ -110,7 +133,7 @@ export default function AdminHome() {
           </div>
           <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>🏬 Tienda</h4>
-            <p>Visualiza las ventas y estadísticas de tienda.</p>
+            <p>Regresar a la tienda.</p>
           </div>
         </div>
       </main>

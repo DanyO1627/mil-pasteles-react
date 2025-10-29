@@ -1,335 +1,293 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "../../styles/global.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUsuarios } from "../../context/UsuariosContext.jsx";
+import "../../styles/stylesAdmin/editarUsuario.css";
 
 export default function EditarUsuario() {
+  const { usuarios, editarUsuario, obtenerUsuario } = useUsuarios();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [usuario, setUsuario] = useState({
+    id: "",
     nombre: "",
     email: "",
     telefono: "",
+    edad: "",
     region: "",
     comuna: "",
     estado: "Activo",
     clave1: "",
     clave2: "",
-    index: null, 
+    index: null,
   });
 
-  const [mensaje, setMensaje] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [comunas, setComunas] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
-  const navigate = useNavigate();
+  const [mensaje, setMensaje] = useState("");
 
-  // Cargar datos del usuario a editar desde localStorage
-  useEffect(() => {
-    const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    setUsuarios(listaUsuarios);
-
-   
-    const params = new URLSearchParams(window.location.search);
-    const index = params.get("index");
-
-    if (index !== null && listaUsuarios[index]) {
-      setUsuario({ ...listaUsuarios[index], index: Number(index) });
-      cambiarComunas(listaUsuarios[index].region);
-    }
-  }, []);
-
- 
-  const cambiarComunas = (region) => {
-    const regiones = {
-      rm: ["Santiago", "Puente Alto", "Maipú", "La Florida"],
-      v: ["Valparaíso", "Viña del Mar", "Quilpué"],
-      biobio: ["Concepción", "Talcahuano", "Los Ángeles"],
-    };
-    setComunas(regiones[region] || []);
+  // === Listado de regiones y comunas ===
+  const comunasPorRegion = {
+    Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
+    Tarapaca: ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
+    Antofagasta: ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
+    Atacama: ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+    Coquimbo: ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
+    Valparaiso: ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache", "Olmué", "Villa Alemana"],
+    Metropolitana: ["Santiago", "Puente Alto", "Maipú", "Las Condes", "La Florida", "Vitacura", "Ñuñoa", "Recoleta", "Providencia", "Pudahuel", "San Bernardo", "Renca", "Cerro Navia", "Estación Central", "Peñalolén", "Quilicura", "La Reina", "Macul", "San Joaquín", "Lo Prado"],
+    Libertador: ["Rancagua", "San Fernando", "Rengo", "Pichidegua", "Peumo", "Las Cabras", "Mostazal", "Codegua", "Requínoa", "Coltauco", "Graneros", "Machalí", "Olivar"],
+    Maule: ["Talca", "Curicó", "Linares", "San Javier", "Parral", "Retiro", "Villa Alegre", "San Clemente", "Yerbas Buenas", "Colbún", "Longaví", "Cauquenes", "Pelluhue", "Chanco", "Constitución", "Empedrado", "Maule", "San Rafael", "Río Claro"],
+    Ñuble: ["Chillán", "Bulnes", "Cobquecura", "Coelemu", "Coihueco", "Chillán Viejo", "El Carmen", "Ninhue", "Ñiquén", "Pemuco", "Pinto", "Portezuelo", "Quillón", "Quirihue", "Ránquil", "San Carlos", "San Fabián", "San Ignacio", "San Nicolás", "Treguaco"],
+    BioBio: ["Concepción", "Talcahuano", "Penco", "Tomé", "Florida", "Hualpén", "Hualqui", "Santa Juana", "Lota", "Coronel", "San Pedro de la Paz", "Chiguayante", "Los Ángeles", "Cabrero", "Mulchén", "Nacimiento", "Laja", "San Rosendo", "Yumbel", "Negrete", "Alto Biobío"],
+    Araucania: ["Temuco", "Villarrica", "Angol", "Victoria", "Traiguén", "Curacautín", "Lonquimay", "Carahue", "Saavedra", "Pitrufquén", "Freire", "Gorbea", "Loncoche", "Pucón", "Vilcún", "Perquenco", "Melipeuco", "Cholchol", "Toltén", "Teodoro Schmidt", "Nueva Imperial", "Lautaro", "Cunco", "Padre Las Casas", "Galvarino", "Collipulli", "Ercilla", "Los Sauces", "Lumaco", "Purén", "Renaico"],
+    Rios: ["Valdivia", "La Unión", "Panguipulli", "Futrono", "Río Bueno", "Lago Ranco", "Corral", "Paillaco", "Máfil", "Lanco", "Mariquina", "Los Lagos"],
+    Lagos: ["Puerto Montt", "Osorno", "Ancud", "Calbuco", "Castro", "Chaitén", "Chonchi", "Cochamó", "Curaco de Vélez", "Dalcahue", "Frutillar", "Fresia", "Futaleufú", "Hualaihué", "Llanquihue", "Los Muermos", "Maullín", "Palena", "Puerto Octay", "Puerto Varas", "Puqueldón", "Purranque", "Puyehue", "Queilén", "Quemchi", "Quellón", "Quinchao", "Río Negro", "San Juan de la Costa", "San Pablo"],
+    Aysen: ["Coyhaique", "Aysén", "Cisnes", "Guaitecas", "Lago Verde", "Río Ibáñez", "Chile Chico", "Cochrane", "O'Higgins", "Tortel"],
+    Magallanes: ["Punta Arenas", "Puerto Natales", "Río Verde", "San Gregorio", "Laguna Blanca", "Porvenir", "Primavera", "Timaukel", "Cabo de Hornos", "Antártica"],
   };
 
- 
-  const badgeClass = {
-    Activo: "bg-success",
-    Pendiente: "bg-warning text-dark",
-    Suspendido: "bg-danger",
-  }[usuario.estado] || "bg-secondary";
+  // Cargar usuario existente
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    if (id) {
+      const user = obtenerUsuario(id);
+      if (user) {
+        setUsuario({ ...user });
+        if (user.region && comunasPorRegion[user.region]) {
+          setComunas(comunasPorRegion[user.region]);
+        }
+      }
+    }
+  }, [usuarios, location.search]);
 
-  //  Guardar cambios del usuario en localStorage
+  // Actualizar comunas según región
+  useEffect(() => {
+    if (usuario.region && comunasPorRegion[usuario.region]) {
+      setComunas(comunasPorRegion[usuario.region]);
+    } else {
+      setComunas([]);
+    }
+  }, [usuario.region]);
+
   const guardarCambios = () => {
     if (!usuario.nombre || !usuario.email) {
-      setMensaje("Por favor completa los campos obligatorios.");
+      setMensaje("⚠️ Por favor completa los campos obligatorios.");
       return;
     }
     if (usuario.clave1 && usuario.clave1.length < 6) {
-      setMensaje("La contraseña debe tener al menos 6 caracteres.");
+      setMensaje("⚠️ La contraseña debe tener al menos 6 caracteres.");
       return;
     }
     if (usuario.clave1 !== usuario.clave2) {
-      setMensaje("Las contraseñas no coinciden.");
+      setMensaje("⚠️ Las contraseñas no coinciden.");
       return;
     }
 
-    const actualizados = [...usuarios];
-    const idx = usuario.index;
+    editarUsuario(usuario.id, usuario);
+    setMensaje("✅ Cambios guardados correctamente.");
+    setShowToast(true);
 
-    if (idx !== null && idx >= 0) {
-      actualizados[idx] = {
-        ...usuario,
-        clave1: usuario.clave1 || usuarios[idx].clave1, 
-        clave2: usuario.clave2 || usuarios[idx].clave2,
-      };
-
-      localStorage.setItem("usuarios", JSON.stringify(actualizados));
-      setUsuarios(actualizados);
-      setMensaje(" Cambios guardados correctamente.");
-
-      //  Redirigir después de guardar
-      setTimeout(() => {
-        navigate("/usuariosRegistrados");
-      }, 1000);
-    } else {
-      setMensaje(" No se pudo identificar el usuario a actualizar.");
-    }
+    setTimeout(() => setShowToast(false), 2000);
+    setTimeout(() => navigate("/usuariosRegistrados"), 1000);
   };
 
-  // Restaurar los datos originales
   const resetFormulario = () => {
-    const lista = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const user = lista[usuario.index];
+    const user = obtenerUsuario(usuario.id);
     if (user) {
-      setUsuario({ ...user, index: usuario.index });
-      cambiarComunas(user.region);
+      setUsuario({ ...user });
+      if (user.region && comunasPorRegion[user.region]) {
+        setComunas(comunasPorRegion[user.region]);
+      }
       setMensaje("Campos restaurados a su valor original.");
     }
   };
 
- 
   const limpiarCampo = (campo) => {
     setUsuario({ ...usuario, [campo]: "" });
   };
 
+  const badgeClass = {
+    Activo: "badge-activo",
+    Pendiente: "badge-pendiente",
+    Suspendido: "badge-suspendido",
+  }[usuario.estado] || "badge-activo";
+
   return (
-    <div className="editar-usuario-page">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div className="container">
-          <a className="navbar-brand" href="/usuariosRegistrados">
-            <i className="fas fa-arrow-left me-2"></i> Volver a Usuarios
-          </a>
-          <span className="navbar-text">
-            <i className="fas fa-user-edit me-1"></i> Editando Usuario
-          </span>
-        </div>
-      </nav>
+    <div className="editar-usr-wrapper">
+      <div className="editar-usr-container">
+        <h2 className="editar-usr-titulo">✏️ Editar Usuario</h2>
+        <p className="editar-usr-subtitulo">
+          Modifica la información del usuario seleccionado
+        </p>
 
-      <main>
-        <div className="container mt-4">
-          <div className="row justify-content-center">
-            <div className="col-lg-8 col-md-10">
-              <div className="card shadow">
-                <div className="card-header bg-primary text-white">
-                  <h2 className="card-title mb-0">
-                    <i className="fas fa-user-edit me-2"></i> Editar Usuario
-                  </h2>
-                </div>
+        {mensaje && (
+          <div
+            className={`editar-usr-mensaje ${
+              mensaje.includes("✅") ? "ok" : "warn"
+            }`}
+          >
+            {mensaje}
+          </div>
+        )}
 
-                <div className="card-body">
-                  {mensaje && (
-                    <div
-                      id="mensajes"
-                      className={`alert ${
-                        mensaje.includes("✅") ? "alert-success" : "alert-warning"
-                      }`}
-                    >
-                      {mensaje}
-                    </div>
-                  )}
+        <form className="editar-usr-form">
+          {/* === Información Personal === */}
+          <div className="editar-usr-section">
+            <h3 className="editar-usr-section-titulo">Información Personal</h3>
 
-                  <form>
-                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-3">
-                      <i className="fas fa-user me-2"></i> Información Personal
-                    </h5>
+            <div className="form-group">
+              <label>Nombre completo *</label>
+              <input
+                type="text"
+                value={usuario.nombre}
+                onFocus={() => limpiarCampo("nombre")}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, nombre: e.target.value })
+                }
+              />
+            </div>
 
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-user me-1"></i> Nombre completo *
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={usuario.nombre}
-                          onFocus={() => limpiarCampo("nombre")}
-                          onChange={(e) =>
-                            setUsuario({ ...usuario, nombre: e.target.value })
-                          }
-                        />
-                      </div>
+            <div className="form-group">
+              <label>Correo electrónico *</label>
+              <input
+                type="email"
+                value={usuario.email}
+                onFocus={() => limpiarCampo("email")}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, email: e.target.value })
+                }
+              />
+            </div>
 
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-envelope me-1"></i> Correo
-                          electrónico *
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          value={usuario.email}
-                          onFocus={() => limpiarCampo("email")}
-                          onChange={(e) =>
-                            setUsuario({ ...usuario, email: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
+            <div className="form-group">
+              <label>Teléfono (opcional)</label>
+              <input
+                type="tel"
+                value={usuario.telefono}
+                onFocus={() => limpiarCampo("telefono")}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, telefono: e.target.value })
+                }
+              />
+            </div>
 
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-phone me-1"></i> Teléfono
-                        </label>
-                        <input
-                          type="tel"
-                          className="form-control"
-                          value={usuario.telefono}
-                          onFocus={() => limpiarCampo("telefono")}
-                          onChange={(e) =>
-                            setUsuario({
-                              ...usuario,
-                              telefono: e.target.value,
-                            })
-                          }
-                        />
-                        <small className="text-muted">Opcional</small>
-                      </div>
+            <div className="form-group">
+              <label>Edad</label>
+              <input
+                type="number"
+                min="1"
+                max="120"
+                value={usuario.edad}
+                onFocus={() => limpiarCampo("edad")}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, edad: e.target.value })
+                }
+              />
+            </div>
 
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-info-circle me-1"></i> Estado
-                          actual
-                        </label>
-                        <div className="form-control-plaintext">
-                          <span className={`badge ${badgeClass}`}>
-                            {usuario.estado}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">
-                      <i className="fas fa-key me-2"></i> Cambiar Contraseña{" "}
-                      <small className="text-muted">(Opcional)</small>
-                    </h5>
-
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-lock me-1"></i> Nueva contraseña
-                        </label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          value={usuario.clave1}
-                          onChange={(e) =>
-                            setUsuario({ ...usuario, clave1: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-lock me-1"></i> Confirmar
-                          contraseña
-                        </label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          value={usuario.clave2}
-                          onChange={(e) =>
-                            setUsuario({ ...usuario, clave2: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">
-                      <i className="fas fa-map-marker-alt me-2"></i> Ubicación
-                    </h5>
-
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-map me-1"></i> Región
-                        </label>
-                        <select
-                          className="form-select"
-                          value={usuario.region}
-                          onChange={(e) => {
-                            setUsuario({
-                              ...usuario,
-                              region: e.target.value,
-                              comuna: "",
-                            });
-                            cambiarComunas(e.target.value);
-                          }}
-                        >
-                          <option value="">Seleccione una región</option>
-                          <option value="rm">Región Metropolitana</option>
-                          <option value="v">Valparaíso</option>
-                          <option value="biobio">Biobío</option>
-                        </select>
-                      </div>
-
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">
-                          <i className="fas fa-building me-1"></i> Comuna
-                        </label>
-                        <select
-                          className="form-select"
-                          value={usuario.comuna}
-                          onChange={(e) =>
-                            setUsuario({ ...usuario, comuna: e.target.value })
-                          }
-                        >
-                          <option value="">Seleccione una comuna</option>
-                          {comunas.map((c) => (
-                            <option key={c}>{c}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="d-flex justify-content-between mt-4">
-                      <a
-                        href="/usuariosRegistrados"
-                        className="btn btn-secondary"
-                      >
-                        <i className="fas fa-times me-1"></i> Cancelar
-                      </a>
-                      <div>
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary me-2"
-                          onClick={resetFormulario}
-                        >
-                          <i className="fas fa-undo me-1"></i> Restaurar
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={guardarCambios}
-                        >
-                          <i className="fas fa-save me-1"></i> Guardar Cambios
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
+            <div className="form-group">
+              <label>Estado actual</label>
+              <div className={badgeClass}>{usuario.estado}</div>
             </div>
           </div>
-        </div>
-      </main>
 
-      <footer className="text-center text-muted mt-5 py-3">
-        <small>© 2025 Pastelería Mil Sabores - Sistema de Administración</small>
-      </footer>
+          {/* === Contraseña === */}
+          <div className="editar-usr-section">
+            <h3 className="editar-usr-section-titulo">
+              Cambiar Contraseña (opcional)
+            </h3>
+
+            <div className="form-group">
+              <label>Nueva contraseña</label>
+              <input
+                type="password"
+                value={usuario.clave1}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, clave1: e.target.value })
+                }
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Confirmar contraseña</label>
+              <input
+                type="password"
+                value={usuario.clave2}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, clave2: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          {/* === Ubicación === */}
+          <div className="editar-usr-section">
+            <h3 className="editar-usr-section-titulo">Ubicación</h3>
+
+            <div className="form-group">
+              <label>Región</label>
+              <select
+                value={usuario.region}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, region: e.target.value, comuna: "" })
+                }
+              >
+                <option value="">Seleccione una región</option>
+                {Object.keys(comunasPorRegion).map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Comuna</label>
+              <select
+                value={usuario.comuna}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, comuna: e.target.value })
+                }
+              >
+                <option value="">Seleccione una comuna</option>
+                {comunas.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* === Acciones === */}
+          <div className="editar-usr-actions">
+            <button
+              type="button"
+              className="btn-cancelar"
+              onClick={() => navigate("/usuariosRegistrados")}
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className="btn-restaurar"
+              onClick={resetFormulario}
+            >
+              Restaurar
+            </button>
+            <button
+              type="button"
+              className="btn-guardar"
+              onClick={guardarCambios}
+            >
+              Guardar Cambios
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {showToast && (
+        <div className="toast-exito">Cambios guardados correctamente</div>
+      )}
     </div>
   );
 }
