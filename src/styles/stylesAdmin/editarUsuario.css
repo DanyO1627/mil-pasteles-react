@@ -1,0 +1,194 @@
+/* ==== CONTENEDOR GENERAL ==== */
+.editar-usr-wrapper {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  background-color: #f9fafc;
+  min-height: 100vh;
+}
+
+.editar-usr-container {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==== TITULOS Y SUBTITULOS ==== */
+.editar-usr-titulo {
+  font-size: 1.9rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.editar-usr-subtitulo {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* ==== MENSAJE ==== */
+.editar-usr-mensaje {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.editar-usr-mensaje.ok {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.editar-usr-mensaje.warn {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+
+/* ==== FORMULARIO ==== */
+.editar-usr-form .form-group {
+  margin-bottom: 18px;
+}
+
+.editar-usr-form label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.editar-usr-form input,
+.editar-usr-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.editar-usr-form input:focus,
+.editar-usr-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* ==== SECCIONES ==== */
+.editar-usr-section {
+  border-top: 1px solid #eee;
+  margin-top: 25px;
+  padding-top: 15px;
+}
+
+.editar-usr-section-titulo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* ==== BOTONES ==== */
+.editar-usr-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn-guardar,
+.btn-restaurar,
+.btn-cancelar {
+  flex: 1;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-guardar {
+  background-color: #a03c5b;
+  color: #fff;
+}
+
+.btn-guardar:hover {
+  background-color: #e29ed3;
+}
+
+.btn-restaurar {
+  background-color: #f8f9fa;
+  color: #e782d1;
+  border: 1px solid #a03c5b;
+}
+
+.btn-restaurar:hover {
+  background-color: #e6f0ff;
+}
+
+.btn-cancelar {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-cancelar:hover {
+  background-color: #555;
+}
+
+/* ==== BADGE DE ESTADO ==== */
+.badge-activo {
+  background-color: #28a745;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.badge-pendiente {
+  background-color: #ffc107;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.badge-suspendido {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+/* ==== TOAST ==== */
+.toast-exito {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  animation: fadeInOut 2.5s ease;
+  font-weight: 500;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* ==== FOOTER ==== */
+.editar-usr-footer {
+  text-align: center;
+  color: #888;
+  margin-top: 30px;
+  font-size: 0.9rem;
+}

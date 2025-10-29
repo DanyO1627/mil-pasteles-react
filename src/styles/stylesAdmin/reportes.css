@@ -1,0 +1,244 @@
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.reportes-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* ========== HEADER ========== */
+.reportes-header {
+  margin-bottom: 30px;
+}
+
+.reportes-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.reportes-subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* ========== BOTONES DE ACCIÓN ========== */
+.reportes-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.reportes-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.reportes-btn--volver {
+  background-color: #6c757d;
+  color: white;
+}
+
+.reportes-btn--volver:hover {
+  background-color: #5a6268;
+}
+
+.reportes-btn--criticos {
+  background-color: #dc3545;
+  color: white;
+}
+
+.reportes-btn--criticos:hover {
+  background-color: #c82333;
+}
+
+.reportes-btn--exportar {
+  background-color: #28a745;
+  color: white;
+}
+
+.reportes-btn--exportar:hover {
+  background-color: #218838;
+}
+
+/* ========== GRID DE ESTADÍSTICAS (CARDS) ========== */
+.reportes-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.reportes-stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid;
+  transition: transform 0.2s;
+}
+
+.reportes-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reportes-stat-card--primary {
+  border-left-color: #007bff;
+}
+
+.reportes-stat-card--success {
+  border-left-color: #28a745;
+}
+
+.reportes-stat-card--warning {
+  border-left-color: #ffc107;
+}
+
+.reportes-stat-card--danger {
+  border-left-color: #dc3545;
+}
+
+.reportes-stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.reportes-stat-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.reportes-stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.reportes-stat-subtitle {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 5px;
+}
+
+/* ========== GRID DE GRÁFICAS ========== */
+.reportes-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.reportes-chart-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reportes-chart-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.reportes-chart-content {
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========== TABLA DE PRODUCTOS CRÍTICOS ========== */
+.reportes-table-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.reportes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.reportes-table th {
+  background-color: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.reportes-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+  color: #666;
+}
+
+.reportes-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.reportes-stock-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.reportes-stock-badge--critico {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.reportes-stock-badge--bajo {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+/* ========== MENSAJE VACÍO ========== */
+.reportes-empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .reportes-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reportes-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reportes-title {
+    font-size: 1.5rem;
+  }
+
+  .reportes-table {
+    font-size: 0.9rem;
+  }
+
+  .reportes-table th,
+  .reportes-table td {
+    padding: 8px;
+  }
+}

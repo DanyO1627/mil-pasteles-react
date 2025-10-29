@@ -1,0 +1,114 @@
+/*CONTENEDOR PRINCIPAL*/
+.criticos-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background: #fff9f9;
+  border-radius: 10px;
+}
+
+/*TITULOS */
+.criticos-title {
+  text-align: center;
+  color: #8b2f3c;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.criticos-subtitle {
+  text-align: center;
+  color: #6e575a;
+  margin-bottom: 1.5rem;
+}
+
+/*BOTONES SUPERIORES */
+.criticos-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/*LISTA DE PRODUCTOS CRÍTICOS */
+.criticos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/*TARJETA DE PRODUCTO CRÍTICO */
+.critico-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #e3c7ca;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.critico-card:hover {
+  transform: translateY(-3px);
+}
+
+/*IMAGEN DEL PRODUCTO */
+.critico-card__img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+/*INFO DEL PRODUCTO */
+.critico-card__info {
+  flex: 3;
+}
+
+.critico-card__nombre {
+  font-weight: 600;
+  color: #4a1f1f;
+  margin-bottom: 0.3rem;
+}
+
+.critico-card__categoria,
+.critico-card__precio,
+.critico-card__stock {
+  margin: 0.2rem 0;
+  color: #6e575a;
+  font-size: 0.95rem;
+}
+
+/*ALERTA Y BNT*/
+.critico-card__acciones {
+  flex: 1;
+  text-align: right;
+}
+
+/*ALERTA DE STOCK*/
+.critico-alerta {
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 0.8rem;
+}
+
+.critico-alerta--amarilla {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.critico-alerta--roja {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/*BTN REPONER*/
+.btn-reponer {
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.4rem 1rem;
+}
