@@ -1,0 +1,13 @@
+/* esta css es para Colores, sombras, tipografía base
+y luego la voy a poder llamar para otras cosas eje (conectada a home, footer y navbar .css) */
+
+:root {
+  --bg: #fffaf9;
+  --card: #fff;
+  --panel: #fff;
+  --sidebar: #fbeaea;
+  --accent: #f6c4cf;
+  --text: #5a3c35;
+  --border: #eadfe0;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}

@@ -1,0 +1,267 @@
+/* === NAVBAR Y ENCABEZADO === */
+header {
+  background: #fffaf9;
+  border-bottom: 1px solid #eadfe0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  /* padding-left: 1000 px; */
+}
+
+.container2 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px
+
+}
+
+.navbar-site {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 56px;
+  width: auto;
+  display: block;
+}
+
+.brand span {
+  color: #6b3d45;
+  font-weight: 600;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.menu a,
+.menu .active {
+  color: #6b3d45;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.menu a:hover,
+.menu .active {
+  color: #d8a1a7;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* === BOTÓN LOGIN === */
+.btn-login {
+  color: #d8a1a7;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.btn-login:hover {
+  border-color: #d8a1a7;
+}
+
+/* === CARRITO === */
+.cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-cart {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #d84d5c;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 999px;
+  padding: 3px 6px;
+  border: 2px solid #fff;
+}
+
+/* === BASE Y COLORES === */
+a {
+  color: inherit;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+:root {
+  --bg: #fffaf9;
+  --card: #fff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+}
+
+main.home {
+  background: var(--bg);
+}
+
+footer.footer {
+  background: var(--bg);
+}
+
+/* === HERO === */
+.hero {
+  background-color: #fffaf9;
+  padding: 60px 20px;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 100px;
+}
+
+.hero-text h1 {
+  color: #d8a1a7;
+  font-size: 2.8rem;
+  margin: 0 0 12px;
+}
+
+.hero-text p.lead {
+  font-size: 1.2rem;
+  color: #6b3d45;
+  margin-bottom: 20px;
+}
+
+.hero-img {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fdebed;
+  border-radius: 18px;
+  padding: 1.5rem;
+  max-width: 350px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.hero-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* RESPONSIVE: cuando la pantalla sea pequeña, que se apilen */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hero-text {
+    order: 1;
+  }
+
+  .hero-img {
+    order: 2;
+  }
+}
+
+
+
+
+
+/* CARD PRODUCTOS / GRID */
+/* === GRID DE PRODUCTOS === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+/* === TARJETAS DE PRODUCTO === */
+.card-producto {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card-producto img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-producto .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.card-producto .info h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.card-producto .info .precio {
+  color: #b25a64;
+  font-weight: 600;
+  font-size: 1rem;
+}
