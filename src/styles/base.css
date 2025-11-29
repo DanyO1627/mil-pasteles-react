@@ -12,6 +12,7 @@
 .text-accent {
   margin-top: 30px;
   color: var(--accent-strong);
+  /* justify-content: center !important; */
 }
 
 body {
@@ -20,6 +21,9 @@ body {
   background-color: var(--bg);
 }
 
+h1.text-center {
+  text-align: center !important;
+}
 
 h1, h2, h3, h4, h5 {
   color: var(--text);

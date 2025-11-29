@@ -6,12 +6,11 @@ import "../../styles/stylesAdmin/admin.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
-
   const { productos, resetearInventario } = useProductos();
   const { usuarios, resetearUsuarios } = useUsuarios();
 
 
-// RESTAURAR USUARIOS
+  // RESTAURAR USUARIOS
   const handleResetCompleto = () => {
     const confirmar = window.confirm(
       "⚠️ ¿Estás seguro de que deseas restaurar los datos del sistema?\nEsto eliminará todos los productos y usuarios actuales."
@@ -27,8 +26,8 @@ export default function AdminHome() {
 
 
   // USUARIOS REGISTRADOS DEL CONTEXT
-//const { usuarios } = useUsuarios();
-const totalUsuarios = usuarios.length;
+  //const { usuarios } = useUsuarios();
+  const totalUsuarios = usuarios.length;
 
   // DATOS DINAMICOS
   const totalProductos = productos.length;
@@ -38,11 +37,9 @@ const totalUsuarios = usuarios.length;
   );
 
 
-const nuevosUsuarios = useMemo(() => {
-  return usuarios.filter(u => u.origen === "nuevo").length;
-}, [usuarios]);
-
-
+  const nuevosUsuarios = useMemo(() => {
+    return usuarios.filter(u => u.origen === "nuevo").length;
+  }, [usuarios]);
 
   // Compras (dato temporal)
   const totalCompras = 1234;
@@ -57,30 +54,15 @@ const nuevosUsuarios = useMemo(() => {
       <aside className="sidebar">
         <h2>🧁 Mil Sabores</h2>
         <ul>
-          <li className="active" onClick={() => navigate("/admin")}>📊 Panel de control</li>
-          <li onClick={handleEnConstruccion}>🧾 Órdenes</li>
+          <li className="active" onClick={() => navigate("/adminHome")}>📊 Panel de control</li>
+          <li onClick={() => navigate("/historialCompras")}>🧾 Historial Compras</li>
           <li onClick={() => navigate("/panelProductos")}>📦 Inventario</li>
           <li onClick={() => navigate("/reportes")}>📈 Reportes</li>
-          <li onClick={handleEnConstruccion}>👩‍🍳 Empleados</li>
+          <li onClick={() => navigate("/empleados")}>👩‍🍳 Empleados</li>
           <li onClick={() => navigate("/UsuariosRegistrados")}>🧍 Clientes</li>
-          <li onClick={handleEnConstruccion}>⚙ Configuración</li>
           <li onClick={() => navigate("/ofertas")}>💬 Ofertas</li>
-          <li onClick={handleEnConstruccion}>🔍 Buscar</li>
-          <li onClick={handleEnConstruccion}>❓ Ayuda</li>
           <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
-
-    {/* <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/> */}
-
         </ul>
-        <ul> ... </ul>
-        <button
-          type="button"
-          onClick={handleResetCompleto}
-          className="btn-reset-total"
-          title="Restaurar datos del sistema"
-        >
-          🔄
-        </button>
       </aside>
 
       {/* HOLA ADMINISTRADOR */}
@@ -109,16 +91,15 @@ const nuevosUsuarios = useMemo(() => {
               Stock total: <strong>{totalStock}</strong> unidades
             </p>
           </div>
-          </div>
-          
 
-          <div className="stat-card usuarios" onClick={() => navigate("/UsuariosRegistrados")}>
-          <h3>👥 Usuarios</h3>
-          <p className="stat-number">{totalUsuarios}</p>
-          <p className="stat-info">
-            Nuevos usuarios del día de hoy: <strong>+{nuevosUsuarios}</strong>
-          </p>
-        </div> 
+          <div className="stat-card usuarios">
+            <h3>👥 Usuarios</h3>
+            <p className="stat-number">{totalUsuarios}</p>
+            <p className="stat-info">
+              Nuevos usuarios del día de hoy: <strong>+{nuevosUsuarios}</strong>
+            </p>
+          </div>
+        </div>
 
         {/* === ACCESOS RÁPIDOS === */}
         <div className="quick-access">
@@ -126,8 +107,8 @@ const nuevosUsuarios = useMemo(() => {
             <h4>📊 Dashboard</h4>
             <p>Visión general de métricas y estadísticas.</p>
           </div>
-          <div className="qa-card" onClick={handleEnConstruccion}>
-            <h4>🧾 Órdenes</h4>
+          <div className="qa-card" onClick={() => navigate("/historialCompra")}>
+            <h4>🧾 Historial Compra</h4>
             <p>Gestión y seguimiento de pedidos en curso.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/panelProductos")}>
@@ -140,7 +121,7 @@ const nuevosUsuarios = useMemo(() => {
           </div>
           <div className="qa-card" onClick={() => navigate("/usuariosRegistrados")}>
             <h4>👥 Usuarios</h4>
-            <p>Gestión de usuarios.</p>
+            <p>Gestión de usuarios y roles en el sistema.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>📈 Reportes</h4>
@@ -150,13 +131,12 @@ const nuevosUsuarios = useMemo(() => {
             <h4>⚙ Perfil</h4>
             <p>Configuración de datos personales y cuenta.</p>
           </div>
-          <div className="qa-card" onClick={() => navigate("/")}>
+          <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>🏬 Tienda</h4>
             <p>Regresar a la tienda.</p>
           </div>
         </div>
       </main>
     </div>
-    
   );
 }

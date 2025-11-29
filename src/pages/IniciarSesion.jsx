@@ -18,7 +18,7 @@ export default function IniciarSesion() {
     }
 
     // ========== DETECCIÓN AUTOMÁTICA ==========
-    // 1️⃣ Verificar si es empleado/admin (dominio @milsabores.cl)
+    // 1️. verifica  si es empleado/admin (dominio @milsabores.cl)
     if (correo.includes("@milsabores.cl")) {
       const administradores = JSON.parse(
         localStorage.getItem("dataAdministradores") || "[]"
@@ -61,7 +61,7 @@ export default function IniciarSesion() {
       return;
     }
 
-   // 2️⃣ Si no es empleado, buscar en clientes registrados
+   // 2. si no es empleado, buscar en clientes registrados
     
     const usuarios = JSON.parse(localStorage.getItem("pasteleria_usuarios") || "[]");
     const usuarioEncontrado = usuarios.find((u) => u.email === correo);
@@ -84,13 +84,13 @@ export default function IniciarSesion() {
     }, 1500);
   };
 
-  // 🔄 NUEVO: Botón para restaurar todo el sistema (incluye administradores)
+  // botón para restaurar todo el sistema (incluye administradores)
   const handleResetCompleto = () => {
     const confirmar = window.confirm(
       "⚠️ Esto restaurará TODAS las categorías, productos y administradores a sus valores iniciales.\n\n¿Deseas continuar?"
     );
     if (confirmar) {
-      // Elimina datos guardados
+      // elimina datos guardados
       localStorage.removeItem("dataAdministradores");
       localStorage.removeItem("adminActivo");
       localStorage.removeItem("usuarioActivo");
@@ -164,7 +164,7 @@ export default function IniciarSesion() {
         </form>
       </div>
 
-      {/* Botón oculto para restaurar sistema (por lo de los admin que están en data) */}
+      {/* botón secreto para restaurar (por lo de los admin que están en data) */}
       <button
         type="button"
         onClick={handleResetCompleto}
