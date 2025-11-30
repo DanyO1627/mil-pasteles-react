@@ -1,0 +1,55 @@
+/* src/styles/buscador.css */
+
+.buscador-class {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.buscador-input {
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 10px 12px;
+}
+
+#clear-search {
+  border-radius: 10px;
+  background: var(--accent-strong);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  transition: background .2s;
+}
+
+#clear-search:hover {
+  background: var(--accent);
+}
+
+
+
+/* LOS CSS DE BUSQUEDA DE LA EVE */
+#productos .search-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  /* elimina centrados previos */
+  margin: 1.5rem 0;
+  padding-left: 0;
+
+  /* alinea visualmente con el título */
+  margin-left: 2rem; /* <-- ajusta este valor según el margen del h2 */
+}
+
+.search-input {
+  flex: 1;
+  max-width: 600px;
+  padding: 10px 14px;
+  border: 1px solid #6b3d45;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}

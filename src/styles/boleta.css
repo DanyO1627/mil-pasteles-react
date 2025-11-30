@@ -1,0 +1,503 @@
+/* ========================================
+   BOLETA - ESTILOS COMPLETOS
+======================================== */
+
+/* Contenedor principal */
+.compra-exitosa-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px 35px;
+  background: linear-gradient(180deg, #fdebed 0%, #fff 40%);
+  border: 2px solid #f5b6bb;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  color: #6b3d45;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   ENCABEZADO CON LOGO Y DATOS
+======================================== */
+.boleta-encabezado-principal {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f5b6bb;
+}
+
+.boleta-info-izquierda {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.boleta-titulo-principal {
+  font-size: 2.5rem;
+  color: #6b3d45;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.boleta-detalles-principales {
+  color: #6b3d45;
+  line-height: 1.8;
+}
+
+.boleta-detalles-principales p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+.boleta-detalles-principales strong {
+  font-weight: 600;
+  color: #5a3c35;
+}
+
+/* Logo circular */
+.boleta-logo-principal {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  border: 4px solid #6b3d45;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.boleta-logo-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ========================================
+   NOMBRE DE LA EMPRESA
+======================================== */
+.nombre-empresa-boleta {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #6b3d45;
+  margin: 2rem 0 2.5rem 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   SECCIÓN DE DATOS
+======================================== */
+.datos-section {
+  text-align: left;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #f5b6bb;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.datos-section h2 {
+  font-size: 1.3rem;
+  color: #d8a1a7;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f5b6bb;
+  font-weight: 600;
+}
+
+/* ========================================
+   TABLA DE PRODUCTOS
+======================================== */
+.tabla-pedido {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tabla-pedido thead {
+  background: #f4e6e8;
+}
+
+.tabla-pedido th {
+  color: #6b3d45;
+  font-weight: 600;
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 0.95rem;
+  border-bottom: 2px solid #f5b6bb;
+}
+
+.tabla-pedido td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #f9f9f9;
+  color: #6b3d45;
+  font-size: 0.9rem;
+}
+
+.tabla-pedido tbody tr:nth-child(even) {
+  background-color: #fdf9fa;
+}
+
+.tabla-pedido tbody tr:hover {
+  background-color: #fff5f6;
+  transition: background-color 0.2s ease;
+}
+
+/* ========================================
+   SECCIÓN DE TOTALES
+======================================== */
+.boleta-totales-seccion {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.totales-lista {
+  min-width: 350px;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #f5b6bb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.total-linea {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin: 0;
+  font-size: 1rem;
+  color: #6b3d45;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.total-linea:last-child {
+  border-bottom: none;
+}
+
+.total-linea span:first-child {
+  font-weight: 500;
+}
+
+.total-linea span:last-child {
+  font-weight: 600;
+}
+
+.total-final-linea {
+  margin-top: 0.5rem;
+  padding: 12px 0 !important;
+  border-top: 2px solid #f5b6bb !important;
+  font-size: 1.25rem;
+  background: #fff5f6;
+  border-radius: 8px;
+}
+
+.total-final-linea span {
+  font-weight: 700 !important;
+  color: #6b3d45;
+}
+
+/* ========================================
+   SEPARADOR
+======================================== */
+.separador-boleta {
+  border: 0;
+  border-top: 2px solid #6b3d45;
+  margin: 2.5rem 0 2rem 0;
+}
+
+/* ========================================
+   FOOTER DE LA BOLETA
+======================================== */
+.boleta-footer-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  color: #6b3d45;
+}
+
+.metodo-pago-info {
+  flex: 1;
+}
+
+.metodo-pago-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #6b3d45;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.metodo-pago-info p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.metodo-pago-info strong {
+  color: #5a3c35;
+  font-weight: 600;
+}
+
+.gracias-mensaje {
+  text-align: right;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.gracias-mensaje p {
+  font-style: italic;
+  color: #d8a1a7;
+  font-size: 1.15rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ========================================
+   BOTONES
+======================================== */
+.no-print {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-volver,
+.btn-imprimir {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-volver {
+  background: #d8a1a7;
+  color: white;
+}
+
+.btn-volver:hover {
+  background: #c98c94;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(216, 161, 167, 0.3);
+}
+
+.btn-imprimir {
+  background-color: #6b3d45;
+  color: white;
+}
+
+.btn-imprimir:hover {
+  background-color: #8b5e5e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 61, 69, 0.3);
+}
+
+/* ========================================
+   MENSAJE DE VACÍO
+======================================== */
+.mensaje-exito {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.mensaje-exito h1 {
+  font-size: 2rem;
+  color: #6b3d45;
+  margin-bottom: 1rem;
+}
+
+.mensaje-exito p {
+  font-size: 1rem;
+  color: #8b5e5e;
+  margin-bottom: 2rem;
+}
+
+/* ========================================
+   ESTILOS DE IMPRESIÓN
+======================================== */
+@media print {
+  body {
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .compra-exitosa-container {
+    margin: 0;
+    padding: 20px;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    background: white;
+  }
+
+  .boleta-encabezado-principal {
+    page-break-inside: avoid;
+  }
+
+  .datos-section {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .tabla-pedido {
+    page-break-inside: auto;
+  }
+
+  .tabla-pedido tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .boleta-totales-seccion,
+  .boleta-footer-info {
+    page-break-inside: avoid;
+  }
+
+  .totales-lista {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 768px) {
+  .compra-exitosa-container {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+
+  .boleta-encabezado-principal {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .boleta-info-izquierda {
+    align-items: center;
+  }
+
+  .boleta-logo-principal {
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+  }
+
+  .boleta-detalles-principales {
+    text-align: center;
+  }
+
+  .boleta-titulo-principal {
+    font-size: 2rem;
+  }
+
+  .nombre-empresa-boleta {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 2rem 0;
+  }
+
+  .datos-section {
+    padding: 1rem;
+  }
+
+  .datos-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .tabla-pedido th,
+  .tabla-pedido td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+
+  .totales-lista {
+    min-width: 100%;
+  }
+
+  .total-linea {
+    font-size: 0.95rem;
+  }
+
+  .total-final-linea {
+    font-size: 1.1rem;
+  }
+
+  .boleta-footer-info {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .gracias-mensaje {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .no-print {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-volver,
+  .btn-imprimir {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .compra-exitosa-container {
+    margin: 10px;
+    padding: 20px 15px;
+  }
+
+  .boleta-titulo-principal {
+    font-size: 1.75rem;
+  }
+
+  .nombre-empresa-boleta {
+    font-size: 1.3rem;
+  }
+
+  .tabla-pedido th,
+  .tabla-pedido td {
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,107 @@
+.empleados-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.empleados-container {
+  width: 95%;
+  max-width: 1200px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.empleados-titulo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empleados-subtitulo {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.empleados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 25px;
+}
+
+/* --- Tarjeta individual --- */
+.empleado-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.empleado-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+.empleado-avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.empleado-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.empleado-nombre {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.empleado-rol {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.empleado-detalles {
+  text-align: left;
+  font-size: 14px;
+  color: #444;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.empleado-acciones {
+  margin-top: 15px;
+}
+
+.btn-ver {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-ver:hover {
+  background-color: #218838;
+}
