@@ -3,8 +3,18 @@ const BASE_URL = "http://localhost:9090";
 export async function getCategorias() {
   const res = await fetch(`${BASE_URL}/categorias`);
   if (!res.ok) throw new Error("Error al obtener categorías");
-  return await res.json();
+
+  const data = await res.json();
+
+  return data.map((c) => ({
+    id: c.id_categoria,
+    nombre: c.nombre_categoria,          
+    descripcion: c.descripcion_categoria,
+    imagen: `http://localhost:9090${c.imagen_url}`, // prefijo de url como en productos
+    activo: c.activo === 1
+  }));
 }
+
 
 export async function createCategoria(payload) {
   const res = await fetch(`${BASE_URL}/categorias`, {
