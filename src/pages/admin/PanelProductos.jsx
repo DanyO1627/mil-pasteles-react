@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
+import { useCategorias } from "../../context/CategoriasContext"; // ✅ se agrega
 import AdminProductCard from "../../components/CardProductosAdmin";
-import "../../styles/stylesAdmin/productosAdmin.css"
+import "../../styles/stylesAdmin/productosAdmin.css";
 
 export default function PanelProductos() {
   const navigate = useNavigate();
   const { productos, eliminarProducto } = useProductos();
+  const { categorias } = useCategorias(); // ✅ se agrega
   const [busqueda, setBusqueda] = useState("");
+
+  // ✅ función auxiliar: busca el nombre de la categoría según su id
+  const obtenerNombreCategoria = (id) => {
+    const categoria = categorias.find((c) => c.id === id);
+    return categoria ? categoria.nombre : "Sin categoría";
+  };
 
   // Filtrar productos por búsqueda
   const productosFiltrados = productos.filter((p) =>
@@ -25,7 +33,7 @@ export default function PanelProductos() {
     const confirmar = window.confirm(
       `¿Estás seguro de eliminar "${producto?.nombre}"?\n\nEsta acción no se puede deshacer.`
     );
-    
+
     if (confirmar) {
       eliminarProducto(id);
       alert(`Producto "${producto?.nombre}" eliminado correctamente.`);
@@ -34,7 +42,7 @@ export default function PanelProductos() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      
+      {/* ENCABEZADO */}
       <div style={{ marginBottom: "30px" }}>
         <h2>📦 Panel de Productos</h2>
         <p style={{ color: "#666" }}>
@@ -43,12 +51,14 @@ export default function PanelProductos() {
       </div>
 
       {/* BOTONES SUPERIORES*/}
-      <div style={{ 
-        display: "flex", 
-        gap: "15px", 
-        marginBottom: "25px",
-        flexWrap: "wrap"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "15px",
+          marginBottom: "25px",
+          flexWrap: "wrap",
+        }}
+      >
         <button
           onClick={() => navigate("/adminHome")}
           style={{
@@ -57,7 +67,7 @@ export default function PanelProductos() {
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           ← Volver al inicio
@@ -71,21 +81,21 @@ export default function PanelProductos() {
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           📉 Ver productos críticos
         </button>
 
         <button
-          onClick={() => alert("Función de agregar producto en desarrollo")}
+          onClick={() => navigate("/nuevoProducto")}
           style={{
             padding: "10px 20px",
             backgroundColor: "#897176",
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           Agregar producto
@@ -99,15 +109,14 @@ export default function PanelProductos() {
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           🧮 Reportes de inventario
         </button>
-
       </div>
 
-      {/* Buscador */}
+      {/* BUSCADOR */}
       <div style={{ marginBottom: "25px" }}>
         <input
           type="text"
@@ -119,29 +128,33 @@ export default function PanelProductos() {
             padding: "12px",
             border: "1px solid #ddd",
             borderRadius: "4px",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         />
       </div>
 
-      {/* Contador*/}
+      {/* CONTADOR */}
       <div style={{ marginBottom: "20px", color: "#666" }}>
         Mostrando {productosFiltrados.length} de {productos.length} productos
       </div>
 
-      {/* Grid de productos */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-        gap: "20px"
-      }}>
+      {/* GRID DE PRODUCTOS */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: "20px",
+        }}
+      >
         {productosFiltrados.length === 0 ? (
-          <div style={{ 
-            gridColumn: "1 / -1", 
-            textAlign: "center", 
-            padding: "40px",
-            color: "#999"
-          }}>
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              textAlign: "center",
+              padding: "40px",
+              color: "#999",
+            }}
+          >
             {busqueda ? (
               <>
                 <p>No se encontraron productos con "{busqueda}"</p>
@@ -154,7 +167,7 @@ export default function PanelProductos() {
                     color: "white",
                     border: "none",
                     borderRadius: "4px",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   Limpiar búsqueda
@@ -168,7 +181,10 @@ export default function PanelProductos() {
           productosFiltrados.map((producto) => (
             <AdminProductCard
               key={producto.id}
-              producto={producto}
+              producto={{
+                ...producto,
+                nombreCategoria: obtenerNombreCategoria(producto.categoriaId), // ✅ nombre resuelto
+              }}
               onEditar={handleEditar}
               onEliminar={handleEliminar}
             />
