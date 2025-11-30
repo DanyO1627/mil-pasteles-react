@@ -42,7 +42,7 @@ import PerfilAdmin from "./pages/admin/PerfilAdmin.jsx";
 import EditarUsuario from "./pages/admin/EditarUsuario.jsx";
 import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
 import Usuarios from "./pages/admin/Usuarios.jsx";
-
+import NuevoProducto from "./pages/admin/NuevoProducto.jsx";
 function App() {
   return (
     <CategoriasProvider>
@@ -52,6 +52,7 @@ function App() {
             <NavBar />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/nuevoProducto" element={<NuevoProducto />} />
               <Route path="/registro" element={<Registro />} />
               <Route path="/ordenCompra" element={<OrdenCompra />} />
               <Route path="/categorias" element={<Categorias />} />

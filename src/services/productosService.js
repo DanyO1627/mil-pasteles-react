@@ -1,8 +1,9 @@
 import axios from "axios";
 
+const BASE = "http://localhost:9090";
+
 export async function fetchProductos() {
-  const resp = await axios.get("http://localhost:9090/productos");
-  const BASE = "http://localhost:9090";  // como salen del backend
+  const resp = await axios.get(`${BASE}/productos`);
 
   return resp.data.map((p) => ({
     id: p.id,
@@ -14,6 +15,26 @@ export async function fetchProductos() {
     stock: p.stock,
     activo: p.activo,
     categoriaId: p.categoria?.id ?? null,
-    categoriaNombre: p.categoria?.nombre ?? null
+    categoriaNombre: p.categoria?.nombre ?? null,
   }));
+}
+
+// 🔥 Nuevo: crear producto
+export async function crearProducto(productoFront) {
+  // Mapear del frontend → backend
+  const productoBack = {
+    nombreProducto: productoFront.nombre,
+    precio: productoFront.precio,
+    imagenUrl: productoFront.imagen,
+    descripcionProducto: productoFront.descripcion,
+    descripcionLarga: productoFront.descripcion,   // o si tienes otro campo, ajústalo
+    stock: productoFront.stock,
+    activo: true,
+    categoria: productoFront.categoriaId
+      ? { id: productoFront.categoriaId }
+      : null,
+  };
+
+  const resp = await axios.post(`${BASE}/productos`, productoBack);
+  return resp.data;
 }

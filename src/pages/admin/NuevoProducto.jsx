@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "../../utils/NuevoProducto.logic.js";
+//import "../../utils/NuevoProducto.logic.js";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
 import { useCategorias } from "../../context/CategoriasContext"; // ✅ Importar categorías
+import { crearProducto } from "../../services/productosService";
 import "../../styles/stylesAdmin/nuevoProducto.css";
 
 export default function NuevoProducto() {
@@ -35,16 +36,26 @@ export default function NuevoProducto() {
   // =======================
   // 💾 Guardar nuevo producto
   // =======================
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const result = window.NuevoProductoLogic.handleSubmit(formData);
     setMensaje(result.mensaje);
 
-    if (result.valido) {
-      agregarProducto(result.nuevoProducto);
-      setTimeout(() => navigate(window.NuevoProductoLogic.getRedirectUrl()), 1500);
+    if (!result.valido) return;
+
+    try {
+      await crearProducto(result.nuevoProducto); // 🔥 se guarda en la BD real
+
+      setMensaje("Producto guardado correctamente 👌");
+
+      setTimeout(() => navigate("/panelProductos"), 1200);
+    } catch (err) {
+      console.error(err);
+      setMensaje("❌ Error al guardar en la base de datos");
     }
   };
+
 
   // =======================
   // 🧱 Render del formulario
