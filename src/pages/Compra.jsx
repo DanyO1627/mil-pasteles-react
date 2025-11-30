@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 import { useNavigate } from "react-router-dom";
+import { crearBoleta } from "../services/boletaService";
 import "../styles/base.css";
 import "../styles/compra.css";
 
 export default function Compra() {
   const { carrito, precioTotal, vaciarCarrito, procesarCompra } = useCarrito();
   const navigate = useNavigate();
-  
+
   // Objeto de regiones y comunas de Chile
   const comunasPorRegion = {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
@@ -45,7 +46,7 @@ export default function Compra() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Si es el campo de teléfono, solo permitir números
     if (name === "telefono") {
       const soloNumeros = value.replace(/\D/g, "");
@@ -67,7 +68,7 @@ export default function Compra() {
         [name]: value
       }));
     }
-    
+
     // Limpiar error del campo cuando el usuario escribe
     if (errors[name]) {
       setErrors(prev => ({
@@ -79,22 +80,22 @@ export default function Compra() {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.nombre.trim()) newErrors.nombre = "El nombre es requerido";
     if (!formData.apellido.trim()) newErrors.apellido = "El apellido es requerido";
-    
+
     if (!formData.email.trim()) {
       newErrors.email = "El email es requerido";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email inválido";
     }
-    
+
     if (!formData.telefono.trim()) {
       newErrors.telefono = "El teléfono es requerido";
     } else if (formData.telefono.length < 9) {
       newErrors.telefono = "El teléfono debe tener al menos 9 dígitos";
     }
-    
+
     if (!formData.calle.trim()) newErrors.calle = "La dirección es requerida";
     if (!formData.region) newErrors.region = "Selecciona una región";
     if (!formData.comuna) newErrors.comuna = "Selecciona una comuna";
@@ -103,9 +104,9 @@ export default function Compra() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (carrito.length === 0) {
       alert("Tu carrito está vacío");
       navigate("/productos");
@@ -113,32 +114,61 @@ export default function Compra() {
     }
 
     if (validateForm()) {
-      // NO procesar la compra aún, solo validar
-      // const resultado = procesarCompra();
-      
-      // Calcular costo de envío
       const costoEnvio = 3000;
-      
-      // Guardar una copia del carrito antes de vaciar
-      const carritoParaEnviar = [...carrito];
-      
-      // Redirigir a página de compra exitosa con todos los datos
-      navigate("/compraExitosa", {
-        state: {
-          formData: formData,
-          carrito: carritoParaEnviar,
-          precioTotal: precioTotal,
-          costoEnvio: costoEnvio
-        }
-      });
-      
-      // Procesar la compra y vaciar carrito después de navegar
-      setTimeout(() => {
-        procesarCompra();
-        vaciarCarrito();
-      }, 100);
+
+      const orden = {
+        fecha: new Date().toLocaleDateString("es-CL"),
+        subtotal: precioTotal,
+        costoEnvio,
+        totalFinal: precioTotal + costoEnvio,
+        metodoPago: "Tarjeta de débito",
+        atendidoPor: "Constanza Pino",
+
+        calle: formData.calle,
+        departamento: formData.departamento,
+        comuna: formData.comuna,
+        region: formData.region,
+        indicaciones: formData.indicaciones,
+
+        usuario: { id: 3 },
+
+        carrito: carrito.map((item) => ({
+          productoId: item.id,
+          nombreProducto: item.nombre,
+          cantidad: item.cantidad,
+          precioUnitario: item.precio,
+          totalLinea: item.precio * item.cantidad,
+        }))
+      };
+
+      console.log("📦 ORDEN A ENVIAR AL BACK:", orden);
+
+      try {
+        const respuesta = await crearBoleta(orden);
+
+        console.log("✔ Orden guardada:", respuesta);
+
+        navigate("/compraExitosa", {
+          state: {
+            formData,
+            carrito,
+            precioTotal,
+            costoEnvio,
+          },
+        });
+
+        setTimeout(() => {
+          procesarCompra();
+          vaciarCarrito();
+        }, 100);
+
+      } catch (error) {
+        console.error("❌ Error al enviar orden", error);
+        alert("No se pudo procesar la compra. Intenta nuevamente.");
+      }
     }
   };
+
 
   if (carrito.length === 0) {
     return (
@@ -167,7 +197,7 @@ export default function Compra() {
             <section className="form-seccion">
               <h3 className="form-seccion-titulo">Información del cliente</h3>
               <p className="form-seccion-subtitulo">Completa la siguiente información</p>
-              
+
               <div className="form-row">
                 <div className="form-group">
                   <label>Nombre*</label>
@@ -180,7 +210,7 @@ export default function Compra() {
                   />
                   {errors.nombre && <span className="error-text">{errors.nombre}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Apellido*</label>
                   <input
@@ -206,7 +236,7 @@ export default function Compra() {
                   />
                   {errors.email && <span className="error-text">{errors.email}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Teléfono* (solo números)</label>
                   <input
@@ -227,7 +257,7 @@ export default function Compra() {
             <section className="form-seccion">
               <h3 className="form-seccion-titulo">Dirección de entrega de los productos</h3>
               <p className="form-seccion-subtitulo">Ingresa dirección de forma detallada</p>
-              
+
               <div className="form-row">
                 <div className="form-group">
                   <label>Calle*</label>
@@ -241,7 +271,7 @@ export default function Compra() {
                   />
                   {errors.calle && <span className="error-text">{errors.calle}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Departamento (opcional)</label>
                   <input
@@ -272,7 +302,7 @@ export default function Compra() {
                   </select>
                   {errors.region && <span className="error-text">{errors.region}</span>}
                 </div>
-                
+
                 <div className="form-group">
                   <label>Comuna*</label>
                   <select
