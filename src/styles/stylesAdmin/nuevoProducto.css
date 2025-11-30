@@ -1,0 +1,135 @@
+.agregar-prod-wrapper {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.agregar-prod-container {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.agregar-prod-titulo {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.agregar-prod-subtitulo {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.agregar-prod-mensaje {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.agregar-prod-form .form-group {
+  margin-bottom: 18px;
+}
+
+.agregar-prod-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.agregar-prod-form input,
+.agregar-prod-form select,
+.agregar-prod-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.agregar-prod-form textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.btn-primario {
+  flex: 1;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-primario:hover {
+  background-color: #0056b3;
+}
+
+.btn-secundario {
+  flex: 1;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-secundario:hover {
+  background-color: #555;
+}
+
+/* ==== Vista previa de imagen ==== */
+.imagen-preview {
+  margin-top: 10px;
+}
+
+.imagen-preview p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.preview-box {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.preview-box:hover {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+}
+
+.preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

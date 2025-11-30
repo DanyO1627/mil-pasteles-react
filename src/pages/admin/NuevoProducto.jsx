@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-//import "../../utils/NuevoProducto.logic.js";
 import { useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
-import { useCategorias } from "../../context/CategoriasContext"; // ✅ Importar categorías
+import { useCategorias } from "../../context/CategoriasContext";
 import { crearProducto } from "../../services/productosService";
 import "../../styles/stylesAdmin/nuevoProducto.css";
 
 export default function NuevoProducto() {
   const navigate = useNavigate();
   const { agregarProducto } = useProductos();
-  const { categorias } = useCategorias(); // ✅ Obtener las categorías registradas
+  const { categorias } = useCategorias();
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -28,34 +27,40 @@ export default function NuevoProducto() {
   // =======================
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const result = window.NuevoProductoLogic.handleChange(formData, name, value);
-    setFormData(result.nuevoFormData);
-    setPreview(result.preview);
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    // Vista previa solo para la imagen
+    if (name === "imagen") {
+      setPreview(value || "/assets/sin_imagen.webp");
+    }
   };
 
   // =======================
   // 💾 Guardar nuevo producto
   // =======================
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  setMensaje("");
 
-    const result = window.NuevoProductoLogic.handleSubmit(formData);
-    setMensaje(result.mensaje);
+  try {
+    await crearProducto(formData);
 
-    if (!result.valido) return;
-
-    try {
-      await crearProducto(result.nuevoProducto); // 🔥 se guarda en la BD real
-
-      setMensaje("Producto guardado correctamente 👌");
-
-      setTimeout(() => navigate("/panelProductos"), 1200);
-    } catch (err) {
-      console.error(err);
-      setMensaje("❌ Error al guardar en la base de datos");
-    }
-  };
-
+    setMensaje("Producto guardado correctamente 👌");
+    setTimeout(() => navigate("/panelProductos"), 1200);
+    
+  } catch (err) {
+    console.error("❌ ERROR COMPLETO:", err);
+    console.error("Response:", err.response);
+    console.error("Data:", err.response?.data);
+    
+    const mensajeError = err.response?.data || err.message || "Error desconocido";
+    setMensaje(`❌ Error: ${mensajeError}`);
+  }
+};
 
   // =======================
   // 🧱 Render del formulario
@@ -71,6 +76,7 @@ export default function NuevoProducto() {
         {mensaje && <div className="agregar-prod-mensaje">{mensaje}</div>}
 
         <form onSubmit={handleSubmit} className="agregar-prod-form">
+
           {/* Nombre */}
           <div className="form-group">
             <label>Nombre:</label>
@@ -144,10 +150,10 @@ export default function NuevoProducto() {
                 <img
                   src={preview}
                   alt="Previsualización del producto"
-                  onError={(e) =>
-                  (e.target.src =
-                    "https://via.placeholder.com/150?text=Sin+imagen")
-                  }
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/assets/sin_imagen.webp";
+                  }}
                 />
               </div>
             </div>
@@ -178,6 +184,7 @@ export default function NuevoProducto() {
               ← Cancelar
             </button>
           </div>
+
         </form>
       </div>
     </div>

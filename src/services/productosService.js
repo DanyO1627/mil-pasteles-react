@@ -19,21 +19,27 @@ export async function fetchProductos() {
   }));
 }
 
-// 🔥 Nuevo: crear producto
 export async function crearProducto(productoFront) {
-  // Mapear del frontend → backend
+  const desc = productoFront.descripcion?.trim() || "Sin descripción";
+
   const productoBack = {
-    nombreProducto: productoFront.nombre,
-    precio: productoFront.precio,
-    imagenUrl: productoFront.imagen,
-    descripcionProducto: productoFront.descripcion,
-    descripcionLarga: productoFront.descripcion,   // o si tienes otro campo, ajústalo
-    stock: productoFront.stock,
+    nombreProducto: productoFront.nombre?.trim(),
+    precio: parseFloat(productoFront.precio),
+    imagenUrl: productoFront.imagen?.trim() || "/assets/sin_imagen.webp",
+    descripcionProducto: desc,
+    descripcionLarga: desc,
+    stock: parseInt(productoFront.stock),
     activo: true,
-    categoria: productoFront.categoriaId
-      ? { id: productoFront.categoriaId }
-      : null,
   };
+
+  // Solo agregar categoria si existe
+  if (productoFront.categoriaId && productoFront.categoriaId !== "") {
+    productoBack.categoria = { 
+      id: parseInt(productoFront.categoriaId)
+    };
+  }
+
+  console.log("📤 ENVIANDO:", JSON.stringify(productoBack, null, 2));
 
   const resp = await axios.post(`${BASE}/productos`, productoBack);
   return resp.data;
