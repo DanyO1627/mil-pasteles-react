@@ -35,7 +35,7 @@ export default function EditarCategoria() {
           <h3>Categoría no encontrada</h3>
           <button
             className="categoria-form-btn categoria-form-btn--cancelar"
-            onClick={() => navigate("/admin/categorias")}
+            onClick={() => navigate("/gestionarCategorias")}
           >
             ← Volver
           </button>
@@ -88,7 +88,9 @@ export default function EditarCategoria() {
       await actualizarCategoria(categoria.id, {
         nombreCategoria: formData.nombre.trim(),
         descripcionCategoria: formData.descripcion.trim(),
-        imagenUrl: formData.imagen.trim() || null,
+        imagenUrl:
+          formData.imagen.trim() ||
+          "/img/default.webp",
         activo: categoria.activo,
       });
 
@@ -97,7 +99,7 @@ export default function EditarCategoria() {
         texto: "✅ Categoría actualizada correctamente",
       });
 
-      setTimeout(() => navigate("/admin/categorias"), 1500);
+      setTimeout(() => navigate("/gestionarCategorias"), 1500);
     } catch (err) {
       console.error(err);
       setMensaje({ tipo: "error", texto: "Error al actualizar la categoría" });
@@ -199,7 +201,7 @@ export default function EditarCategoria() {
             <button
               type="button"
               className="categoria-form-btn categoria-form-btn--cancelar"
-              onClick={() => navigate("/admin/categorias")}
+              onClick={() => navigate("/gestionarCategorias")}
             >
               ↩️ Cancelar
             </button>

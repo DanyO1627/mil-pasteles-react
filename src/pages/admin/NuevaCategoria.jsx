@@ -52,7 +52,7 @@ export default function NuevaCategoria() {
         descripcionCategoria: formData.descripcion.trim(),
         imagenUrl:
           formData.imagen.trim() ||
-          "https://via.placeholder.com/400x300?text=Sin+Imagen",
+          "/img/default.webp",
         activo: true,
       });
 
@@ -61,7 +61,7 @@ export default function NuevaCategoria() {
         texto: `✅ Categoría "${formData.nombre}" creada`,
       });
 
-      setTimeout(() => navigate("/admin/categorias"), 1500);
+      setTimeout(() => navigate("/gestionarCategorias"), 1500);
     } catch (error) {
       console.error(error);
       setMensaje({
@@ -124,8 +124,8 @@ export default function NuevaCategoria() {
                 src={formData.imagen}
                 alt="preview"
                 onError={(e) =>
-                  (e.target.src =
-                    "https://via.placeholder.com/400x300?text=No+image")
+                (e.target.src =
+                  "https://via.placeholder.com/400x300?text=No+image")
                 }
                 style={{
                   width: "100%",

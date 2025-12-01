@@ -43,7 +43,6 @@ export function ProductosProvider({ children }) {
   // ===============================
   async function eliminarProducto(id) {
     await eliminarProductoBack(id);
-
     setProductos((prev) => prev.filter((p) => p.id !== id));
   }
 
@@ -51,7 +50,6 @@ export function ProductosProvider({ children }) {
   // ✏️ ACTUALIZAR producto
   // ===============================
   async function actualizarProducto(id, cambiosFront) {
-    // Convertir al formato backend
     const productoBack = {
       nombreProducto: cambiosFront.nombre,
       precio: Number(cambiosFront.precio),
@@ -67,18 +65,21 @@ export function ProductosProvider({ children }) {
 
     const actualizado = await actualizarProductoBack(id, productoBack);
 
-    // actualizar lista en frontend
     setProductos((prev) =>
-      prev.map((p) => (p.id === id ? {
-        ...p,
-        nombre: actualizado.nombreProducto,
-        precio: actualizado.precio,
-        stock: actualizado.stock,
-        descripcion: actualizado.descripcionProducto,
-        descripcion_larga: actualizado.descripcionLarga,
-        imagen: actualizado.imagenUrl,
-        categoriaId: actualizado.categoria?.id ?? null
-      } : p))
+      prev.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              nombre: actualizado.nombreProducto,
+              precio: actualizado.precio,
+              stock: actualizado.stock,
+              descripcion: actualizado.descripcionProducto,
+              descripcion_larga: actualizado.descripcionLarga,
+              imagen: actualizado.imagenUrl,
+              categoriaId: actualizado.categoria?.id ?? null
+            }
+          : p
+      )
     );
   }
 
@@ -89,7 +90,7 @@ export function ProductosProvider({ children }) {
     productos.filter((p) => !p.categoriaId);
 
   // ===============================
-  // 🔍 Verificar stock
+  // 🔍 Stock
   // ===============================
   function hayStock(id) {
     const p = productos.find((prod) => prod.id === Number(id));
@@ -113,13 +114,12 @@ export function ProductosProvider({ children }) {
         cargando,
         error,
 
-        // funciones públicas
         obtenerProducto,
         eliminarProducto,
         actualizarProducto,
         productosHuerfanos,
         hayStock,
-        descontarStock,
+        descontarStock
       }}
     >
       {children}

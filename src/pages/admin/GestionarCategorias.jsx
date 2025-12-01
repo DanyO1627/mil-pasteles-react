@@ -275,7 +275,7 @@ export default function GestionarCategorias() {
                   <div className="categoria-admin-acciones">
                     <button
                       className="categoria-admin-btn categoria-admin-btn--editar"
-                      onClick={() => navigate(`/admin/categorias/editar/${categoria.id}`)}
+                      onClick={() => navigate(`/editarCategoria/${categoria.id}`)}
                     >
                       ✏️ Editar
                     </button>
