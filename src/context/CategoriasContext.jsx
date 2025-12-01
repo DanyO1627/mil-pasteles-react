@@ -12,7 +12,13 @@ export function CategoriasProvider({ children }) {
   const [categorias, setCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
 
+<<<<<<< HEAD
   // CARGAR DESDE BACKEND - VERSIÓN DE CONY 
+=======
+  // ===============================
+  // 🔄 Cargar desde backend
+  // ===============================
+>>>>>>> 9f3896e1553bc79815cb25e58a7c6689df2a2a27
   useEffect(() => {
     (async () => {
       try {
@@ -26,8 +32,9 @@ export function CategoriasProvider({ children }) {
     })();
   }, []);
 
-  // -------- CRUD ---------
-
+  // ===============================
+  // CRUD
+  // ===============================
   const agregarCategoria = async (nueva) => {
     const creada = await createCategoria(nueva);
     setCategorias((prev) => [...prev, creada]);
@@ -47,14 +54,17 @@ export function CategoriasProvider({ children }) {
     setCategorias((prev) => prev.filter((c) => c.id !== id));
   };
 
-  // -------- UTILIDADES --------
-
-  const obtenerCategoria = (id) => categorias.find((c) => c.id === Number(id));
+  // ===============================
+  // Utilidades
+  // ===============================
+  const obtenerCategoria = (id) =>
+    categorias.find((c) => c.id === Number(id));
 
   const obtenerCategoriaPorNombre = (nombre) =>
     categorias.find((c) => c.nombre === nombre);
 
-  const categoriasActivas = () => categorias.filter((c) => c.activo);
+  const categoriasActivas = () =>
+    categorias.filter((c) => c.activo);
 
   const contarProductosPorCategoria = (productos, categoriaId) =>
     productos.filter((p) => p.categoriaId === categoriaId).length;
@@ -67,9 +77,11 @@ export function CategoriasProvider({ children }) {
       value={{
         categorias,
         cargando,
+
         agregarCategoria,
         actualizarCategoria: actualizarCategoriaContext,
         eliminarCategoria: eliminarCategoriaContext,
+
         obtenerCategoria,
         obtenerCategoriaPorNombre,
         categoriasActivas,
