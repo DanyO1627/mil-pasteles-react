@@ -1,150 +1,139 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import initialProductos from "../data/dataProductos";
-import { useCategorias } from "./CategoriasContext";
+import {
+  fetchProductos,
+  crearProducto,
+  eliminarProductoBack,
+  actualizarProductoBack,
+} from "../services/productosService";
+
 const InventarioContext = createContext();
 
-const STORAGE_KEY = "pasteleria_inventario";
-
 export function ProductosProvider({ children }) {
-  const { existeCategoria } = useCategorias();
-  // Inicializar desde LocalStorage o usar datos iniciales
-  const [productos, setProductos] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        return JSON.parse(stored);
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  // ===============================
+  // 🔄 Cargar productos desde backend
+  // ===============================
+  useEffect(() => {
+    async function cargar() {
+      try {
+        const data = await fetchProductos();
+        // fetchProductos ya devuelve datos normalizados
+        setProductos(data);
+      } catch (err) {
+        console.error(err);
+        setError("No se pudieron cargar productos");
+      } finally {
+        setCargando(false);
       }
-      // guardar datos iniciales /1vez
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialProductos));
-      return initialProductos;
-    } catch (error) {
-      console.error("Error cargando productos:", error);
-      return initialProductos;
     }
-  });
-
-  // Sincroniza el localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
-    } catch (error) {
-      console.error("Error guardando productos:", error);
-    }
-  }, [productos]);
-
-  useEffect(() => {
-  const productosValidados = productos.map((p) => {
-    if (!p.categoriaId || !existeCategoria(p.categoriaId)) {
-      console.warn(`⚠️ Producto "${p.nombre}" tenía categoría inválida. Se movió a "Sin categoría".`);
-      return { ...p, categoriaId: null };
-    }
-    return p;
-  });
-    setProductos(productosValidados);
+    cargar();
   }, []);
 
-  // CRUD
-  
-  const agregarProducto = (nuevo) => {
-    const nuevoProducto = { 
-      ...nuevo, 
-      id: Date.now(),
-      stock: nuevo.stock || 0 
+  // ===============================
+  // 🔎 Obtener un producto por ID
+  // ===============================
+  const obtenerProducto = (id) => productos.find((p) => p.id === Number(id));
+
+  // ===============================
+  // ➕ CREAR producto nuevo
+  // ===============================
+  async function agregarProducto(productoFront) {
+    // Tu servicio crearProducto ya maneja toda la conversión
+    const creado = await crearProducto(productoFront);
+
+    // Normalizar respuesta del backend para el estado local
+    const nuevoProducto = {
+      id: creado.id,
+      nombre: creado.nombreProducto,
+      precio: creado.precio,
+      stock: creado.stock,
+      descripcion: creado.descripcionProducto || creado.descripcionLarga || "",
+      descripcion_larga: creado.descripcionLarga || "",
+      imagen: creado.imagenUrl || "/assets/sin_imagen.webp",
+      categoriaId: creado.categoria?.id ?? null,
+      categoriaNombre: creado.categoria?.nombre ?? null,
+      activo: creado.activo ?? true,
     };
-    setProductos((prev) => [nuevoProducto, ...prev]);
-  };
 
-  const actualizarProducto = (id, cambios) => {
+    setProductos((prev) => [...prev, nuevoProducto]);
+    return nuevoProducto;
+  }
+
+  // ===============================
+  // ✏️ ACTUALIZAR producto
+  // ===============================
+  async function actualizarProducto(id, cambiosFront) {
+    // Tu servicio actualizarProductoBack ya maneja la conversión
+    const actualizado = await actualizarProductoBack(id, cambiosFront);
+
+    // Actualizar el estado local con datos normalizados
     setProductos((prev) =>
-      prev.map((prod) =>
-        prod.id === id ? { ...prod, ...cambios } : prod
+      prev.map((p) =>
+        p.id === Number(id)
+          ? {
+              id: actualizado.id,
+              nombre: actualizado.nombreProducto,
+              precio: actualizado.precio,
+              stock: actualizado.stock,
+              descripcion: actualizado.descripcionProducto || actualizado.descripcionLarga || "",
+              descripcion_larga: actualizado.descripcionLarga || "",
+              imagen: actualizado.imagenUrl || "/assets/sin_imagen.webp",
+              categoriaId: actualizado.categoria?.id ?? null,
+              categoriaNombre: actualizado.categoria?.nombre ?? null,
+              activo: actualizado.activo ?? true,
+            }
+          : p
       )
     );
-  };
 
-  const eliminarProducto = (id) => {
-    setProductos((prev) => prev.filter((prod) => prod.id !== id));
-  };
+    return actualizado;
+  }
 
-  // ===== GESTIÓN DE STOCK =====
+  // ===============================
+  // ❌ ELIMINAR en backend + estado
+  // ===============================
+  async function eliminarProducto(id) {
+    await eliminarProductoBack(id);
+    setProductos((prev) => prev.filter((p) => p.id !== Number(id)));
+  }
 
-  // Descontar stock (para compras)
-  const descontarStock = (id, cantidad = 1) => {
+  // ===============================
+  // 🟡 Productos huérfanos (sin categoría)
+  // ===============================
+  const productosHuerfanos = () => productos.filter((p) => !p.categoriaId);
+
+  // ===============================
+  // 🔍 Stock
+  // ===============================
+  function hayStock(id) {
+    const p = productos.find((prod) => prod.id === Number(id));
+    return p && p.stock > 0;
+  }
+
+  function descontarStock(id) {
     setProductos((prev) =>
-      prev.map((prod) => {
-        if (prod.id === id) {
-          const nuevoStock = Math.max(0, (prod.stock || 0) - cantidad);
-          return { ...prod, stock: nuevoStock };
-        }
-        return prod;
-      })
-    );
-  };
-
-  // ajustar stock
-  const ajustarStock = (id, diferencia) => {
-    setProductos((prev) =>
-      prev.map((prod) => {
-        if (prod.id === id) {
-          const nuevoStock = Math.max(0, (prod.stock || 0) + diferencia);
-          return { ...prod, stock: nuevoStock };
-        }
-        return prod;
-      })
-    );
-  };
-
-// Establecer stock
-  const establecerStock = (id, nuevoStock) => {
-    setProductos((prev) =>
-      prev.map((prod) =>
-        prod.id === id ? { ...prod, stock: Math.max(0, nuevoStock) } : prod
+      prev.map((p) =>
+        p.id === Number(id) ? { ...p, stock: Math.max(0, p.stock - 1) } : p
       )
     );
-  };
-
- 
-
-  // producto por id
-  const obtenerProducto = (id) => {
-    return productos.find((p) => p.id === Number(id));
-  };
-
-  // stock crítico
-  const productosCriticos = (umbral = 7) => {
-    return productos.filter((p) => (p.stock ?? 0) <= umbral);
-  };
-
-  // ve si hay stock
-  const hayStock = (id, cantidadRequerida = 1) => {
-    const producto = obtenerProducto(id);
-    return producto && (producto.stock ?? 0) >= cantidadRequerida;
-  };
-  // Productos sin categoría (huérfanos)
-  const productosHuerfanos = () => {
-    return productos.filter((p) => !p.categoriaId);
-  };
-  // Resetear a datos iniciales
-  const resetearInventario = () => {
-    setProductos(initialProductos);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialProductos));
-  };
+  }
 
   return (
     <InventarioContext.Provider
       value={{
         productos,
-        agregarProducto,
+        cargando,
+        error,
+        obtenerProducto,
+        agregarProducto,        // ✅ AHORA EXPUESTA
         actualizarProducto,
         eliminarProducto,
-        descontarStock,
-        ajustarStock,
-        establecerStock,
-        obtenerProducto,
-        productosCriticos,
-        hayStock,
-        resetearInventario,
         productosHuerfanos,
+        hayStock,
+        descontarStock,
       }}
     >
       {children}

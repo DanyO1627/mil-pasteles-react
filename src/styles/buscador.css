@@ -1,16 +1,19 @@
-/* src/styles/buscador.css */
-
 .buscador-class {
   max-width: 720px;
   margin: 0 auto 1rem;
   display: flex;
   align-items: center;
+  
 }
 
 .buscador-input {
   border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.08);
   padding: 10px 12px;
+   flex: 1 !important;      /* se estira sí o sí */
+  width: 100% !important;  /* ignora los anchos de bootstrap */
+  min-width: 0 !important; /* evita que bootstrap lo rigidice */
+  max-width: none !important;
 }
 
 #clear-search {
@@ -19,7 +22,6 @@
   color: white;
   border: none;
   padding: 8px 12px;
-  transition: background .2s;
 }
 
 #clear-search:hover {
@@ -45,7 +47,9 @@
 
 .search-input {
   flex: 1;
-  max-width: 600px;
+  /* max-width: 600px; */
+  width: 100%;
+  max-width: none;
   padding: 10px 14px;
   border: 1px solid #6b3d45;
   border-radius: 12px;

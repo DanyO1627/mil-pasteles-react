@@ -1,45 +1,63 @@
+/* ========================================================= */
+/* EMPLEADOS - ESTILO EN LÍNEA CON EL PANEL DE ADMINISTRADOR */
+/* ========================================================= */
+
+:root {
+  --color-fondo: #fffaf9;
+  --color-borde: #f3d1d5;
+  --color-texto: #6b3d45;
+  --color-acento: #d8a1a7;
+}
+
+/* CONTENEDOR GENERAL */
 .empleados-wrapper {
+  background: var(--color-fondo);
+  min-height: 100vh;
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
-  padding: 40px;
-  background-color: #f9fafb;
-  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: var(--color-texto);
 }
 
+/* CONTENIDO */
 .empleados-container {
-  width: 95%;
-  max-width: 1200px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 1100px;
 }
 
+/* TITULOS */
 .empleados-titulo {
   font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+  color: var(--color-texto);
+  margin-bottom: 6px;
 }
 
 .empleados-subtitulo {
-  color: #666;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
+  color: #826169;
 }
 
+/* GRID DE EMPLEADOS */
 .empleados-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 20px;
 }
 
-/* --- Tarjeta individual --- */
+/* CARD */
 .empleado-card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  background: #ffffff;
+  border: 1px solid var(--color-borde);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -87,21 +105,52 @@
   line-height: 1.5;
 }
 
-.empleado-acciones {
-  margin-top: 15px;
-}
 
 .btn-ver {
-  background-color: #28a745;
+  background: var(--color-acento);
   color: white;
+  padding: 8px 18px;
+  border-radius: 10px;
   border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s;
+  font-weight: bold;
 }
 
 .btn-ver:hover {
-  background-color: #218838;
+  background: #c67f86;
+}
+
+/* MENSAJE SIN ADMIN */
+.sin-admin {
+  text-align: center;
+  font-size: 1rem;
+  color: #8a6f76;
+}
+
+/* LOADER */
+.cargando {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 40px;
+  color: var(--color-texto);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .empleados-wrapper {
+    padding: 20px 12px;
+  }
+
+  .empleados-container {
+    max-width: 100%;
+  }
+
+  .empleados-titulo {
+    text-align: center;
+  }
+
+  .empleados-subtitulo {
+    text-align: center;
+  }
 }

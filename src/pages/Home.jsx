@@ -21,13 +21,17 @@ export default function Home() {
   // usar los productos
   const { productos } = useProductos();
 
-  const productosHome = productos.filter(p => p.id >= 33 && p.id <= 37);
+  const productosHome = productos.filter((p) => {
+  const id = p.id || p.id_producto;
+  return id >= 33 && id <= 37;
+  });
 
   const [query, setQuery] = useState("");
 
-  const productosFiltrados = productosHome.filter((p) =>
-    p.nombre.toLowerCase().includes(query.toLowerCase())
-  );
+  const productosFiltrados = productosHome.filter((p) => {
+  const nombre = p.nombre || p.nombre_producto || "";
+  return nombre.toLowerCase().includes(query.toLowerCase());
+  });
 
   useEffect(() => {
     console.log("Productos cargados en Home:", productos);

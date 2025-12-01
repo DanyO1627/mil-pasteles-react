@@ -4,7 +4,7 @@ import "../styles/stylesAdmin/productosAdmin.css";
 export default function AdminProductCard({ producto, onEditar, onEliminar }) {
   return (
     <div className="admin-card">
-      {/* Imagen del producto */}
+      {/* imagen del producto*/}
       <img
         src={producto.imagen}
         alt={producto.nombre}
@@ -14,13 +14,13 @@ export default function AdminProductCard({ producto, onEditar, onEliminar }) {
         }}
       />
 
-      {/* Contenido principal */}
+      {/* nombre y contendiod */}
       <div className="admin-card__contenido">
         <h5 className="admin-card__nombre">{producto.nombre}</h5>
 
-        {/* ✅ ahora usamos el nombre de categoría correcto */}
+        {/* categoría del producto */}
         <p className="admin-card__categoria">
-          Categoría: {producto.nombreCategoria || "Sin categoría"}
+          Categoría: {producto.nombreCategoria || producto.categoriaId || "Sin categoría"}
         </p>
 
         <p className="admin-card__precio">
@@ -31,7 +31,7 @@ export default function AdminProductCard({ producto, onEditar, onEliminar }) {
         </p>
       </div>
 
-      {/* Botones de acción */}
+      {/* BOTONES */}
       <div className="admin-card__acciones">
         <button
           className="admin-card__btn admin-card__btn--editar"

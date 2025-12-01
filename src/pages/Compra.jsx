@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 import { useNavigate } from "react-router-dom";
+import { crearBoleta } from "../services/boletaService";
 import "../styles/base.css";
 import "../styles/compra.css";
 
 export default function Compra() {
   const { carrito, precioTotal, vaciarCarrito, procesarCompra } = useCarrito();
   const navigate = useNavigate();
+
+  // 🔥 CONSTANTE DE ENVÍO (ahora accesible en todo el componente)
+  const costoEnvio = 3000;
 
   // Objeto de regiones y comunas de Chile
   const comunasPorRegion = {
@@ -103,10 +107,7 @@ export default function Compra() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Calcular costo de envío dinámico según región
-  const costoEnvio = formData.region === "Metropolitana" ? 3000 : 5000;
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (carrito.length === 0) {
@@ -116,26 +117,59 @@ export default function Compra() {
     }
 
     if (validateForm()) {
-      // Guardar una copia del carrito antes de vaciar
-      const carritoParaEnviar = [...carrito];
+      const orden = {
+        fecha: new Date().toLocaleDateString("es-CL"),
+        subtotal: precioTotal,
+        costoEnvio,
+        totalFinal: precioTotal + costoEnvio,
+        metodoPago: "Tarjeta de débito",
+        atendidoPor: "Constanza Pino",
 
-      // Redirigir a página de compra exitosa con todos los datos
-      navigate("/compraExitosa", {
-        state: {
-          formData: formData,
-          carrito: carritoParaEnviar,
-          precioTotal: precioTotal,
-          costoEnvio: costoEnvio
-        }
-      });
+        calle: formData.calle,
+        departamento: formData.departamento,
+        comuna: formData.comuna,
+        region: formData.region,
+        indicaciones: formData.indicaciones,
 
-      // Procesar la compra y vaciar carrito después de navegar
-      setTimeout(() => {
-        procesarCompra();
-        vaciarCarrito();
-      }, 100);
+        usuario: { id: 3 },
+
+        carrito: carrito.map((item) => ({
+          productoId: item.id,
+          nombreProducto: item.nombre,
+          cantidad: item.cantidad,
+          precioUnitario: item.precio,
+          totalLinea: item.precio * item.cantidad,
+        }))
+      };
+
+      console.log("📦 ORDEN A ENVIAR AL BACK:", orden);
+
+      try {
+        const respuesta = await crearBoleta(orden);
+
+        console.log("✔ Orden guardada:", respuesta);
+
+        navigate("/compraExitosa", {
+          state: {
+            formData,
+            carrito,
+            precioTotal,
+            costoEnvio,
+          },
+        });
+
+        setTimeout(() => {
+          procesarCompra();
+          vaciarCarrito();
+        }, 100);
+
+      } catch (error) {
+        console.error("❌ Error al enviar orden", error);
+        alert("No se pudo procesar la compra. Intenta nuevamente.");
+      }
     }
   };
+
 
   if (carrito.length === 0) {
     return (

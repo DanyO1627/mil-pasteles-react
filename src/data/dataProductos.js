@@ -423,7 +423,7 @@ const lista_productos = [
       descripcion_larga: "Versión grande de nuestra popular tarta, con una base de masa sablée tierna, una capa generosa de crema pastelera de vainilla y cubierta totalmente con frambuesas frescas que aportan un toque ácido y muy refrescante. Ideal para compartir.",
       categoriaId: 2, 
       stock: 12 
-    },
-];
+    }
+]
 
 export default lista_productos;

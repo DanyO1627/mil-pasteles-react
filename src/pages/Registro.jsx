@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { useUsuarios } from "../context/UsuariosContext.jsx"; // el import de los usuarios context (para acceder a ellos)
-import { useNavigate } from "react-router-dom"; // para no tener qu recargar
+import { useUsuarios } from "../context/UsuariosContext.jsx";
+import { useNavigate } from "react-router-dom";
+import Toast from "../components/MensajeFlotante";
 import "../utils/Registro.logic.js";
 import "../styles/mensaje.css";
 import "../styles/style.css";
 
+
 export default function Registro() {
-  const { usuarios, agregarUsuario } = useUsuarios(); // aquí usamos la funcion del contexto
+  const { agregarUsuario } = useUsuarios(); // función del context
   const navigate = useNavigate();
+
 
   const [form, setForm] = useState({
     nombre: "",
@@ -58,45 +61,72 @@ export default function Registro() {
     Magallanes: ["Punta Arenas", "Puerto Natales", "Río Verde", "San Gregorio",
       "Laguna Blanca", "Porvenir", "Primavera", "Timaukel", "Natales",
       "Cabo de Hornos", "Antártica"]
-    // puedes agregar las demás regiones...
+    
   };
 
-  // Actualiza el listado de comunas cuando cambia la región
+  // actualiza el listado de comunas cuando cambia la región
   useEffect(() => {
     const lista = window.RegistroLogic.computeComunas(form.region, comunasPorRegion);
     setComunas(lista);
   }, [form.region]);
 
-  // Control de cambios en los inputs
-  const onChange = (e) => {
-    const next = window.RegistroLogic.changeHandler(form, e.target.name, e.target.value);
-    setForm(next);
-  };
+
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
 
   // Validación y guardado en localStorage
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const estados = ["Completado", "Pendiente", "Cancelado"];
-    const res = window.RegistroLogic.submitRegistro(
-      form,
-      usuarios,
-      comunasPorRegion,
-      estados
-    );
+    const { nombre, email, clave1, clave2, region, comuna } = form;
+    const errores = [];
 
-    // Mostrar mensaje HTML ya formateado (opcional)
-    setMsg(<div dangerouslySetInnerHTML={{ __html: res.messageHtml }} />);
+    // Validaciones
+    if (!nombre.trim()) errores.push("El nombre no puede estar vacío.");
+    if (!email.includes("@")) errores.push("El correo electrónico no es válido.");
+    if (clave1.length < 6) errores.push("La contraseña debe tener al menos 6 caracteres.");
+    if (clave1 !== clave2) errores.push("Las contraseñas no coinciden.");
+    if (!region) errores.push("Debes seleccionar una región.");
+    if (!comuna) errores.push("Debes seleccionar una comuna.");
 
-    if (!res.ok) return; // errores o duplicado: no continuar
+    if (errores.length > 0) {
+      setMsg(
+        <div className="alert alert-danger">
+          <ul>{errores.map((err, i) => <li key={i}>{err}</li>)}</ul>
+        </div>
+      );
+      return;
+    }
 
-    // Éxito: persistir mediante el contexto y efectos visuales
-    agregarUsuario(res.nuevoUsuario);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-    setTimeout(() => navigate(res.navigateTo), 1200);
+const nuevoUsuario = {
+      nombre,
+      email,
+      clave: clave1,
+      region,
+      comuna,
+      estado: "Pendiente", // uno le puede elegir
+      rol: "cliente",
+      categoria: null, 
+      edad: null,
+      fecha: new Date().toISOString().slice(0, 10)
+    };
+
+    try {
+      await agregarUsuario(nuevoUsuario);  //  AHORA BUSCA EN EL BACKEND
+
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+
+      setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
+
+      setTimeout(() => navigate("/"), 1200);
+    } catch (err) {
+      setMsg(<div className="alert alert-danger">❌ Error al registrar usuario.</div>);
+    }
   };
 
-
+  // ————————————————————————————————————————
+  // RENDER
+  // ————————————————————————————————————————
   return (
     <main className="registro-wrapper">
       <div className="container">
@@ -106,6 +136,8 @@ export default function Registro() {
           {msg && <div id="mensajes">{msg}</div>}
 
           <div className="form-grid">
+
+            {/* TODOS TUS INPUTS IGUALES */}
             <div className="field">
               <label htmlFor="nombre">Nombre completo</label>
               <input id="nombre" name="nombre" type="text" onChange={onChange} value={form.nombre} />
@@ -145,7 +177,9 @@ export default function Registro() {
                 ))}
               </select>
             </div>
+
           </div>
+
           <div className="actions">
             <button className="btn-primary" type="submit">Registrar</button>
           </div>

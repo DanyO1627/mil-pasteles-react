@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../utils/IniciarSesion.logic.js";
+import { loginUsuario } from "../services/usuariosApi";
 import "../styles/registro&login.css";
 
 export default function IniciarSesion() {
@@ -8,34 +9,45 @@ export default function IniciarSesion() {
   const [form, setForm] = useState({ correo: "", clave: "" });
   const [msg, setMsg] = useState("");
 
-  const onChange = (e) => setForm(window.IniciarSesionLogic.onChange(form, e));
+  const onChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const res = window.IniciarSesionLogic.onSubmit(form, localStorage, navigate);
-    setMsg(res.mensaje);
+    const { correo, clave } = form;
+
+    if (!correo || !clave) {
+      return setMsg("⚠️ Por favor completa todos los campos.");
+    }
+
+    try {
+      // el login ahora usa el backend
+      const user = await loginUsuario({ email: correo, clave });
+
+      // guarda SOLO SI es activa
+      localStorage.setItem("usuarioActivo", JSON.stringify(user));
+
+      setMsg(`✅ Bienvenido/a ${user.nombre}!`);
+
+      // si es admin te manda para el admin, si no te deja en home
+      setTimeout(() => {
+        if (user.rol === "admin") {
+          navigate("/adminHome");
+        } else {
+          navigate("/");
+        }
+      }, 1000);
+    } catch (err) {
+      setMsg("❌ Correo o contraseña incorrectos.");
+    }
   };
-
-  // 🔄 NUEVO: Botón para restaurar todo el sistema (incluye administradores)
-  const handleResetCompleto = () => {
-    window.IniciarSesionLogic.handleResetCompleto(
-      localStorage,
-      window.confirm,
-      window.alert,
-      () => window.location.reload()
-    );
-  };
-
-
-
-
 
   return (
     <main className="login-wrapper">
       <div className="container">
         <h1 className="page-title">Iniciar sesión</h1>
 
-        {msg && <p id="mensaje" role="status">{msg}</p>}
+        {msg && <p id="mensaje">{msg}</p>}
 
         <form id="loginForm" onSubmit={onSubmit}>
           <div className="field">
@@ -47,9 +59,8 @@ export default function IniciarSesion() {
               placeholder="correo@ejemplo.cl"
               value={form.correo}
               onChange={onChange}
-              autoComplete="email"
             />
-            <small style={{ display: "block", marginTop: "5px", color: "#666" }}>
+            <small style={{ marginTop: "5px", display: "block", color: "#666" }}>
               💡 Empleados: usar correo @milsabores.cl
             </small>
           </div>
@@ -63,7 +74,6 @@ export default function IniciarSesion() {
               placeholder="********"
               value={form.clave}
               onChange={onChange}
-              autoComplete="current-password"
             />
           </div>
 
@@ -72,8 +82,6 @@ export default function IniciarSesion() {
               Ingresar
             </button>
           </div>
-
-
 
           <div style={{ marginTop: "15px", textAlign: "center" }}>
             <a
@@ -86,17 +94,7 @@ export default function IniciarSesion() {
         </form>
       </div>
 
-      {/* Botón oculto para restaurar sistema (por lo de los admin que están en data) */}
-      <button
-        type="button"
-        onClick={handleResetCompleto}
-        className="btn-reset-total"
-        title="Restaurar datos del sistema"
-      >
-        🔄
-      </button>
-
-
+      
     </main>
   );
 }

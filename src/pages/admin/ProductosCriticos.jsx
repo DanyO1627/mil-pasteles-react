@@ -1,4 +1,4 @@
-// src/pagesAdmin/ProductosCriticos.jsx
+
 import React from "react";
 import { useProductos } from "../../context/InventarioContext";
 import { useNavigate } from "react-router-dom";

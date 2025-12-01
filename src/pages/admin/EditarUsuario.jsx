@@ -1,10 +1,11 @@
+// src/pagesAdmin/EditarUsuario.jsx
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUsuarios } from "../../context/UsuariosContext.jsx";
-import "../../styles/stylesAdmin/editarUsuario.css";
+import "../../styles/global.css";
 
 export default function EditarUsuario() {
-  const { usuarios, editarUsuario, obtenerUsuario } = useUsuarios();
+  const { obtenerUsuario, editarUsuario } = useUsuarios();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -12,282 +13,271 @@ export default function EditarUsuario() {
     id: "",
     nombre: "",
     email: "",
-    telefono: "",
-    edad: "",
     region: "",
     comuna: "",
-    estado: "Activo",
+    estado: "",
+    rol: "",
+    categoria: "",
+    fecha: "",
     clave1: "",
     clave2: "",
-    index: null,
   });
 
   const [showToast, setShowToast] = useState(false);
-  const [comunas, setComunas] = useState([]);
   const [mensaje, setMensaje] = useState("");
+  const [comunas, setComunas] = useState([]);
 
-  // === Listado de regiones y comunas ===
-  const comunasPorRegion = {
-    Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
-    Tarapaca: ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
-    Antofagasta: ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
-    Atacama: ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
-    Coquimbo: ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
-    Valparaiso: ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache", "Olmué", "Villa Alemana"],
-    Metropolitana: ["Santiago", "Puente Alto", "Maipú", "Las Condes", "La Florida", "Vitacura", "Ñuñoa", "Recoleta", "Providencia", "Pudahuel", "San Bernardo", "Renca", "Cerro Navia", "Estación Central", "Peñalolén", "Quilicura", "La Reina", "Macul", "San Joaquín", "Lo Prado"],
-    Libertador: ["Rancagua", "San Fernando", "Rengo", "Pichidegua", "Peumo", "Las Cabras", "Mostazal", "Codegua", "Requínoa", "Coltauco", "Graneros", "Machalí", "Olivar"],
-    Maule: ["Talca", "Curicó", "Linares", "San Javier", "Parral", "Retiro", "Villa Alegre", "San Clemente", "Yerbas Buenas", "Colbún", "Longaví", "Cauquenes", "Pelluhue", "Chanco", "Constitución", "Empedrado", "Maule", "San Rafael", "Río Claro"],
-    Ñuble: ["Chillán", "Bulnes", "Cobquecura", "Coelemu", "Coihueco", "Chillán Viejo", "El Carmen", "Ninhue", "Ñiquén", "Pemuco", "Pinto", "Portezuelo", "Quillón", "Quirihue", "Ránquil", "San Carlos", "San Fabián", "San Ignacio", "San Nicolás", "Treguaco"],
-    BioBio: ["Concepción", "Talcahuano", "Penco", "Tomé", "Florida", "Hualpén", "Hualqui", "Santa Juana", "Lota", "Coronel", "San Pedro de la Paz", "Chiguayante", "Los Ángeles", "Cabrero", "Mulchén", "Nacimiento", "Laja", "San Rosendo", "Yumbel", "Negrete", "Alto Biobío"],
-    Araucania: ["Temuco", "Villarrica", "Angol", "Victoria", "Traiguén", "Curacautín", "Lonquimay", "Carahue", "Saavedra", "Pitrufquén", "Freire", "Gorbea", "Loncoche", "Pucón", "Vilcún", "Perquenco", "Melipeuco", "Cholchol", "Toltén", "Teodoro Schmidt", "Nueva Imperial", "Lautaro", "Cunco", "Padre Las Casas", "Galvarino", "Collipulli", "Ercilla", "Los Sauces", "Lumaco", "Purén", "Renaico"],
-    Rios: ["Valdivia", "La Unión", "Panguipulli", "Futrono", "Río Bueno", "Lago Ranco", "Corral", "Paillaco", "Máfil", "Lanco", "Mariquina", "Los Lagos"],
-    Lagos: ["Puerto Montt", "Osorno", "Ancud", "Calbuco", "Castro", "Chaitén", "Chonchi", "Cochamó", "Curaco de Vélez", "Dalcahue", "Frutillar", "Fresia", "Futaleufú", "Hualaihué", "Llanquihue", "Los Muermos", "Maullín", "Palena", "Puerto Octay", "Puerto Varas", "Puqueldón", "Purranque", "Puyehue", "Queilén", "Quemchi", "Quellón", "Quinchao", "Río Negro", "San Juan de la Costa", "San Pablo"],
-    Aysen: ["Coyhaique", "Aysén", "Cisnes", "Guaitecas", "Lago Verde", "Río Ibáñez", "Chile Chico", "Cochrane", "O'Higgins", "Tortel"],
-    Magallanes: ["Punta Arenas", "Puerto Natales", "Río Verde", "San Gregorio", "Laguna Blanca", "Porvenir", "Primavera", "Timaukel", "Cabo de Hornos", "Antártica"],
+  // REGIONES Y COMUNAS
+  const regiones = {
+    rm: ["Santiago", "Puente Alto", "Maipú", "La Florida"],
+    v: ["Valparaíso", "Viña del Mar", "Quilpué"],
+    biobio: ["Concepción", "Talcahuano", "Los Ángeles"],
   };
 
-  // Cargar usuario existente
+  const cambiarComunas = (region) => {
+    setComunas(regiones[region] || []);
+  };
+
+  // CARGAR DATOS DEL USUARIO
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
+
     if (id) {
-      const user = obtenerUsuario(id);
+      const user = obtenerUsuario(Number(id));
       if (user) {
-        setUsuario({ ...user });
-        if (user.region && comunasPorRegion[user.region]) {
-          setComunas(comunasPorRegion[user.region]);
-        }
+        setUsuario({
+          ...user,
+          clave1: "",
+          clave2: "",
+        });
+        cambiarComunas(user.region);
       }
     }
-  }, [usuarios, location.search]);
+  }, [location.search]);
 
-  // Actualizar comunas según región
-  useEffect(() => {
-    if (usuario.region && comunasPorRegion[usuario.region]) {
-      setComunas(comunasPorRegion[usuario.region]);
-    } else {
-      setComunas([]);
+  // GUARDAR CAMBIOS
+  const guardarCambios = async () => {
+    if (!usuario.nombre.trim() || !usuario.email.trim()) {
+      return setMensaje("⚠️ Completa los campos obligatorios.");
     }
-  }, [usuario.region]);
 
-  const guardarCambios = () => {
-    if (!usuario.nombre || !usuario.email) {
-      setMensaje("⚠️ Por favor completa los campos obligatorios.");
-      return;
-    }
     if (usuario.clave1 && usuario.clave1.length < 6) {
-      setMensaje("⚠️ La contraseña debe tener al menos 6 caracteres.");
-      return;
+      return setMensaje("⚠️ La contraseña debe tener 6 caracteres mínimo.");
     }
+
     if (usuario.clave1 !== usuario.clave2) {
-      setMensaje("⚠️ Las contraseñas no coinciden.");
-      return;
+      return setMensaje("⚠️ Las contraseñas no coinciden.");
     }
 
-    editarUsuario(usuario.id, usuario);
-    setMensaje("✅ Cambios guardados correctamente.");
-    setShowToast(true);
+    const payload = {
+      nombre: usuario.nombre,
+      email: usuario.email,
+      clave: usuario.clave1 ? usuario.clave1 : usuario.clave,
+      region: usuario.region,
+      comuna: usuario.comuna,
+      estado: usuario.estado,
+      rol: usuario.rol,
+      categoria: usuario.categoria,
+      fecha: usuario.fecha,
+    };
 
-    setTimeout(() => setShowToast(false), 2000);
-    setTimeout(() => navigate("/usuariosRegistrados"), 1000);
+    try {
+      await editarUsuario(usuario.id, payload);
+
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+
+      setMensaje("✅ Cambios guardados exitosamente");
+
+      setTimeout(() => navigate("/usuariosRegistrados"), 1000);
+    } catch (err) {
+      setMensaje("❌ Error al actualizar usuario.");
+    }
   };
 
+  // RESETEAR FORMULARIO
   const resetFormulario = () => {
-    const user = obtenerUsuario(usuario.id);
-    if (user) {
-      setUsuario({ ...user });
-      if (user.region && comunasPorRegion[user.region]) {
-        setComunas(comunasPorRegion[user.region]);
-      }
-      setMensaje("Campos restaurados a su valor original.");
+    const original = obtenerUsuario(usuario.id);
+    if (original) {
+      setUsuario({ ...original, clave1: "", clave2: "" });
+      cambiarComunas(original.region);
+      setMensaje("Campos restaurados.");
     }
-  };
-
-  const limpiarCampo = (campo) => {
-    setUsuario({ ...usuario, [campo]: "" });
   };
 
   const badgeClass = {
-    Activo: "badge-activo",
-    Pendiente: "badge-pendiente",
-    Suspendido: "badge-suspendido",
-  }[usuario.estado] || "badge-activo";
+    Activo: "bg-success",
+    Pendiente: "bg-warning text-dark",
+    Suspendido: "bg-danger",
+  }[usuario.estado] || "bg-secondary";
 
   return (
-    <div className="editar-usr-wrapper">
-      <div className="editar-usr-container">
-        <h2 className="editar-usr-titulo">✏️ Editar Usuario</h2>
-        <p className="editar-usr-subtitulo">
-          Modifica la información del usuario seleccionado
-        </p>
+    <div className="editar-usuario-page">
+      {/* NAV BAR */}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div className="container">
+          <a className="navbar-brand" href="/usuariosRegistrados">← Volver</a>
+          <span className="navbar-text">Editar Usuario</span>
+        </div>
+      </nav>
 
-        {mensaje && (
-          <div
-            className={`editar-usr-mensaje ${
-              mensaje.includes("✅") ? "ok" : "warn"
-            }`}
-          >
-            {mensaje}
+      {/* ===== CONTENIDO ===== */}
+      <main>
+        <div className="container mt-4">
+          <div className="row justify-content-center">
+            <div className="col-lg-8 col-md-10">
+              <div className="card shadow">
+
+                {/* HEADER */}
+                <div className="card-header bg-primary text-white">
+                  <h2 className="card-title mb-0">Editar Usuario</h2>
+                </div>
+
+                {/* BODY */}
+                <div className="card-body">
+
+                  {mensaje && (
+                    <div className={`alert ${mensaje.includes("⚠") ? "alert-warning" : "alert-success"}`}>
+                      {mensaje}
+                    </div>
+                  )}
+
+                  <form>
+
+                    {/* === INFORMACIÓN PERSONAL === */}
+                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-3">Información Personal</h5>
+
+                    <div className="row">
+                      <div className="col-md-6 mb-3">
+                        <label>Nombre *</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={usuario.nombre}
+                          onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="col-md-6 mb-3">
+                        <label>Email *</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          value={usuario.email}
+                          onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      Estado:
+                      <span className={`badge ${badgeClass} ms-2`}>{usuario.estado}</span>
+                    </div>
+
+                    {/* === CONTRASEÑA === */}
+                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">
+                      Cambiar Contraseña (opcional)
+                    </h5>
+
+                    <div className="row">
+                      <div className="col-md-6 mb-3">
+                        <label>Nueva contraseña</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          value={usuario.clave1}
+                          onChange={(e) => setUsuario({ ...usuario, clave1: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="col-md-6 mb-3">
+                        <label>Confirmar contraseña</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          value={usuario.clave2}
+                          onChange={(e) => setUsuario({ ...usuario, clave2: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* === UBICACIÓN === */}
+                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">Ubicación</h5>
+
+                    <div className="row">
+                      <div className="col-md-6 mb-3">
+                        <label>Región</label>
+                        <select
+                          className="form-select"
+                          value={usuario.region}
+                          onChange={(e) => {
+                            setUsuario({ ...usuario, region: e.target.value, comuna: "" });
+                            cambiarComunas(e.target.value);
+                          }}
+                        >
+                          <option value="">Seleccione</option>
+                          <option value="rm">Región Metropolitana</option>
+                          <option value="v">Valparaíso</option>
+                          <option value="biobio">Biobío</option>
+                        </select>
+                      </div>
+
+                      <div className="col-md-6 mb-3">
+                        <label>Comuna</label>
+                        <select
+                          className="form-select"
+                          value={usuario.comuna}
+                          onChange={(e) => setUsuario({ ...usuario, comuna: e.target.value })}
+                        >
+                          <option value="">Seleccione</option>
+                          {comunas.map((c) => (
+                            <option key={c}>{c}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* === ACCIONES === */}
+                    <div className="d-flex justify-content-between mt-4">
+                      <a href="/usuariosRegistrados" className="btn btn-secondary">
+                        Cancelar
+                      </a>
+
+                      <div>
+                        <button
+                          type="button"
+                          className="btn btn-outline-primary me-2"
+                          onClick={resetFormulario}
+                        >
+                          Restaurar
+                        </button>
+
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={guardarCambios}
+                        >
+                          Guardar Cambios
+                        </button>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+            </div>
           </div>
-        )}
 
-        <form className="editar-usr-form">
-          {/* === Información Personal === */}
-          <div className="editar-usr-section">
-            <h3 className="editar-usr-section-titulo">Información Personal</h3>
-
-            <div className="form-group">
-              <label>Nombre completo *</label>
-              <input
-                type="text"
-                value={usuario.nombre}
-                onFocus={() => limpiarCampo("nombre")}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, nombre: e.target.value })
-                }
-              />
+          {showToast && (
+            <div className="toast-noti toast-exito">
+              Cambios guardados correctamente
             </div>
+          )}
 
-            <div className="form-group">
-              <label>Correo electrónico *</label>
-              <input
-                type="email"
-                value={usuario.email}
-                onFocus={() => limpiarCampo("email")}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, email: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Teléfono (opcional)</label>
-              <input
-                type="tel"
-                value={usuario.telefono}
-                onFocus={() => limpiarCampo("telefono")}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, telefono: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Edad</label>
-              <input
-                type="number"
-                min="1"
-                max="120"
-                value={usuario.edad}
-                onFocus={() => limpiarCampo("edad")}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, edad: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Estado actual</label>
-              <div className={badgeClass}>{usuario.estado}</div>
-            </div>
-          </div>
-
-          {/* === Contraseña === */}
-          <div className="editar-usr-section">
-            <h3 className="editar-usr-section-titulo">
-              Cambiar Contraseña (opcional)
-            </h3>
-
-            <div className="form-group">
-              <label>Nueva contraseña</label>
-              <input
-                type="password"
-                value={usuario.clave1}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, clave1: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Confirmar contraseña</label>
-              <input
-                type="password"
-                value={usuario.clave2}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, clave2: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          {/* === Ubicación === */}
-          <div className="editar-usr-section">
-            <h3 className="editar-usr-section-titulo">Ubicación</h3>
-
-            <div className="form-group">
-              <label>Región</label>
-              <select
-                value={usuario.region}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, region: e.target.value, comuna: "" })
-                }
-              >
-                <option value="">Seleccione una región</option>
-                {Object.keys(comunasPorRegion).map((region) => (
-                  <option key={region} value={region}>
-                    {region}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Comuna</label>
-              <select
-                value={usuario.comuna}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, comuna: e.target.value })
-                }
-              >
-                <option value="">Seleccione una comuna</option>
-                {comunas.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* === Acciones === */}
-          <div className="editar-usr-actions">
-            <button
-              type="button"
-              className="btn-cancelar"
-              onClick={() => navigate("/usuariosRegistrados")}
-            >
-              Cancelar
-            </button>
-            <button
-              type="button"
-              className="btn-restaurar"
-              onClick={resetFormulario}
-            >
-              Restaurar
-            </button>
-            <button
-              type="button"
-              className="btn-guardar"
-              onClick={guardarCambios}
-            >
-              Guardar Cambios
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {showToast && (
-        <div className="toast-exito">Cambios guardados correctamente</div>
-      )}
+        </div>
+      </main>
     </div>
   );
 }

@@ -4,7 +4,7 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import '../styles/cardProducto.css'; // usa mismo css
+import '../styles/cardProducto.css';
 
 export default function CardHomeProducto({ producto }) {
   const navigate = useNavigate();

@@ -16,18 +16,16 @@ export default function DetalleProducto() {
   const { obtenerProducto } = useProductos();
   const [showToast, setShowToast] = useState(false);
 
-  // Obtiene producto desde el inventario actualizado
+  // desde el inventario actualizado
   const producto = obtenerProducto(id);
 
-  if (!producto) {
-    return <p>Producto no encontrado.</p>;
-  }
+  if (!producto) return <p>Producto no encontrado.</p>;
 
   const handleAgregar = () => {
     const agregado = agregarAlCarrito(producto);
     if (agregado) {
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000); // 2 seg
+      setTimeout(() => setShowToast(false), 2000);
     }
   };
 
@@ -36,15 +34,23 @@ export default function DetalleProducto() {
 
   return (
     <div className="detalle-card detalle-flex">
-      <img className="detalle-imagen" src={producto.imagen} alt={producto.nombre} />
+
+      <img
+        className="detalle-imagen"
+        src={producto.imagen}
+        alt={producto.nombre}
+      />
+
       <div className="detalle-texto">
         <h2 className="card-title">{producto.nombre}</h2>
+
         <p className="card-text-descrip">{producto.descripcion_larga}</p>
+
         <p className="card-text">
           <strong>${producto.precio.toLocaleString()}</strong>
         </p>
 
-        {/* Indicador de stock */}
+        {/* DICE EL STOCK */}
         <div style={{ marginBottom: '15px' }}>
           {sinStock ? (
             <p style={{ color: '#dc3545', fontWeight: 'bold' }}>
@@ -62,35 +68,31 @@ export default function DetalleProducto() {
         </div>
 
         <div className="detalle-botones">
-          <button 
-            className="btn btn-danger btn-agregar" 
+          <button
+            className="btn btn-danger btn-agregar"
             onClick={handleAgregar}
             disabled={sinStock}
           >
             {sinStock ? 'Sin stock' : 'Agregar al carrito'}
           </button>
-          <button 
-            className="btn-carrito"
-            onClick={() => navigate(`/productos`)}
-          >
+
+          <button className="btn-carrito" onClick={() => navigate(`/productos`)}>
             Ver más productos
           </button>
-          <button 
-            className="btn-carrito"
-            onClick={() => navigate(`/carrito`)}
-          >
+
+          <button className="btn-carrito" onClick={() => navigate(`/carrito`)}>
             Ver carrito
           </button>
         </div>
 
-        {/* contador del carrito */}
+          {/* contador del carrito */}
         <div className="detalle-carrito">
-          <span className="carrito-icon">Productos totales del carrito: </span>
+          <span className="carrito-icon">Productos totales del carrito:</span>
           <span className="carrito-contador">{cantidadTotal}</span>
         </div>
       </div>
 
-      {/* Toast (mensaje flotante) */}
+      {/* mensaje flotante */}
       <Toast mensaje="Producto agregado al carrito" visible={showToast} />
     </div>
   );
