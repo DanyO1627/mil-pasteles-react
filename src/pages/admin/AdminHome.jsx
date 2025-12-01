@@ -6,42 +6,29 @@ import "../../styles/stylesAdmin/admin.css";
 
 export default function AdminHome() {
   const navigate = useNavigate();
-  const { productos, resetearInventario } = useProductos();
-  const { usuarios, resetearUsuarios } = useUsuarios();
+  const { productos } = useProductos();
+  const { usuarios } = useUsuarios();
 
 
-  // RESTAURAR USUARIOS
-  const handleResetCompleto = () => {
-    const confirmar = window.confirm(
-      "⚠️ ¿Estás seguro de que deseas restaurar los datos del sistema?\nEsto eliminará todos los productos y usuarios actuales."
-    );
-    if (confirmar) {
-      resetearInventario();
-      resetearUsuarios();
-      localStorage.clear();
-      alert("✅ Sistema restaurado correctamente.");
-      window.location.reload();
-    }
-  };
 
-
-  // USUARIOS REGISTRADOS DEL CONTEXT
-  //const { usuarios } = useUsuarios();
+  // LOS DATOS QUE SE MUESTRAN EN EL DASHBOARD
+  // TOTAL DE USUARIOS DEL BACKEND
   const totalUsuarios = usuarios.length;
 
-  // DATOS DINAMICOS
+  // USUARIOS DEL DÍA
+  const hoy = new Date().toISOString().slice(0, 10);
+  const nuevosUsuarios = usuarios.filter(u => u.fecha === hoy).length;
+
+  // PRODUCTOS TOTALES DEL BACKEND
   const totalProductos = productos.length;
+
+  // STOCK TOTAL
   const totalStock = useMemo(
     () => productos.reduce((sum, p) => sum + (p.stock || 0), 0),
     [productos]
   );
 
-
-  const nuevosUsuarios = useMemo(() => {
-    return usuarios.filter(u => u.origen === "nuevo").length;
-  }, [usuarios]);
-
-  // Compras (dato temporal)
+  // NO UNIDO AÚN CON EL BACKEND
   const totalCompras = 1234;
 
   const handleEnConstruccion = () => {
@@ -50,6 +37,7 @@ export default function AdminHome() {
 
   return (
     <div className="admin-dashboard">
+      
       {/* SIDEBAR*/}
       <aside className="sidebar">
         <h2>🧁 Mil Sabores</h2>
@@ -63,9 +51,11 @@ export default function AdminHome() {
           <li onClick={() => navigate("/ofertas")}>💬 Ofertas</li>
           <li onClick={() => navigate("/perfilAdmin")}>🔒 Perfil</li>
         </ul>
+
+        
       </aside>
 
-      {/* HOLA ADMINISTRADOR */}
+      {/* HOLA ADMIN */}
       <main className="main-content">
         <header className="dashboard-header">
           <h1>¡Hola Administrador!</h1>
@@ -76,6 +66,8 @@ export default function AdminHome() {
 
         {/* TARJETAS SUPERIORES */}
         <div className="stats-grid">
+
+          {/* COMPRAS */}
           <div className="stat-card compras">
             <h3>🛒 Compras</h3>
             <p className="stat-number">{totalCompras.toLocaleString()}</p>
@@ -84,7 +76,11 @@ export default function AdminHome() {
             </p>
           </div>
 
-          <div className="stat-card productos" onClick={() => navigate("/panelProductos")}>
+          {/* PRODUCTOS */}
+          <div
+            className="stat-card productos"
+            onClick={() => navigate("/panelProductos")}
+          >
             <h3>📦 Productos</h3>
             <p className="stat-number">{totalProductos}</p>
             <p className="stat-info">
@@ -92,48 +88,49 @@ export default function AdminHome() {
             </p>
           </div>
 
+          {/* USUARIOS */}
           <div className="stat-card usuarios">
             <h3>👥 Usuarios</h3>
             <p className="stat-number">{totalUsuarios}</p>
             <p className="stat-info">
-              Nuevos usuarios del día de hoy: <strong>+{nuevosUsuarios}</strong>
+              Nuevos hoy: <strong>+{nuevosUsuarios}</strong>
             </p>
           </div>
         </div>
 
-        {/* === ACCESOS RÁPIDOS === */}
+        {/* ACCESOS RÁPIDOS */}
         <div className="quick-access">
           <div className="qa-card" onClick={() => navigate("/adminHome")}>
             <h4>📊 Dashboard</h4>
-            <p>Visión general de métricas y estadísticas.</p>
+            <p>Visión general del sistema.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/historialCompra")}>
             <h4>🧾 Historial Compra</h4>
-            <p>Gestión y seguimiento de pedidos en curso.</p>
+            <p>Revisa tus ventas.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/panelProductos")}>
             <h4>📦 Productos</h4>
-            <p>Administración del inventario y detalles.</p>
+            <p>Inventario y gestión.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/gestionarCategorias")}>
             <h4>🏷 Categorías</h4>
-            <p>Organización de productos en secciones.</p>
+            <p>Organización por secciones.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/usuariosRegistrados")}>
             <h4>👥 Usuarios</h4>
-            <p>Gestión de usuarios y roles en el sistema.</p>
+            <p>Administración de clientes.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/reportes")}>
             <h4>📈 Reportes</h4>
-            <p>Generación de reportes detallados.</p>
+            <p>Análisis detallado.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/perfilAdmin")}>
             <h4>⚙ Perfil</h4>
-            <p>Configuración de datos personales y cuenta.</p>
+            <p>Ajustes personales.</p>
           </div>
-          <div className="qa-card" onClick={() => navigate("/reportes")}>
+          <div className="qa-card" onClick={() => navigate("/")}>
             <h4>🏬 Tienda</h4>
-            <p>Regresar a la tienda.</p>
+            <p>Ir a la tienda.</p>
           </div>
         </div>
       </main>

@@ -1,0 +1,160 @@
+/* ========================================================= */
+/* EMPLEADOS - ESTILO EN LÍNEA CON EL PANEL DE ADMINISTRADOR */
+/* ========================================================= */
+
+:root {
+  --color-fondo: #fffaf9;
+  --color-borde: #f3d1d5;
+  --color-texto: #6b3d45;
+  --color-acento: #d8a1a7;
+}
+
+/* CONTENEDOR GENERAL */
+.empleados-wrapper {
+  background: var(--color-fondo);
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  color: var(--color-texto);
+}
+
+/* CONTENIDO */
+.empleados-container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* TITULOS */
+.empleados-titulo {
+  font-size: 28px;
+  color: var(--color-texto);
+  margin-bottom: 6px;
+}
+
+.empleados-subtitulo {
+  margin-bottom: 24px;
+  color: #826169;
+}
+
+/* GRID DE EMPLEADOS */
+.empleados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 20px;
+}
+
+/* CARD */
+.empleado-card {
+  background: #ffffff;
+  border: 1px solid var(--color-borde);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.empleado-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* AVATAR */
+.empleado-avatar-container {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-acento);
+  margin-bottom: 12px;
+}
+
+.empleado-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* INFORMACIÓN */
+.empleado-nombre {
+  font-size: 20px;
+  margin: 6px 0;
+}
+
+.empleado-rol {
+  background: var(--color-acento);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.empleado-detalles p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #7d5a61;
+}
+
+/* BOTÓN VER PERFIL */
+.empleado-acciones {
+  margin-top: 14px;
+}
+
+.btn-ver {
+  background: var(--color-acento);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-ver:hover {
+  background: #c67f86;
+}
+
+/* MENSAJE SIN ADMIN */
+.sin-admin {
+  text-align: center;
+  font-size: 1rem;
+  color: #8a6f76;
+}
+
+/* LOADER */
+.cargando {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 40px;
+  color: var(--color-texto);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .empleados-wrapper {
+    padding: 20px 12px;
+  }
+
+  .empleados-container {
+    max-width: 100%;
+  }
+
+  .empleados-titulo {
+    text-align: center;
+  }
+
+  .empleados-subtitulo {
+    text-align: center;
+  }
+}

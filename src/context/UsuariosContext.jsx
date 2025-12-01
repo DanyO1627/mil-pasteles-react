@@ -1,95 +1,92 @@
-// para que los usuarios se estándaricen y se sincronicen con el localStorage. 
-// con esto el localstorage se actualiza solo, 
-// el crud es independiente de los productos , carrito etc
-// se puede usar el user usuarios () en registro, usuarios, usuarios registrados, etidtar usuarios y todo eso. 
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  getUsuarios,
+  loginUsuario,
+  updateUsuario,
+  deleteUsuario,
+} from "../services/usuariosApi";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import dataUsuarios from "../data/dataUsuarios";
-
-const STORAGE_KEY = "pasteleria_usuarios";
 const UsuariosContext = createContext();
 
-export const UsuariosProvider = ({ children }) => {
-  // si hay usuarios guardados los carga, sino usa los base
-  const [usuarios, setUsuarios] = useState(() => {
-    const guardados = localStorage.getItem(STORAGE_KEY);
-    if (guardados) {
-      return JSON.parse(guardados);
-    } else {
-      // inicializa localStorage con los usuarios base
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUsuarios));
-      return dataUsuarios;
-    }
-  });
+export function UsuariosProvider({ children }) {
+  const [usuarios, setUsuarios] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
-  // ✅ sincroniza automáticamente los cambios
+  // CARGAR USUARIOS DESDE EL BACKEND
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarios));
-  }, [usuarios]);
-  // EL CRUD DE LOS USUARIOS (LAS FUNCIONES QUE LUEGO SE LLAMAN)
+    async function cargar() {
+      try {
+        const data = await getUsuarios();
+        setUsuarios(data);
+      } catch (err) {
+        console.error("Error cargando usuarios:", err);
+      } finally {
+        setCargando(false);
+      }
+    }
 
-    const agregarUsuario = (nuevo) => {
-    const usuario = {
-        id: "USR" + Date.now(),
-        nombre: nuevo.nombre,
-        email: nuevo.email,
-        clave: nuevo.clave,
-        rol: nuevo.rol || "cliente",
-        fecha: new Date().toISOString().slice(0, 10),
-        origen: "nuevo", // marca los nuevos
-    };
+    cargar();
+  }, []);
 
-    setUsuarios((prev) => [...prev, usuario]);
-    };
+  // OBTENER USUARIO POR ID
+  const obtenerUsuario = (id) =>
+    usuarios.find((u) => String(u.id) === String(id));
 
+  // REGISTRAR USUARIO 
+  const agregarUsuario = async (data) => {
+    try {
+      const nuevo = await fetch("http://localhost:9090/api/usuarios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).then((r) => r.json());
 
-  // por id (no por indice)
-  const editarUsuario = (id, cambios) => {
-    setUsuarios((prev) =>
-      prev.map((u) =>
-        u.id === id
-          ? {
-              ...u,
-              ...cambios,
-              // Mantiene contraseñas anteriores si no se cambian
-              clave: cambios.clave || u.clave,
-            }
-          : u
-      )
-    );
+      setUsuarios([...usuarios, nuevo]);
+      return nuevo;
+    } catch (err) {
+      console.error("Error registrando usuario:", err);
+    }
   };
 
-    // 🔄 Restaurar usuarios (borra y deja los del dataUsuarios base)
-  const resetearUsuarios = () => {
-    setUsuarios(dataUsuarios); // vuelve a los usuarios iniciales del dataUsuarios.js
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUsuarios));
+  // EDITAR USUARIO
+  const editarUsuario = async (id, datosActualizados) => {
+    try {
+      const actualizado = await updateUsuario(id, datosActualizados);
+
+      setUsuarios((prev) =>
+        prev.map((u) => (u.id === id ? actualizado : u))
+      );
+
+      return actualizado;
+    } catch (err) {
+      console.error("Error actualizando usuario:", err);
+    }
   };
 
-  const eliminarUsuario = (id) => {
-    setUsuarios((prev) => prev.filter((u) => u.id !== id));
+  // ELIMINAR USUARIO
+  const eliminarUsuario = async (id) => {
+    try {
+      await deleteUsuario(id);
+      setUsuarios((prev) => prev.filter((u) => u.id !== id));
+    } catch (err) {
+      console.error("Error eliminando usuario:", err);
+    }
   };
-
-  const obtenerUsuario = (id) => {
-    return usuarios.find((u) => u.id === id);
-  };
-
-
 
   return (
     <UsuariosContext.Provider
       value={{
         usuarios,
+        cargando,
+        obtenerUsuario,
         agregarUsuario,
         editarUsuario,
         eliminarUsuario,
-        obtenerUsuario,
-        resetearUsuarios,
       }}
     >
       {children}
     </UsuariosContext.Provider>
   );
-};
+}
 
-// Hook personalizado
 export const useUsuarios = () => useContext(UsuariosContext);

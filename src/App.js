@@ -43,54 +43,59 @@ import EditarUsuario from "./pages/admin/EditarUsuario.jsx";
 import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
 import Usuarios from "./pages/admin/Usuarios.jsx";
 import NuevoProducto from "./pages/admin/NuevoProducto.jsx";
+import Empleados from "./pages/admin/Empleados";
+
 function App() {
   return (
-    <CategoriasProvider>
-      <ProductosProvider>
-        <CarritoProvider>
-          <UsuariosProvider>
-            <NavBar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/nuevoProducto" element={<NuevoProducto />} />
-              <Route path="/registro" element={<Registro />} />
-              <Route path="/ordenCompra" element={<OrdenCompra />} />
-              <Route path="/categorias" element={<Categorias />} />
-              <Route path="/ofertas" element={<Ofertas />} />
-              <Route path="/iniciar-sesion" element={<IniciarSesion />} />
-              <Route path="/nosotros" element={<Nosotros />} />
-              <Route path="/contacto" element={<Contacto />} />
-              <Route path="/productos" element={<Productos />} />
-              <Route path="/panelProductos" element={<PanelProductos />} />
-              <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
-              <Route path="/editar/:id" element={<EditarProducto />} />
-              <Route path="/criticos" element={<ProductosCriticos />} />
-              <Route path="/editarCategoria/:id" element={<EditarCategoria />} />
-              <Route path="/gestionarCategorias" element={<GestionarCategorias />} />
-              <Route path="/reportes" element={<Reportes />} />
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/blog1" element={<Blog1 />} />
-              <Route path="/blog2" element={<Blog2 />} />
-              <Route path="/blog3" element={<Blog3 />} />
-              <Route path="/blog4" element={<Blog4 />} />
-              <Route path="/carrito" element={<Carrito />} />
-              <Route path="/adminHome" element ={<AdminHome/>}/>
-              <Route path="/nuevaCategoria" element ={<NuevaCategoria/>}/>
-              <Route path="/compra" element ={<Compra/>}/>
-              <Route path="/compraExitosa" element ={<CompraExitosa/>}/>
-              <Route path="/boleta" element ={<Boleta/>}/>
-              <Route path="/perfilAdmin" element ={<PerfilAdmin/>}/>
-              <Route path="/editarUsuario" element ={<EditarUsuario/>}/>
-              <Route path="/usuariosRegistrados" element ={<UsuariosRegistrados/>}/>
-              <Route path="/usuarios" element ={<Usuarios/>}/>
+    
+      <CategoriasProvider>
+        <ProductosProvider>
+          <CarritoProvider>
+            <UsuariosProvider>
+              <NavBar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/nuevoProducto" element={<NuevoProducto />} />
+                <Route path="/registro" element={<Registro />} />
+                <Route path="/ordenCompra" element={<OrdenCompra />} />
+                <Route path="/categorias" element={<Categorias />} />
+                <Route path="/ofertas" element={<Ofertas />} />
+                <Route path="/iniciar-sesion" element={<IniciarSesion />} />
+                <Route path="/nosotros" element={<Nosotros />} />
+                <Route path="/contacto" element={<Contacto />} />
+                <Route path="/productos" element={<Productos />} />
+                <Route path="/panelProductos" element={<PanelProductos />} />
+                <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
+                <Route path="/editar/:id" element={<EditarProducto />} />
+                <Route path="/criticos" element={<ProductosCriticos />} />
+                <Route path="/editarCategoria/:id" element={<EditarCategoria />} />
+                <Route path="/gestionarCategorias" element={<GestionarCategorias />} />
+                <Route path="/reportes" element={<Reportes />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/blog1" element={<Blog1 />} />
+                <Route path="/blog2" element={<Blog2 />} />
+                <Route path="/blog3" element={<Blog3 />} />
+                <Route path="/blog4" element={<Blog4 />} />
+                <Route path="/carrito" element={<Carrito />} />
+                <Route path="/adminHome" element={<AdminHome />} />
+                <Route path="/empleados" element={<Empleados />} />
+                <Route path="/nuevaCategoria" element={<NuevaCategoria />} />
+                <Route path="/compra" element={<Compra />} />
+                <Route path="/compraExitosa" element={<CompraExitosa />} />
+                <Route path="/boleta" element={<Boleta />} />
+                <Route path="/perfilAdmin" element={<PerfilAdmin />} />
+                <Route path="/editarUsuario" element={<EditarUsuario />} />
+                <Route path="/usuariosRegistrados" element={<UsuariosRegistrados />} />
+                <Route path="/usuarios" element={<Usuarios />} />
 
               </Routes>
               <Footer />
-           <Chat />
-         </UsuariosProvider>
-       </CarritoProvider>
-     </ProductosProvider>
-    </CategoriasProvider>
+              <Chat />
+            </UsuariosProvider>
+          </CarritoProvider>
+        </ProductosProvider>
+      </CategoriasProvider>
+   
   );
 }
 

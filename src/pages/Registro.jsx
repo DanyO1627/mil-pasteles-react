@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useUsuarios } from "../context/UsuariosContext.jsx"; // el import de los usuarios context (para acceder a ellos)
-import { useNavigate } from "react-router-dom"; // para no tener qu recargar
-import Toast from "../components/MensajeFlotante"; // para el mensaje flotante
+import { useUsuarios } from "../context/UsuariosContext.jsx";
+import { useNavigate } from "react-router-dom";
+import Toast from "../components/MensajeFlotante";
 import "../styles/mensaje.css";
 import "../styles/style.css";
 
 
 export default function Registro() {
-  const { usuarios, agregarUsuario } = useUsuarios(); // aquí usamos la funcion del contexto
+  const { agregarUsuario } = useUsuarios(); // función del context
   const navigate = useNavigate();
 
 
@@ -61,10 +61,10 @@ export default function Registro() {
     Magallanes: ["Punta Arenas", "Puerto Natales", "Río Verde", "San Gregorio",
       "Laguna Blanca", "Porvenir", "Primavera", "Timaukel", "Natales",
       "Cabo de Hornos", "Antártica"]
-    // puedes agregar las demás regiones...
+    
   };
 
-  // Actualiza el listado de comunas cuando cambia la región
+  // actualiza el listado de comunas cuando cambia la región
   useEffect(() => {
     if (form.region && comunasPorRegion[form.region]) {
       setComunas(comunasPorRegion[form.region]);
@@ -78,24 +78,16 @@ export default function Registro() {
 
 
   // Validación y guardado en localStorage
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const { nombre, email, clave1, clave2, region, comuna } = form;
     const errores = [];
 
-    // Validar nombre
-    if (nombre.trim() === "") errores.push("El nombre no puede estar vacío.");
-
-    // Validar correo
+    // Validaciones
+    if (!nombre.trim()) errores.push("El nombre no puede estar vacío.");
     if (!email.includes("@")) errores.push("El correo electrónico no es válido.");
-
-    // Validar contraseña
     if (clave1.length < 6) errores.push("La contraseña debe tener al menos 6 caracteres.");
-
-    // Confirmar contraseña
     if (clave1 !== clave2) errores.push("Las contraseñas no coinciden.");
-
-    // Validar región y comuna
     if (!region) errores.push("Debes seleccionar una región.");
     if (!comuna) errores.push("Debes seleccionar una comuna.");
 
@@ -108,54 +100,36 @@ export default function Registro() {
       return;
     }
 
-
-    // Verificar si el correo ya está registrado / DUPLICADO
-    const correoExistente = usuarios.some(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
-    );
-
-    if (correoExistente) {
-      setMsg(
-        <div className="alert alert-warning">
-          ⚠️ Este correo ya está registrado. Intenta con otro.
-        </div>
-      );
-      return;
-    }
-
-
-    // y si pasa todas esas pruebas, entonces viene esto
-    // Generar estado aleatorio
-    const estados = ["Activo", "Pendiente", "Suspendido"];
-    const estadoAleatorio = estados[Math.floor(Math.random() * estados.length)];
-
-    // Crear nuevo usuario
-    const nuevoUsuario = {
-      id: "USR" + Date.now(),
-      fecha: new Date().toISOString().slice(0, 10),
+const nuevoUsuario = {
       nombre,
       email,
       clave: clave1,
       region,
       comuna,
-      estado: estadoAleatorio,
-      monto: 0,
-      rol: "cliente" // se agrega el rol como en el contexto
+      estado: "Pendiente", // uno le puede elegir
+      rol: "cliente",
+      categoria: null, 
+      edad: null,
+      fecha: new Date().toISOString().slice(0, 10)
     };
 
+    try {
+      await agregarUsuario(nuevoUsuario);  //  AHORA BUSCA EN EL BACKEND
 
-     // Cambio: Ahora usamos el contexto en vez de el localstorage directo
-    agregarUsuario(nuevoUsuario);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
 
-    // Y le mostramos el tast verde
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+      setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
 
-    setMsg(<div className="alert alert-success">✅ Registro exitoso</div>);
-
-    setTimeout(() => navigate("/"), 1200);
+      setTimeout(() => navigate("/"), 1200);
+    } catch (err) {
+      setMsg(<div className="alert alert-danger">❌ Error al registrar usuario.</div>);
+    }
   };
 
+  // ————————————————————————————————————————
+  // RENDER
+  // ————————————————————————————————————————
   return (
     <main className="registro-wrapper">
       <div className="container">
@@ -165,6 +139,8 @@ export default function Registro() {
           {msg && <div id="mensajes">{msg}</div>}
 
           <div className="form-grid">
+
+            {/* TODOS TUS INPUTS IGUALES */}
             <div className="field">
               <label htmlFor="nombre">Nombre completo</label>
               <input id="nombre" name="nombre" type="text" onChange={onChange} value={form.nombre} />
@@ -204,13 +180,14 @@ export default function Registro() {
                 ))}
               </select>
             </div>
+
           </div>
+
           <div className="actions">
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
         </form>
 
-        {/* toast de registro exitoso al final*/}
         {showToast && (
           <div className="toast-noti toast-exito">
             Usuario registrado correctamente
@@ -220,4 +197,3 @@ export default function Registro() {
     </main>
   );
 }
-  

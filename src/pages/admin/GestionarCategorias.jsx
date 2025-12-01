@@ -64,21 +64,7 @@ export default function GestionarCategorias() {
     }
   };
 
-  // RESETEA EL SISTEMA COMPLETO Y DEJA CON LOS VALORES DE INICIO AL LOCAL ()
-  const handleResetCompleto = () => {
-    const confirmar = window.confirm(
-      "⚠️ ADVERTENCIA: Esto restaurará TODAS las categorías y productos a sus valores iniciales.\n\n" +
-      "Se perderán todos los cambios realizados.\n\n" +
-      "¿Estás seguro?"
-    );
-    
-    if (confirmar) {
-      resetearCategorias();
-      resetearInventario();
-      alert("✅ Sistema restaurado completamente. Recarga la página.");
-      window.location.reload();
-    }
-  };
+
 
   return (
     <div className="gestion-categorias-container">
@@ -182,13 +168,7 @@ export default function GestionarCategorias() {
         >
           📦 Ver Productos
         </button>
-        <button
-          className="gestion-cat-btn"
-          onClick={handleResetCompleto}
-          style={{ backgroundColor: "#dc3545", color: "white" }}
-        >
-          🔄 Restaurar Todo
-        </button>
+       
       </div>
 
       {/* GRID DE LAS CATEGORIAS*/}
