@@ -1,23 +1,22 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import {
-  fetchCategorias,
-  crearCategoria,
-  actualizarCategoria,
-  eliminarCategoria
+  getCategorias,
+  createCategoria,
+  updateCategoria,
+  deleteCategoria,
 } from "../services/categoriasService";
 
 const CategoriasContext = createContext();
 
 export function CategoriasProvider({ children }) {
-
   const [categorias, setCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // CARGAR DESDE BACKEND
+  // CARGAR DESDE BACKEND - VERSIÓN DE CONY 
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchCategorias();
+        const data = await getCategorias();
         setCategorias(data);
       } catch (err) {
         console.error("Error cargando categorías", err);
@@ -30,13 +29,13 @@ export function CategoriasProvider({ children }) {
   // -------- CRUD ---------
 
   const agregarCategoria = async (nueva) => {
-    const creada = await crearCategoria(nueva);
+    const creada = await createCategoria(nueva);
     setCategorias((prev) => [...prev, creada]);
     return creada;
   };
 
   const actualizarCategoriaContext = async (id, cambios) => {
-    const actualizada = await actualizarCategoria(id, cambios);
+    const actualizada = await updateCategoria(id, cambios);
     setCategorias((prev) =>
       prev.map((c) => (c.id === id ? actualizada : c))
     );
@@ -44,7 +43,7 @@ export function CategoriasProvider({ children }) {
   };
 
   const eliminarCategoriaContext = async (id) => {
-    await eliminarCategoria(id);
+    await deleteCategoria(id);
     setCategorias((prev) => prev.filter((c) => c.id !== id));
   };
 
@@ -75,7 +74,7 @@ export function CategoriasProvider({ children }) {
         obtenerCategoriaPorNombre,
         categoriasActivas,
         contarProductosPorCategoria,
-        existeCategoria
+        existeCategoria,
       }}
     >
       {children}
