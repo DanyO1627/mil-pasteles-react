@@ -44,3 +44,30 @@ export async function crearProducto(productoFront) {
   const resp = await axios.post(`${BASE}/productos`, productoBack);
   return resp.data;
 }
+
+// ...
+
+export async function eliminarProductoBack(id) {
+  return axios.delete(`${BASE}/productos/${id}`);
+}
+
+export async function actualizarProductoBack(id, productoFront) {
+  const desc = productoFront.descripcion?.trim() || "Sin descripción";
+
+  const productoBack = {
+    nombreProducto: productoFront.nombre?.trim(),
+    precio: parseFloat(productoFront.precio),
+    imagenUrl: productoFront.imagen?.trim() || "/assets/sin_imagen.webp",
+    descripcionProducto: desc,
+    descripcionLarga: desc,
+    stock: parseInt(productoFront.stock),
+    activo: true,
+  };
+
+  if (productoFront.categoriaId && productoFront.categoriaId !== "") {
+    productoBack.categoria = { id: parseInt(productoFront.categoriaId) };
+  }
+
+  const resp = await axios.put(`${BASE}/productos/${id}`, productoBack);
+  return resp.data;
+}
