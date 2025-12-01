@@ -5,19 +5,37 @@ const BASE = "http://localhost:9090";
 export async function fetchProductos() {
   const resp = await axios.get(`${BASE}/productos`);
 
-  return resp.data.map((p) => ({
-    id: p.id,
-    nombre: p.nombreProducto,
-    descripcion: p.descripcionProducto,
-    descripcion_larga: p.descripcionLarga,
-    imagen: p.imagenUrl ? `${BASE}${p.imagenUrl}` : null,
-    precio: p.precio,
-    stock: p.stock,
-    activo: p.activo,
-    categoriaId: p.categoria?.id ?? null,
-    categoriaNombre: p.categoria?.nombre ?? null,
-  }));
+  return resp.data.map((p) => {
+    let imagenFinal = null;
+
+    if (p.imagenUrl) {
+      if (p.imagenUrl.startsWith("http")) {
+        // URL externa completa
+        imagenFinal = p.imagenUrl;
+      } else if (p.imagenUrl.startsWith("/assets/")) {
+        // Imagen local del frontend
+        imagenFinal = p.imagenUrl;
+      } else {
+        // Imagen SERVIDA por tu backend
+        imagenFinal = `${BASE}${p.imagenUrl}`;
+      }
+    }
+
+    return {
+      id: p.id,
+      nombre: p.nombreProducto,
+      descripcion: p.descripcionProducto,
+      descripcion_larga: p.descripcionLarga,
+      imagen: imagenFinal,
+      precio: p.precio,
+      stock: p.stock,
+      activo: p.activo,
+      categoriaId: p.categoria?.id ?? null,
+      categoriaNombre: p.categoria?.nombre ?? null,
+    };
+  });
 }
+
 
 export async function crearProducto(productoFront) {
   const desc = productoFront.descripcion?.trim() || "Sin descripción";

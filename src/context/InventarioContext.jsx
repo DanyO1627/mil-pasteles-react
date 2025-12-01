@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   fetchProductos,
+  crearProducto,
   eliminarProductoBack,
-  actualizarProductoBack,
+  actualizarProductoBack
 } from "../services/productosService";
 
 const InventarioContext = createContext();
@@ -12,9 +13,9 @@ export function ProductosProvider({ children }) {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
-  // ============================
-  // 🔄 CARGAR DESDE BACKEND
-  // ============================
+  // ===============================
+  // 🔄 Cargar productos desde backend
+  // ===============================
   useEffect(() => {
     async function cargar() {
       try {
@@ -31,75 +32,92 @@ export function ProductosProvider({ children }) {
     cargar();
   }, []);
 
-  // ============================
-  // 🔍 OBTENER 1 PRODUCTO
-  // ============================
+  // ===============================
+  // 🔎 Obtener un producto por ID
+  // ===============================
   const obtenerProducto = (id) =>
     productos.find((p) => p.id === Number(id));
 
-  // ============================
-  // ❌ ELIMINAR PRODUCTO (backend + estado)
-  // ============================
+  // ===============================
+  // ❌ ELIMINAR en backend + estado
+  // ===============================
   async function eliminarProducto(id) {
-    try {
-      await eliminarProductoBack(id);
+    await eliminarProductoBack(id);
 
-      setProductos((prev) => prev.filter((p) => p.id !== id));
-
-    } catch (err) {
-      console.error("❌ Error al eliminar producto:", err);
-      throw err;
-    }
+    setProductos((prev) => prev.filter((p) => p.id !== id));
   }
 
-  // ============================
-  // ✏️ ACTUALIZAR PRODUCTO (backend + estado)
-  // ============================
-  async function actualizarProducto(id, datosActualizados) {
-    try {
-      const actualizadoBack = await actualizarProductoBack(id, datosActualizados);
+  // ===============================
+  // ✏️ ACTUALIZAR producto
+  // ===============================
+  async function actualizarProducto(id, cambiosFront) {
+    // Convertir al formato backend
+    const productoBack = {
+      nombreProducto: cambiosFront.nombre,
+      precio: Number(cambiosFront.precio),
+      stock: Number(cambiosFront.stock),
+      descripcionProducto: cambiosFront.descripcion,
+      descripcionLarga: cambiosFront.descripcion,
+      imagenUrl: cambiosFront.imagen,
+      categoria: cambiosFront.categoriaId
+        ? { id: Number(cambiosFront.categoriaId) }
+        : null,
+      activo: true
+    };
 
-      // Actualizar el estado local
-      setProductos((prev) =>
-        prev.map((p) => (p.id === id ? actualizadoBack : p))
-      );
+    const actualizado = await actualizarProductoBack(id, productoBack);
 
-    } catch (err) {
-      console.error("❌ Error al actualizar producto:", err);
-      throw err;
-    }
+    // actualizar lista en frontend
+    setProductos((prev) =>
+      prev.map((p) => (p.id === id ? {
+        ...p,
+        nombre: actualizado.nombreProducto,
+        precio: actualizado.precio,
+        stock: actualizado.stock,
+        descripcion: actualizado.descripcionProducto,
+        descripcion_larga: actualizado.descripcionLarga,
+        imagen: actualizado.imagenUrl,
+        categoriaId: actualizado.categoria?.id ?? null
+      } : p))
+    );
   }
 
-  // ============================
-  // 🏪 UTILIDADES EXISTENTES
-  // ============================
+  // ===============================
+  // 🟡 Productos huérfanos (sin categoría)
+  // ===============================
+  const productosHuerfanos = () =>
+    productos.filter((p) => !p.categoriaId);
+
+  // ===============================
+  // 🔍 Verificar stock
+  // ===============================
   function hayStock(id) {
-    const p = productos.find((prod) => prod.id === parseInt(id));
+    const p = productos.find((prod) => prod.id === Number(id));
     return p && p.stock > 0;
   }
 
   function descontarStock(id) {
     setProductos((prev) =>
       prev.map((p) =>
-        p.id === parseInt(id)
+        p.id === Number(id)
           ? { ...p, stock: p.stock > 0 ? p.stock - 1 : 0 }
           : p
       )
     );
   }
 
-  // ============================
-  // PROVIDER
-  // ============================
   return (
     <InventarioContext.Provider
       value={{
         productos,
         cargando,
         error,
+
+        // funciones públicas
         obtenerProducto,
         eliminarProducto,
         actualizarProducto,
+        productosHuerfanos,
         hayStock,
         descontarStock,
       }}

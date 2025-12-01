@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
 import { useCategorias } from "../../context/CategoriasContext";
 
+import "../../styles/stylesAdmin/nuevoProducto.css"; // ❤️ MISMO CSS DEL FORMULARIO NUEVO
 
 export default function EditarProducto() {
   const { id } = useParams();
@@ -17,121 +18,172 @@ export default function EditarProducto() {
     precio: producto?.precio || "",
     stock: producto?.stock || 0,
     categoriaId: producto?.categoriaId || "",
-    imagen: producto?.imagen,
+    imagen: producto?.imagen || "",
     descripcion: producto?.descripcion || "",
   });
 
+  const [preview, setPreview] = useState(
+    producto?.imagen || "/assets/sin_imagen.webp"
+  );
   const [mensaje, setMensaje] = useState("");
 
   if (!producto) {
     return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <h3>Producto no encontrado</h3>
-        <button
-          onClick={() => navigate("/criticos")}
-          style={{ marginTop: "20px", padding: "10px 20px" }}
-        >
-          Volver a productos críticos
-        </button>
+      <div className="agregar-prod-wrapper">
+        <h3>El producto no existe</h3>
+        <button onClick={() => navigate("/panelProductos")}>Volver</button>
       </div>
     );
   }
 
+  // ======================
+  // 🔧 MANEJO DE INPUTS
+  // ======================
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData({ ...formData, [name]: value });
+
+    if (name === "imagen") {
+      if (value.trim() === "") {
+        setPreview("/assets/sin_imagen.webp");
+      } else {
+        setPreview(value);
+      }
+    }
   };
 
+  // ======================
+  // 💾 GUARDAR CAMBIOS
+  // ======================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await actualizarProducto(producto.id, formData);
+      await actualizarProducto(id, formData);
 
-      setMensaje(`✅ Producto actualizado correctamente`);
-
-      setTimeout(() => navigate("/criticos"), 1500);
+      setMensaje("✅ Producto actualizado correctamente");
+      setTimeout(() => navigate("/panelProductos"), 1200);
     } catch (err) {
       console.error(err);
-      setMensaje("❌ Error al actualizar el producto");
+      setMensaje("❌ Error al actualizar");
     }
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-      <h2>✏️ Editar Producto</h2>
+    <div className="agregar-prod-wrapper">
+      <div className="agregar-prod-container">
+        <h2 className="agregar-prod-titulo">✏️ Editar Producto</h2>
 
-      {mensaje && (
-        <div style={{
-          padding: "12px",
-          backgroundColor: "#e6ffe6",
-          border: "1px solid #adebad",
-          marginBottom: "20px"
-        }}>
-          {mensaje}
-        </div>
-      )}
+        {mensaje && <div className="agregar-prod-mensaje">{mensaje}</div>}
 
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="agregar-prod-form">
+          {/* Nombre */}
+          <div className="form-group">
+            <label>Nombre:</label>
+            <input
+              type="text"
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <label>Nombre:</label>
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-          required
-        />
+          {/* Categoría */}
+          <div className="form-group">
+            <label>Categoría:</label>
+            <select
+              name="categoriaId"
+              value={formData.categoriaId}
+              onChange={handleChange}
+            >
+              <option value="">Sin categoría</option>
+              {categorias.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <label>Categoría:</label>
-        <select
-          name="categoriaId"
-          value={formData.categoriaId}
-          onChange={handleChange}
-        >
-          <option value="">Sin categoría</option>
-          {categorias.map((c) => (
-            <option key={c.id} value={c.id}>{c.nombre}</option>
-          ))}
-        </select>
+          {/* Precio */}
+          <div className="form-group">
+            <label>Precio:</label>
+            <input
+              type="number"
+              name="precio"
+              value={formData.precio}
+              onChange={handleChange}
+              required
+              min="0"
+            />
+          </div>
 
-        <label>Precio:</label>
-        <input
-          type="number"
-          name="precio"
-          value={formData.precio}
-          onChange={handleChange}
-          required
-          min="0"
-        />
+          {/* Stock */}
+          <div className="form-group">
+            <label>Stock:</label>
+            <input
+              type="number"
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+              min="0"
+            />
+          </div>
 
-        <label>Stock:</label>
-        <input
-          type="number"
-          name="stock"
-          value={formData.stock}
-          onChange={handleChange}
-          required
-          min="0"
-        />
+          {/* Imagen */}
+          <div className="form-group">
+            <label>Imagen URL:</label>
+            <input
+              type="text"
+              name="imagen"
+              value={formData.imagen}
+              onChange={handleChange}
+            />
 
-        <label>Imagen URL:</label>
-        <input
-          type="text"
-          name="imagen"
-          value={formData.imagen}
-          onChange={handleChange}
-        />
+            <div className="imagen-preview">
+              <p>Vista previa:</p>
+              <div className="preview-box">
+                <img
+                  src={preview}
+                  alt="Vista previa"
+                  onError={(e) => {
+                    e.target.src = "/assets/sin_imagen.webp";
+                  }}
+                />
+              </div>
+            </div>
+          </div>
 
-        <label>Descripción:</label>
-        <textarea
-          name="descripcion"
-          value={formData.descripcion}
-          onChange={handleChange}
-        />
+          {/* Descripción */}
+          <div className="form-group">
+            <label>Descripción:</label>
+            <textarea
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleChange}
+              rows={4}
+            />
+          </div>
 
-        <button type="submit">Guardar</button>
-      </form>
+          {/* Botones */}
+          <div className="form-actions">
+            <button type="submit" className="btn-primario">
+              💾 Guardar cambios
+            </button>
+
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={() => navigate("/panelProductos")}
+            >
+              ← Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
