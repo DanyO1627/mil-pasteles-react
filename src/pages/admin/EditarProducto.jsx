@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useProductos } from "../../context/InventarioContext";
 import { useCategorias } from "../../context/CategoriasContext";
 
+
 export default function EditarProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
