@@ -3,7 +3,7 @@ import {
   fetchProductos,
   crearProducto,
   eliminarProductoBack,
-  actualizarProductoBack
+  actualizarProductoBack,
 } from "../services/productosService";
 
 const InventarioContext = createContext();
@@ -20,6 +20,7 @@ export function ProductosProvider({ children }) {
     async function cargar() {
       try {
         const data = await fetchProductos();
+        // fetchProductos ya devuelve datos normalizados
         setProductos(data);
       } catch (err) {
         console.error(err);
@@ -28,66 +29,81 @@ export function ProductosProvider({ children }) {
         setCargando(false);
       }
     }
-
     cargar();
   }, []);
 
   // ===============================
   // 🔎 Obtener un producto por ID
   // ===============================
-  const obtenerProducto = (id) =>
-    productos.find((p) => p.id === Number(id));
+  const obtenerProducto = (id) => productos.find((p) => p.id === Number(id));
 
   // ===============================
-  // ❌ ELIMINAR en backend + estado
+  // ➕ CREAR producto nuevo
   // ===============================
-  async function eliminarProducto(id) {
-    await eliminarProductoBack(id);
-    setProductos((prev) => prev.filter((p) => p.id !== id));
+  async function agregarProducto(productoFront) {
+    // Tu servicio crearProducto ya maneja toda la conversión
+    const creado = await crearProducto(productoFront);
+
+    // Normalizar respuesta del backend para el estado local
+    const nuevoProducto = {
+      id: creado.id,
+      nombre: creado.nombreProducto,
+      precio: creado.precio,
+      stock: creado.stock,
+      descripcion: creado.descripcionProducto || creado.descripcionLarga || "",
+      descripcion_larga: creado.descripcionLarga || "",
+      imagen: creado.imagenUrl || "/assets/sin_imagen.webp",
+      categoriaId: creado.categoria?.id ?? null,
+      categoriaNombre: creado.categoria?.nombre ?? null,
+      activo: creado.activo ?? true,
+    };
+
+    setProductos((prev) => [...prev, nuevoProducto]);
+    return nuevoProducto;
   }
 
   // ===============================
   // ✏️ ACTUALIZAR producto
   // ===============================
   async function actualizarProducto(id, cambiosFront) {
-    const productoBack = {
-      nombreProducto: cambiosFront.nombre,
-      precio: Number(cambiosFront.precio),
-      stock: Number(cambiosFront.stock),
-      descripcionProducto: cambiosFront.descripcion,
-      descripcionLarga: cambiosFront.descripcion,
-      imagenUrl: cambiosFront.imagen,
-      categoria: cambiosFront.categoriaId
-        ? { id: Number(cambiosFront.categoriaId) }
-        : null,
-      activo: true
-    };
+    // Tu servicio actualizarProductoBack ya maneja la conversión
+    const actualizado = await actualizarProductoBack(id, cambiosFront);
 
-    const actualizado = await actualizarProductoBack(id, productoBack);
-
+    // Actualizar el estado local con datos normalizados
     setProductos((prev) =>
       prev.map((p) =>
-        p.id === id
+        p.id === Number(id)
           ? {
-              ...p,
+              id: actualizado.id,
               nombre: actualizado.nombreProducto,
               precio: actualizado.precio,
               stock: actualizado.stock,
-              descripcion: actualizado.descripcionProducto,
-              descripcion_larga: actualizado.descripcionLarga,
-              imagen: actualizado.imagenUrl,
-              categoriaId: actualizado.categoria?.id ?? null
+              descripcion: actualizado.descripcionProducto || actualizado.descripcionLarga || "",
+              descripcion_larga: actualizado.descripcionLarga || "",
+              imagen: actualizado.imagenUrl || "/assets/sin_imagen.webp",
+              categoriaId: actualizado.categoria?.id ?? null,
+              categoriaNombre: actualizado.categoria?.nombre ?? null,
+              activo: actualizado.activo ?? true,
             }
           : p
       )
     );
+
+    return actualizado;
+  }
+
+  // ===============================
+  // ❌ ELIMINAR en backend + estado
+  // ===============================
+  async function eliminarProducto(id) {
+    await eliminarProductoBack(id);
+    setProductos((prev) => prev.filter((p) => p.id !== Number(id)));
   }
 
   // ===============================
   // 🟡 Productos huérfanos (sin categoría)
   // ===============================
-  const productosHuerfanos = () =>
-    productos.filter((p) => !p.categoriaId);
+  const productosHuerfanos = () => productos.filter((p) => !p.categoriaId);
 
   // ===============================
   // 🔍 Stock
@@ -100,9 +116,7 @@ export function ProductosProvider({ children }) {
   function descontarStock(id) {
     setProductos((prev) =>
       prev.map((p) =>
-        p.id === Number(id)
-          ? { ...p, stock: p.stock > 0 ? p.stock - 1 : 0 }
-          : p
+        p.id === Number(id) ? { ...p, stock: Math.max(0, p.stock - 1) } : p
       )
     );
   }
@@ -113,13 +127,13 @@ export function ProductosProvider({ children }) {
         productos,
         cargando,
         error,
-
         obtenerProducto,
-        eliminarProducto,
+        agregarProducto,        // ✅ AHORA EXPUESTA
         actualizarProducto,
+        eliminarProducto,
         productosHuerfanos,
         hayStock,
-        descontarStock
+        descontarStock,
       }}
     >
       {children}
