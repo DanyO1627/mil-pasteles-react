@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import {
-  getCategorias,
-  createCategoria,
-  updateCategoria,
-  deleteCategoria
-} from "../services/categoriasApi";
+  fetchCategorias,
+  crearCategoria,
+  actualizarCategoria,
+  eliminarCategoria
+} from "../services/categoriasService";
 
 const CategoriasContext = createContext();
 
@@ -13,11 +13,11 @@ export function CategoriasProvider({ children }) {
   const [categorias, setCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // CARGAR LAS CATEGORÍAS DEL BACKEND
+  // CARGAR DESDE BACKEND
   useEffect(() => {
     (async () => {
       try {
-        const data = await getCategorias();
+        const data = await fetchCategorias();
         setCategorias(data);
       } catch (err) {
         console.error("Error cargando categorías", err);
@@ -27,61 +27,50 @@ export function CategoriasProvider({ children }) {
     })();
   }, []);
 
+  // -------- CRUD ---------
 
-  // CRUD DEL BACKEND
   const agregarCategoria = async (nueva) => {
-    const creada = await createCategoria(nueva);
+    const creada = await crearCategoria(nueva);
     setCategorias((prev) => [...prev, creada]);
     return creada;
   };
 
-  const actualizarCategoria = async (id, cambios) => {
-    const actualizada = await updateCategoria(id, cambios);
+  const actualizarCategoriaContext = async (id, cambios) => {
+    const actualizada = await actualizarCategoria(id, cambios);
     setCategorias((prev) =>
       prev.map((c) => (c.id === id ? actualizada : c))
     );
     return actualizada;
   };
 
-  const eliminarCategoria = async (id) => {
-    await deleteCategoria(id);
+  const eliminarCategoriaContext = async (id) => {
+    await eliminarCategoria(id);
     setCategorias((prev) => prev.filter((c) => c.id !== id));
   };
 
+  // -------- UTILIDADES --------
 
- // FUNCIONES
+  const obtenerCategoria = (id) => categorias.find((c) => c.id === Number(id));
 
-  const obtenerCategoria = (id) => {
-    return categorias.find((c) => c.id === Number(id));
-  };
+  const obtenerCategoriaPorNombre = (nombre) =>
+    categorias.find((c) => c.nombre === nombre);
 
-  const obtenerCategoriaPorNombre = (nombre) => {
-    return categorias.find((c) => c.nombre === nombre);
-  };
+  const categoriasActivas = () => categorias.filter((c) => c.activo);
 
-  const categoriasActivas = () => {
-    return categorias.filter((c) => c.activo);
-  };
+  const contarProductosPorCategoria = (productos, categoriaId) =>
+    productos.filter((p) => p.categoriaId === categoriaId).length;
 
-  const contarProductosPorCategoria = (productos, categoriaId) => {
-    return productos.filter((p) => p.categoriaId === categoriaId).length;
-  };
-
-  const existeCategoria = (id) => {
-    return categorias.some((c) => c.id === Number(id));
-  };
-
+  const existeCategoria = (id) =>
+    categorias.some((c) => c.id === Number(id));
 
   return (
     <CategoriasContext.Provider
       value={{
         categorias,
         cargando,
-
         agregarCategoria,
-        actualizarCategoria,
-        eliminarCategoria,
-
+        actualizarCategoria: actualizarCategoriaContext,
+        eliminarCategoria: eliminarCategoriaContext,
         obtenerCategoria,
         obtenerCategoriaPorNombre,
         categoriasActivas,
