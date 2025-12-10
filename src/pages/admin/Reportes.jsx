@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProductos } from "../../context/InventarioContext";
-import { useUsuarios } from "../../context/UsuariosContext";
 
 import {
-  BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 import "../../styles/stylesAdmin/reportes.css";
@@ -73,8 +80,8 @@ export default function Reportes() {
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.href = encodedUri;
-    link.download = `reporte_inventario_${Date.now()}.csv`;
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `reporte_inventario_${Date.now()}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -99,10 +106,16 @@ export default function Reportes() {
         >
           ← Volver al inicio
         </button>
-        <button className="reportes-btn reportes-btn--criticos" onClick={() => navigate("/criticos")}>
+        <button
+          className="reportes-btn reportes-btn--criticos"
+          onClick={() => navigate("/criticos")}
+        >
           📉 Ver productos críticos
         </button>
-        <button className="reportes-btn reportes-btn--exportar" onClick={handleExportar}>
+        <button
+          className="reportes-btn reportes-btn--exportar"
+          onClick={handleExportar}
+        >
           📥 Exportar reporte
         </button>
       </div>
@@ -114,6 +127,7 @@ export default function Reportes() {
           <div className="reportes-stat-label">Total Productos</div>
           <div className="reportes-stat-value">{totalProductos}</div>
         </div>
+
         <div className="reportes-stat-card reportes-stat-card--success">
           <div className="reportes-stat-icon">💰</div>
           <div className="reportes-stat-label">Valor del Inventario</div>
@@ -121,11 +135,13 @@ export default function Reportes() {
             ${valorInventario.toLocaleString()}
           </div>
         </div>
+
         <div className="reportes-stat-card reportes-stat-card--warning">
           <div className="reportes-stat-icon">📊</div>
           <div className="reportes-stat-label">Stock Total</div>
           <div className="reportes-stat-value">{stockTotal}</div>
         </div>
+
         <div className="reportes-stat-card reportes-stat-card--danger">
           <div className="reportes-stat-icon">⚠️</div>
           <div className="reportes-stat-label">Productos Críticos</div>

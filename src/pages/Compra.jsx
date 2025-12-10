@@ -9,9 +9,6 @@ export default function Compra() {
   const { carrito, precioTotal, vaciarCarrito, procesarCompra } = useCarrito();
   const navigate = useNavigate();
 
-  // 🔥 CONSTANTE DE ENVÍO (ahora accesible en todo el componente)
-  const costoEnvio = 3000;
-
   // Objeto de regiones y comunas de Chile
   const comunasPorRegion = {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
@@ -117,6 +114,8 @@ export default function Compra() {
     }
 
     if (validateForm()) {
+      const costoEnvio = 3000;
+
       const orden = {
         fecha: new Date().toLocaleDateString("es-CL"),
         subtotal: precioTotal,
@@ -125,20 +124,20 @@ export default function Compra() {
         metodoPago: "Tarjeta de débito",
         atendidoPor: "Constanza Pino",
 
+        // dirección
         calle: formData.calle,
         departamento: formData.departamento,
         comuna: formData.comuna,
         region: formData.region,
         indicaciones: formData.indicaciones,
 
-        usuario: { id: 3 },
+        
 
+        // carrito que espera el backendA
         carrito: carrito.map((item) => ({
-          productoId: item.id,
-          nombreProducto: item.nombre,
+          nombre: item.nombre,
           cantidad: item.cantidad,
           precioUnitario: item.precio,
-          totalLinea: item.precio * item.cantidad,
         }))
       };
 
@@ -337,7 +336,7 @@ export default function Compra() {
             </section>
 
             <button type="submit" className="btn-pagar">
-              Pagar ahora ${(precioTotal + costoEnvio).toLocaleString()}
+              Pagar ahora ${precioTotal.toLocaleString()}
             </button>
           </form>
         </div>
@@ -346,21 +345,8 @@ export default function Compra() {
         <div className="checkout-resumen">
           <div className="resumen-card">
             <div className="resumen-header">
-              <h3>Subtotal:</h3>
+              <h3>Total a pagar:</h3>
               <h2 className="resumen-total">${precioTotal.toLocaleString()}</h2>
-              <p className="resumen-envio">
-                Envío: ${costoEnvio.toLocaleString()}
-                <span style={{ fontSize: "0.9rem", color: "#555" }}>
-                  {" "}
-                  ({formData.region === "Metropolitana" ? "Región Metropolitana" : formData.region ? "Otra región" : "Selecciona región"})
-                </span>
-              </p>
-
-              <hr />
-
-              <h2 className="resumen-total">
-                Total final: ${(precioTotal + costoEnvio).toLocaleString()}
-              </h2>
             </div>
 
             <div className="resumen-tabla">

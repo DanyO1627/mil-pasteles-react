@@ -128,7 +128,6 @@ header {
 a { color: inherit; }
 * { box-sizing: border-box; }
 
-
 :root{
   --bg:#fffaf9;   
   --card:#fff; 
@@ -274,6 +273,7 @@ footer.footer{ background:var(--bg); }
 }
 
 
+
 /* ==================================== */
 /* Contenido de chatbot.css */
 /* ==================================== */
@@ -363,6 +363,7 @@ footer.footer{ background:var(--bg); }
 /* Contenido de AdminUsers.css */
 /* ==================================== */
 :root{
+ 
   --bg:#fff7f6; 
   --panel:#fff;
   --sidebar:#fbeaea;
@@ -371,6 +372,7 @@ footer.footer{ background:var(--bg); }
   --muted:#7a5850;
   --border:#eadfe0;
   --shadow:0 6px 16px rgba(0,0,0,.06);
+ 
 }
 
 .admin-wrap{ display:flex; min-height:100vh; background:var(--bg); color:var(--text); font-family:Poppins, system-ui, sans-serif; }
@@ -391,9 +393,9 @@ footer.footer{ background:var(--bg); }
 .toolbar select{ border:1px solid var(--border); border-radius:10px; height:36px; padding:0 10px; background:#fff; }
 .search{ display:flex; align-items:center; gap:6px; border:1px solid var(--border); background:#fff; border-radius:10px; padding:0 10px; height:36px; }
 .search input{ border:none; outline:none; background:transparent; width:220px; }
+
 .btn.primary{ background:#f2a7b9; color:#fff; border:none; border-radius:10px; height:36px; padding:0 12px; cursor:pointer; }
 .btn.primary:hover{ filter:brightness(1.05); }
-
 
 /* Panel / tabla */
 .panel{ background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:0; box-shadow:var(--shadow); }
@@ -436,8 +438,11 @@ footer.footer{ background:var(--bg); }
 
 
 
+
+
 #productos { padding: 32px 0; }
 #productos h2 { margin: 0 0 12px; color:#6b3d45; }
+
 
 .card-producto {
   background:#fff;
@@ -462,6 +467,7 @@ footer.footer{ background:var(--bg); }
 .card-producto .info h3, .card-producto .info span { margin:0; }
 .card-producto .precio { color:#b25a64; font-weight:600; }
 
+
 /* Contenido de Dashboard.css */
 
 :root {
@@ -480,6 +486,7 @@ footer.footer{ background:var(--bg); }
   background: var(--bg);
   color: var(--text);
 }
+
 
 .sidebar {
   width: 230px; 
@@ -508,6 +515,7 @@ footer.footer{ background:var(--bg); }
   transition: background 0.2s;
 }
 
+
 .sidebar li:hover,
 .sidebar li.active {
   background: var(--accent);
@@ -529,6 +537,7 @@ header {
   border-radius: 12px;
   font-weight: 700;
 }
+
 
 .panel {
   background: #fff;

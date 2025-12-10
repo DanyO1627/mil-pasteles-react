@@ -138,7 +138,7 @@ export default function GestionarCategorias() {
                     borderRadius: "4px",
                     cursor: "pointer"
                   }}
-                  onClick={() => navigate(`/editarCategoria/${p.id}`)}
+                  onClick={() => navigate(`/admin/editar/${p.id}`)}
                 >
                   Asignar categoría
                 </button>
@@ -180,7 +180,7 @@ export default function GestionarCategorias() {
           </p>
           <button
             className="gestion-cat-btn gestion-cat-btn--nueva"
-            onClick={() => navigate("/nuevaCategoria")}
+            onClick={() => navigate("/admin/categorias/nueva")}
           >
             Crear primera categoría
           </button>

@@ -189,7 +189,7 @@ export default function CompraExitosa() {
         </button>
 
         <button
-          className="compraExitosa-botones"
+          className="btn-boleta"
           onClick={handleVerBoleta}
         >
           🧾 Ver Boleta

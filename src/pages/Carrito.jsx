@@ -111,7 +111,7 @@ export default function Carrito() {
 
                     <button
                       className="btn-eliminar"
-                      onClick={() => eliminarDelCarrito(item.id)}
+                      onClick={() => eliminarDelCarrito(item.itemId)}
                     >
                       🗑️
                     </button>

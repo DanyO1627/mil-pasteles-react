@@ -62,3 +62,196 @@ h1, h2, h3, h4, h5 {
 a {
   transition: color 0.3s ease, border-color 0.3s ease;
 }
+
+
+/* LINKS DE USUARIO (Mi Perfil / Panel Admin / Cerrar sesión) */
+.nav-user-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: #6b3d45;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-user-link:hover {
+  color: #d8a1a7;
+}
+
+button.nav-user-link {
+  /* Para que el botón herede el mismo estilo que el <a> */
+  font: inherit;
+}
+
+/* ==== CONTENEDOR GENERAL ==== */
+.perfil {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff7fa;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  font-family: "Poppins", sans-serif;
+  animation: aparecer 0.4s ease-in-out;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== TÍTULO ==== */
+.perfil h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #d67a86;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* ==== ETIQUETAS ==== */
+.perfil label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #444;
+}
+
+/* ==== INPUTS ==== */
+.perfil input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d8a1a7;
+  background: #fff;
+  font-size: 15px;
+  transition: 0.2s ease-in-out;
+}
+
+.perfil input:focus {
+  border-color: #d67a86;
+  box-shadow: 0 0 5px #d67a8644;
+  outline: none;
+}
+
+.perfil input:disabled {
+  background: #f2f2f2;
+  color: #777;
+}
+
+/* ==== BOTONES ==== */
+.perfil .btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+/* Guardar Cambios */
+.perfil .btn-guardar {
+  background-color: #d67a86;
+  color: white;
+}
+
+.perfil .btn-guardar:hover {
+  background-color: #c66a77;
+}
+
+/* Cerrar Sesión */
+.perfil .btn-cerrar {
+  background-color: #444;
+  color: white;
+  margin-top: 10px;
+}
+
+.perfil .btn-cerrar:hover {
+  background-color: #000;
+}
+
+/* ==== PERFIL CLIENTE ==== */
+
+.perfil {
+  max-width: 620px;
+  margin: 60px auto;
+  padding: 24px 28px 30px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #eadfe0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.perfil h1 {
+  margin: 0 0 10px;
+  font-size: 1.8rem;
+  color: #d8a1a7;
+}
+
+.perfil label {
+  font-size: 0.9rem;
+  color: #6b3d45;
+  margin-top: 8px;
+}
+
+.perfil input {
+  width: 100%;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid #eadfe0;
+  padding: 0 12px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.perfil input:focus {
+  border-color: #d8a1a7;
+  box-shadow: 0 0 0 3px rgba(216, 161, 167, 0.2);
+}
+
+.perfil-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-perfil-guardar,
+.btn-perfil-cerrar {
+  border: none;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-perfil-guardar {
+  background: #d8a1a7;
+  color: #fff;
+}
+
+.btn-perfil-guardar:hover {
+  filter: brightness(1.05);
+}
+
+.btn-perfil-cerrar {
+  background: #444;
+  color: #fff;
+}
+
+.btn-perfil-cerrar:hover {
+  filter: brightness(1.05);
+}

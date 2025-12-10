@@ -22,6 +22,7 @@
   color: white;
   border: none;
   padding: 8px 12px;
+  transition: background .2s;
 }
 
 #clear-search:hover {

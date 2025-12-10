@@ -76,6 +76,7 @@ export default function NuevoProducto() {
         {mensaje && <div className="agregar-prod-mensaje">{mensaje}</div>}
 
         <form onSubmit={handleSubmit} className="agregar-prod-form">
+
           {/* Nombre */}
           <div className="form-group">
             <label>Nombre:</label>
@@ -183,6 +184,7 @@ export default function NuevoProducto() {
               ← Cancelar
             </button>
           </div>
+
         </form>
       </div>
     </div>

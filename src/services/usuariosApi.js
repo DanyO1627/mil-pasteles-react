@@ -1,4 +1,3 @@
-// src/services/usuariosApi.js
 const BASE_URL = "http://localhost:9090/api/usuarios";
 
 export async function getUsuarios() {
@@ -7,16 +6,20 @@ export async function getUsuarios() {
   return await res.json();
 }
 
-export async function loginUsuario(payload) {
-  const res = await fetch(`${BASE_URL}/login`, {
+export async function loginUsuario({ email, clave }) {
+  const response = await fetch("http://localhost:9090/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, clave })
   });
 
-  if (!res.ok) throw new Error("Credenciales incorrectas");
+  if (!response.ok) {
+    throw new Error("Error en login");
+  }
 
-  return await res.json();
+  return response.json(); 
 }
 
 export async function updateUsuario(id, payload) {

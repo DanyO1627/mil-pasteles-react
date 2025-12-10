@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useUsuarios } from "../context/UsuariosContext.jsx";
 import { useNavigate } from "react-router-dom";
 import Toast from "../components/MensajeFlotante";
-import "../utils/Registro.logic.js";
 import "../styles/mensaje.css";
 import "../styles/style.css";
 
@@ -23,6 +22,7 @@ export default function Registro() {
   const [msg, setMsg] = useState("");
   const [comunas, setComunas] = useState([]);
   const [showToast, setShowToast] = useState(false); // mensaje toast
+
   // Objeto de regiones y comunas
   const comunasPorRegion = {
     Arica: ["Arica", "Camarones", "Putre", "General Lagos"],
@@ -66,8 +66,11 @@ export default function Registro() {
 
   // actualiza el listado de comunas cuando cambia la región
   useEffect(() => {
-    const lista = window.RegistroLogic.computeComunas(form.region, comunasPorRegion);
-    setComunas(lista);
+    if (form.region && comunasPorRegion[form.region]) {
+      setComunas(comunasPorRegion[form.region]);
+    } else {
+      setComunas([]);
+    }
   }, [form.region]);
 
 
@@ -184,6 +187,7 @@ const nuevoUsuario = {
             <button className="btn-primary" type="submit">Registrar</button>
           </div>
         </form>
+
         {showToast && (
           <div className="toast-noti toast-exito">
             Usuario registrado correctamente

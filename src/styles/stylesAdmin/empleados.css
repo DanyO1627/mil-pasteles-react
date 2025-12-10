@@ -62,49 +62,52 @@
 }
 
 .empleado-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
 }
 
+/* AVATAR */
 .empleado-avatar-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-acento);
+  margin-bottom: 12px;
 }
 
 .empleado-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border: 3px solid #007bff;
 }
 
+/* INFORMACIÓN */
 .empleado-nombre {
-  font-size: 18px;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 4px;
+  font-size: 20px;
+  margin: 6px 0;
 }
 
 .empleado-rol {
+  background: var(--color-acento);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
   display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 3px 10px;
-  border-radius: 10px;
-  font-size: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.empleado-detalles {
-  text-align: left;
-  font-size: 14px;
-  color: #444;
-  margin-top: 10px;
-  line-height: 1.5;
+.empleado-detalles p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #7d5a61;
 }
 
+/* BOTÓN VER PERFIL */
+.empleado-acciones {
+  margin-top: 14px;
+}
 
 .btn-ver {
   background: var(--color-acento);
@@ -114,6 +117,7 @@
   border: none;
   cursor: pointer;
   font-weight: bold;
+  transition: background 0.2s;
 }
 
 .btn-ver:hover {

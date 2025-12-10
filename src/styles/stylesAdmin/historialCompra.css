@@ -1,0 +1,92 @@
+.historial-wrapper {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.historial-titulo {
+  text-align: center;
+  color: var(--accent-strong);
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.historial-busqueda {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.historial-busqueda input {
+  width: 60%;
+  max-width: 420px;
+  padding: 12px;
+  border: 1px solid #e3c2c2;
+  border-radius: 10px;
+}
+
+.historial-grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 750px) {
+  .historial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.boleta-card {
+  background: #fff4f6;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #f5b6bb;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  animation: fadeIn .3s ease-in;
+}
+
+.boleta-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.boleta-fecha {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.boleta-info p {
+  margin: 6px 0;
+}
+
+.boleta-productos {
+  margin-top: 10px;
+  padding-left: 20px;
+  color: #694f54;
+}
+
+.boleta-card-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-eliminar {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background: #a5281c;
+}
+
+.sin-boletas {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+}

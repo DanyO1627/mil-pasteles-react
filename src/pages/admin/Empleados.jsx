@@ -82,6 +82,7 @@ export default function Empleados() {
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );

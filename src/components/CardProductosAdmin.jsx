@@ -26,6 +26,7 @@ export default function AdminProductCard({ producto, onEditar, onEliminar }) {
         <p className="admin-card__precio">
           ${producto.precio.toLocaleString()}
         </p>
+
         <p className="admin-card__stock">
           Stock: {producto.stock ?? 0}
         </p>

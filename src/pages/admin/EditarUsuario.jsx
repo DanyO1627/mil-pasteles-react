@@ -1,4 +1,3 @@
-// src/pagesAdmin/EditarUsuario.jsx
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUsuarios } from "../../context/UsuariosContext.jsx";
@@ -19,7 +18,7 @@ export default function EditarUsuario() {
     rol: "",
     categoria: "",
     fecha: "",
-    clave1: "",
+    clave1: "", // las claves por si quiere cambiarla
     clave2: "",
   });
 
@@ -27,7 +26,7 @@ export default function EditarUsuario() {
   const [mensaje, setMensaje] = useState("");
   const [comunas, setComunas] = useState([]);
 
-  // REGIONES Y COMUNAS
+  // Regiones - usa las tuyas mismas
   const regiones = {
     rm: ["Santiago", "Puente Alto", "Maipú", "La Florida"],
     v: ["Valparaíso", "Viña del Mar", "Quilpué"],
@@ -38,7 +37,7 @@ export default function EditarUsuario() {
     setComunas(regiones[region] || []);
   };
 
-  // CARGAR DATOS DEL USUARIO
+  // carga usuarios según el id en la url
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
@@ -56,7 +55,7 @@ export default function EditarUsuario() {
     }
   }, [location.search]);
 
-  // GUARDAR CAMBIOS
+  // valida y envía las actualizaciones
   const guardarCambios = async () => {
     if (!usuario.nombre.trim() || !usuario.email.trim()) {
       return setMensaje("⚠️ Completa los campos obligatorios.");
@@ -70,10 +69,11 @@ export default function EditarUsuario() {
       return setMensaje("⚠️ Las contraseñas no coinciden.");
     }
 
+    // objetos para el backend
     const payload = {
       nombre: usuario.nombre,
       email: usuario.email,
-      clave: usuario.clave1 ? usuario.clave1 : usuario.clave,
+      clave: usuario.clave1 ? usuario.clave1 : usuario.clave, // conserva la anterior
       region: usuario.region,
       comuna: usuario.comuna,
       estado: usuario.estado,
@@ -96,7 +96,6 @@ export default function EditarUsuario() {
     }
   };
 
-  // RESETEAR FORMULARIO
   const resetFormulario = () => {
     const original = obtenerUsuario(usuario.id);
     if (original) {
@@ -114,39 +113,35 @@ export default function EditarUsuario() {
 
   return (
     <div className="editar-usuario-page">
-      {/* NAV BAR */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div className="container">
-          <a className="navbar-brand" href="/usuariosRegistrados">← Volver</a>
+          <a className="navbar-brand" href="/usuariosRegistrados">
+            ← Volver
+          </a>
           <span className="navbar-text">Editar Usuario</span>
         </div>
       </nav>
 
-      {/* ===== CONTENIDO ===== */}
       <main>
         <div className="container mt-4">
           <div className="row justify-content-center">
             <div className="col-lg-8 col-md-10">
               <div className="card shadow">
-
-                {/* HEADER */}
                 <div className="card-header bg-primary text-white">
                   <h2 className="card-title mb-0">Editar Usuario</h2>
                 </div>
 
-                {/* BODY */}
                 <div className="card-body">
-
                   {mensaje && (
-                    <div className={`alert ${mensaje.includes("⚠") ? "alert-warning" : "alert-success"}`}>
+                    <div className={`alert ${mensaje.includes("✅") ? "alert-success" : "alert-warning"}`}>
                       {mensaje}
                     </div>
                   )}
 
                   <form>
-
-                    {/* === INFORMACIÓN PERSONAL === */}
-                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-3">Información Personal</h5>
+                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-3">
+                      Información Personal
+                    </h5>
 
                     <div className="row">
                       <div className="col-md-6 mb-3">
@@ -175,7 +170,6 @@ export default function EditarUsuario() {
                       <span className={`badge ${badgeClass} ms-2`}>{usuario.estado}</span>
                     </div>
 
-                    {/* === CONTRASEÑA === */}
                     <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">
                       Cambiar Contraseña (opcional)
                     </h5>
@@ -190,7 +184,6 @@ export default function EditarUsuario() {
                           onChange={(e) => setUsuario({ ...usuario, clave1: e.target.value })}
                         />
                       </div>
-
                       <div className="col-md-6 mb-3">
                         <label>Confirmar contraseña</label>
                         <input
@@ -202,8 +195,9 @@ export default function EditarUsuario() {
                       </div>
                     </div>
 
-                    {/* === UBICACIÓN === */}
-                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">Ubicación</h5>
+                    <h5 className="text-muted border-bottom pb-2 mb-3 mt-4">
+                      Ubicación
+                    </h5>
 
                     <div className="row">
                       <div className="col-md-6 mb-3">
@@ -238,33 +232,19 @@ export default function EditarUsuario() {
                       </div>
                     </div>
 
-                    {/* === ACCIONES === */}
                     <div className="d-flex justify-content-between mt-4">
-                      <a href="/usuariosRegistrados" className="btn btn-secondary">
-                        Cancelar
-                      </a>
+                      <a href="/usuariosRegistrados" className="btn btn-secondary">Cancelar</a>
 
                       <div>
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary me-2"
-                          onClick={resetFormulario}
-                        >
+                        <button type="button" className="btn btn-outline-primary me-2" onClick={resetFormulario}>
                           Restaurar
                         </button>
-
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={guardarCambios}
-                        >
+                        <button type="button" className="btn btn-primary" onClick={guardarCambios}>
                           Guardar Cambios
                         </button>
                       </div>
                     </div>
-
                   </form>
-
                 </div>
               </div>
             </div>
@@ -275,9 +255,12 @@ export default function EditarUsuario() {
               Cambios guardados correctamente
             </div>
           )}
-
         </div>
       </main>
+
+      <footer className="text-center text-muted mt-5 py-3">
+        <small>© 2025 Pastelería Mil Sabores - Sistema de Administración</small>
+      </footer>
     </div>
   );
 }
