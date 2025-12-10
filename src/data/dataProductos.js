@@ -90,16 +90,7 @@ const lista_productos = [
     categoriaId: 3, // Antes: "Individuales & Repostería Fina"
     stock: 3
   },
-  {
-    id: 5,
-    nombre: "Pie de Limón",
-    precio: 8500,
-    imagen: pieLimon,
-    descripcion: "Pie con base crocante, relleno de limón y merengue dorado.",
-    descripcion_larga: "El clásico y vibrante Pie de Limón: una base de masa sablée crocante, un relleno suave y ácido de crema de limón natural, coronado con un imponente merengue suizo tostado a la perfección. Un postre ligero y refrescante que equilibra dulzor y acidez.",
-    categoriaId: 2, // Antes: "Tartas & Pies"
-    stock: 11
-  },
+
   {
     id: 6,
     nombre: "Torta Selva Negra",

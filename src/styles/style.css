@@ -28,6 +28,39 @@ a {
 }
 
 /* ==== HEADER Y NAVBAR ==== */
+
+
+
+
+.btn-logout:hover,
+.btn-perfil:hover,
+.btn-admin:hover {
+  color: #d8a1a7;
+}
+
+
+/* ==== BOTONES DE NAV - UNIFICADOS ==== */
+.btn-nav {
+  color: #6b3d45;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.btn-nav:hover {
+  color: #d8a1a7;
+}
+
+
+
+
+
+
 header {
   background: #f5d4d7;
   border-bottom: 1px solid #eadfe0;
@@ -118,6 +151,90 @@ header {
   padding: 3px 6px;
   border: 2px solid #fff;
 }
+
+
+
+/* COSAS PARA EL PERFIL */
+
+/* ==== PERFIL DEL CLIENTE ==== */
+.perfil {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  border: 1px solid #eadfe0;
+}
+
+.perfil h1 {
+  text-align: center;
+  color: #d8a1a7;
+  margin-bottom: 25px;
+}
+
+.perfil label {
+  display: block;
+  font-weight: 600;
+  margin: 10px 0 6px;
+  color: #6b3d45;
+}
+
+.perfil input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #eadfe0;
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.perfil input:focus {
+  border-color: #d8a1a7;
+  box-shadow: 0 0 0 3px rgba(216,161,167,0.25);
+}
+
+.btn-guardar {
+  background: #d8a1a7;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 48%;
+  margin-right: 4%;
+}
+
+.btn-guardar:hover {
+  filter: brightness(1.05);
+}
+
+.btn-cerrar {
+  background: #f28b92;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 48%;
+}
+
+.btn-cerrar:hover {
+  filter: brightness(1.05);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /* ==== FOOTER DEFINITIVO ==== */
 footer.footer {

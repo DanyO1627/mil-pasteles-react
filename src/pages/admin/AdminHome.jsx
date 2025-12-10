@@ -104,8 +104,8 @@ export default function AdminHome() {
             <h4>📊 Dashboard</h4>
             <p>Visión general del sistema.</p>
           </div>
-          <div className="qa-card" onClick={() => navigate("/historialCompra")}>
-            <h4>🧾 Historial Compra</h4>
+          <div className="qa-card" onClick={() => navigate("/historialCompras")}>
+            <h4>🧾 Historial Compras</h4>
             <p>Revisa tus ventas.</p>
           </div>
           <div className="qa-card" onClick={() => navigate("/panelProductos")}>

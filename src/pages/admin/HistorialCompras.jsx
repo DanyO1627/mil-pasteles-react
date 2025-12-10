@@ -1,103 +1,109 @@
-import React, { useState, useEffect } from "react";
-import { obtenerBoletas, limpiarBoletas } from "../../data/dataBoletas";
-import "../../styles/stylesAdmin/historialCompras.css";
+import { useEffect, useState } from "react";
+import { getBoletas, eliminarBoleta } from "../../services/boletaService";
+import "../../styles/stylesAdmin/historialCompra.css";
 
 export default function HistorialCompras() {
-  const [boletas, setBoletas] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
+    const [boletas, setBoletas] = useState([]);
+    const [busqueda, setBusqueda] = useState("");
 
-  useEffect(() => {
-    const data = obtenerBoletas();
-    setBoletas(data);
-  }, []);
+    // Cargar boletas desde el backend
+    // estamos "blindando" porque no funcionaaa
+    useEffect(() => {
+        const cargar = async () => {
+            const data = await getBoletas();
+            console.log("BOLETAS RECIBIDAS POR EL FRONT:", data);
+            setBoletas(Array.isArray(data) ? data : []);
+        };
 
-  const handleBuscar = (e) => {
-    setBusqueda(e.target.value.toLowerCase());
-  };
+        cargar();
+    }, []);
 
-  const handleLimpiar = () => {
-    if (window.confirm("¿Seguro que deseas borrar todo el historial de boletas?")) {
-      limpiarBoletas();
-      setBoletas([]);
-    }
-  };
+    // Buscador
+    // Blindar por si boletas NO es array
+    const boletasSeguras = Array.isArray(boletas) ? boletas : [];
 
-  const boletasFiltradas = boletas.filter(
-    (b) =>
-      b.cliente.nombre.toLowerCase().includes(busqueda) ||
-      b.cliente.apellido.toLowerCase().includes(busqueda) ||
-      b.id.toString().includes(busqueda)
-  );
+    // Buscador 
+    const boletasFiltradas = boletasSeguras.filter((b) => {
+        const query = busqueda.toLowerCase();
+        return (
+            b.id.toString().includes(query) ||
+            (b.usuario?.nombre || "").toLowerCase().includes(query)
+        );
+    });
 
-  return (
-    <div className="boletas-wrapper">
-      <div className="boletas-container">
-        <h2 className="boletas-titulo">🧾 Historial de Boletas</h2>
-        <p className="boletas-subtitulo">
-          Aquí puedes revisar todas las ventas registradas en el sistema.
-        </p>
+    const handleLimpiar = async () => {
+        if (!window.confirm("¿Borrar TODO el historial de boletas?")) return;
 
-        {/* Barra de búsqueda */}
-        <div className="boletas-busqueda">
-          <input
-            type="text"
-            placeholder="Buscar por nombre o ID..."
-            value={busqueda}
-            onChange={handleBuscar}
-          />
-          <button className="btn-limpiar" onClick={handleLimpiar}>
-            🗑️ Limpiar Historial
-          </button>
-        </div>
+        try {
+            // eliminar UNA POR UNA
+            for (const b of boletas) {
+                await eliminarBoleta(b.id);
+            }
+            setBoletas([]);
+            alert("Historial eliminado.");
+        } catch (err) {
+            console.error("❌ Error al borrar:", err);
+        }
+    };
 
-        {/* Tabla de boletas */}
-        <div className="tabla-scroll">
-          <table className="tabla-boletas">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Productos</th>
-                <th>Total</th>
-                <th>Método Pago</th>
-                <th>Atendido Por</th>
-              </tr>
-            </thead>
-            <tbody>
-              {boletasFiltradas.length > 0 ? (
-                boletasFiltradas.map((b) => (
-                  <tr key={b.id}>
-                    <td>#{b.id}</td>
-                    <td>{b.fecha}</td>
-                    <td>
-                      {b.cliente.nombre} {b.cliente.apellido}
-                      <br />
-                      <small>{b.cliente.email}</small>
-                    </td>
-                    <td>
-                      {b.carrito.map((p, i) => (
-                        <div key={i} className="producto-item">
-                          {p.nombre} x{p.cantidad}
+    return (
+        <div className="historial-wrapper">
+            <h2 className="titulo">🧾 Historial de Boletas</h2>
+
+            {/* Buscador */}
+            <div className="buscador">
+                <input
+                    type="text"
+                    placeholder="Buscar por ID o nombre de cliente..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                />
+
+                {boletas.length > 0 && (
+                    <button className="btn-limpiar" onClick={handleLimpiar}>
+                        🗑 Limpiar historial
+                    </button>
+                )}
+            </div>
+
+            {/* Lista de boletas */}
+            <div className="boletas-lista">
+                {boletasFiltradas.length === 0 ? (
+                    <p className="no-data">No hay boletas registradas.</p>
+                ) : (
+                    boletasFiltradas.map((b) => (
+                        <div key={b.id} className="boleta-card">
+                            <h3>Boleta #{b.id}</h3>
+                            <p><strong>Fecha:</strong> {b.fecha}</p>
+                            <p><strong>Total:</strong>
+                                ${(b.totalFinal ?? 0).toLocaleString("es-CL")}
+                            </p>
+
+                            {/* Cliente */}
+                            {b.usuario ? (
+                                <p><strong>Cliente:</strong> {b.usuario.nombre} ({b.usuario.email})</p>
+                            ) : (
+                                <p><strong>Cliente:</strong> Invitado</p>
+                            )}
+
+                            {/* Dirección */}
+                            <p>
+                                <strong>Dirección:</strong> {b.calle}, {b.comuna}, {b.region}
+                            </p>
+
+                            {/* Productos */}
+                            <div className="productos">
+                                {(b.carrito || []).map((item, i) => (
+                                    <div key={i} className="item">
+                                        {item.nombreProducto} x{item.cantidad}
+                                        <strong>${(item.totalLinea ?? 0).toLocaleString("es-CL")}</strong>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                      ))}
-                    </td>
-                    <td>${b.totalFinal.toLocaleString("es-CL")}</td>
-                    <td>{b.metodoPago}</td>
-                    <td>{b.atendidoPor}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="sin-boletas">
-                    No hay boletas registradas.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                    ))
+                )}
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

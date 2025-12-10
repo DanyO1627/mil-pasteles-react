@@ -4,6 +4,7 @@ import { CarritoProvider } from "./context/CarritoContext";
 import { ProductosProvider } from "./context/InventarioContext.jsx";
 import { CategoriasProvider } from "./context/CategoriasContext.jsx";
 import { UsuariosProvider } from "./context/UsuariosContext.jsx";
+import { AuthProvider } from "./context/AuthContext";
 
 //components
 import NavBar from "./components/Navbar.jsx";
@@ -44,18 +45,24 @@ import UsuariosRegistrados from "./pages/admin/UsuariosRegistrados.jsx";
 import Usuarios from "./pages/admin/Usuarios.jsx";
 import NuevoProducto from "./pages/admin/NuevoProducto.jsx";
 import Empleados from "./pages/admin/Empleados";
+import HistorialCompras from "./pages/admin/HistorialCompras.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
+import PerfilCliente from "./pages/PerfilCliente.jsx";
+
 
 function App() {
   return (
-    
+
+    <AuthProvider>
       <CategoriasProvider>
         <ProductosProvider>
           <CarritoProvider>
             <UsuariosProvider>
               <NavBar />
               <Routes>
+
+                {/* RUTAS PÚBLICAS */}
                 <Route path="/" element={<Home />} />
-                <Route path="/nuevoProducto" element={<NuevoProducto />} />
                 <Route path="/registro" element={<Registro />} />
                 <Route path="/ordenCompra" element={<OrdenCompra />} />
                 <Route path="/categorias" element={<Categorias />} />
@@ -64,29 +71,156 @@ function App() {
                 <Route path="/nosotros" element={<Nosotros />} />
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/productos" element={<Productos />} />
-                <Route path="/panelProductos" element={<PanelProductos />} />
                 <Route path="/detalleProductos/:id" element={<DetalleProductos />} />
-                <Route path="/editar/:id" element={<EditarProducto />} />
-                <Route path="/criticos" element={<ProductosCriticos />} />
-                <Route path="/editarCategoria/:id" element={<EditarCategoria />} />
-                <Route path="/gestionarCategorias" element={<GestionarCategorias />} />
-                <Route path="/reportes" element={<Reportes />} />
                 <Route path="/blogs" element={<Blogs />} />
                 <Route path="/blog1" element={<Blog1 />} />
                 <Route path="/blog2" element={<Blog2 />} />
                 <Route path="/blog3" element={<Blog3 />} />
                 <Route path="/blog4" element={<Blog4 />} />
                 <Route path="/carrito" element={<Carrito />} />
-                <Route path="/adminHome" element={<AdminHome />} />
-                <Route path="/empleados" element={<Empleados />} />
-                <Route path="/nuevaCategoria" element={<NuevaCategoria />} />
                 <Route path="/compra" element={<Compra />} />
                 <Route path="/compraExitosa" element={<CompraExitosa />} />
                 <Route path="/boleta" element={<Boleta />} />
-                <Route path="/perfilAdmin" element={<PerfilAdmin />} />
-                <Route path="/editarUsuario" element={<EditarUsuario />} />
-                <Route path="/usuariosRegistrados" element={<UsuariosRegistrados />} />
-                <Route path="/usuarios" element={<Usuarios />} />
+                <Route path="/perfil" element={<PerfilCliente />} />
+
+
+                {/* RUTAS RESTRINGIDAS PARA ADMINS */}
+                <Route
+                  path="/adminHome"
+                  element={
+                    <AdminRoute>
+                      <AdminHome />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/panelProductos"
+                  element={
+                    <AdminRoute>
+                      <PanelProductos />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/empleados"
+                  element={
+                    <AdminRoute>
+                      <Empleados />
+                    </AdminRoute>
+                  }
+                />
+
+
+
+                <Route
+                  path="/usuariosRegistrados"
+                  element={
+                    <AdminRoute>
+                      <UsuariosRegistrados />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/nuevaCategoria"
+                  element={
+                    <AdminRoute>
+                      <NuevaCategoria />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/perfilAdmin"
+                  element={
+                    <AdminRoute>
+                      <PerfilAdmin />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/editarUsuario"
+                  element={
+                    <AdminRoute>
+                      <EditarUsuario />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/usuarios"
+                  element={
+                    <AdminRoute>
+                      <Usuarios />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/historialCompras"
+                  element={
+                    <AdminRoute>
+                      <HistorialCompras />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/reportes"
+                  element={
+                    <AdminRoute>
+                      <Reportes />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/editarCategoria/:id"
+                  element={
+                    <AdminRoute>
+                      <EditarCategoria />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/gestionarCategorias"
+                  element={
+                    <AdminRoute>
+                      <GestionarCategorias />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/editar/:id"
+                  element={
+                    <AdminRoute>
+                      <EditarProducto />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/criticos"
+                  element={
+                    <AdminRoute>
+                      <ProductosCriticos />
+                    </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/nuevoProducto"
+                  element={
+                    <AdminRoute>
+                      <NuevoProducto />
+                    </AdminRoute>
+                  }
+                />
 
               </Routes>
               <Footer />
@@ -95,7 +229,8 @@ function App() {
           </CarritoProvider>
         </ProductosProvider>
       </CategoriasProvider>
-   
+    </AuthProvider>
+
   );
 }
 

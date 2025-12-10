@@ -124,20 +124,20 @@ export default function Compra() {
         metodoPago: "Tarjeta de débito",
         atendidoPor: "Constanza Pino",
 
+        // dirección
         calle: formData.calle,
         departamento: formData.departamento,
         comuna: formData.comuna,
         region: formData.region,
         indicaciones: formData.indicaciones,
 
-        usuario: { id: 3 },
+        
 
+        // carrito que espera el backendA
         carrito: carrito.map((item) => ({
-          productoId: item.id,
-          nombreProducto: item.nombre,
+          nombre: item.nombre,
           cantidad: item.cantidad,
           precioUnitario: item.precio,
-          totalLinea: item.precio * item.cantidad,
         }))
       };
 
