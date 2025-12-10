@@ -999,6 +999,7 @@ footer.footer {
 
 /* ==== CONTACTO ==== */
 .contacto-wrapper {
+  display: block;  
   background-color: #fffaf9;
   padding: 50px 20px 80px;
   text-align: center;

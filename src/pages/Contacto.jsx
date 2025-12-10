@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import "../utils/Contacto.logic.js";
 import logo from "../assets/logo.png";
-import "../styles/style.css"
-
+import "../styles/style.css";
 export default function Contacto() {
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
@@ -9,22 +9,20 @@ export default function Contacto() {
     const [mensaje, setMensaje] = useState(null);
 
     const validarFormulario = () => {
-        const errores = [];
+        const res = window.ContactoLogic.validarFormulario(nombre, email, contenido);
 
-        if (nombre.trim() === "") errores.push("El nombre no puede estar vacío.");
-        if (!email.includes("@")) errores.push("El correo electrónico no es válido.");
-        if (contenido.trim() === "") errores.push("El mensaje no puede estar vacío.");
-
-        if (errores.length > 0) {
-            setMensaje({ tipo: "error", texto: errores });
+        if (res.tipo === "error") {
+            setMensaje(res);
         } else {
-            setMensaje({ tipo: "exito", texto: ["✅ Envío exitoso"] });
-            setNombre("");
-            setEmail("");
-            setContenido("");
+            setMensaje(res);
+            const reset = window.ContactoLogic.resetFormulario();
+            setNombre(reset.nombre);
+            setEmail(reset.email);
+            setContenido(reset.contenido);
+
             // Redirección
             setTimeout(() => {
-                window.location.href = "/";
+                window.location.href = window.ContactoLogic.getRedirectUrl();
             }, 1000);
         }
     };
@@ -38,8 +36,8 @@ export default function Contacto() {
                 {mensaje && (
                     <div
                         className={`contacto-alert ${mensaje.tipo === "error"
-                                ? "contacto-alert-error"
-                                : "contacto-alert-exito"
+                            ? "contacto-alert-error"
+                            : "contacto-alert-exito"
                             }`}
                     >
                         <ul>
